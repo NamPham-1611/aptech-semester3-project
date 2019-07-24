@@ -28,5 +28,7 @@ namespace EnvironmentalSurveyPortal.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }
