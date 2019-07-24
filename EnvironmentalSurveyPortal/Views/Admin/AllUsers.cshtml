@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.User>
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewBag.Title = "All Users";
+}
+
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">All Users</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>UID</th>
+                        <th>Fullname</th>
+                        <th>Class</th>
+                        <th>Specification</th>
+                        <th>Section</th>
+                        <th>Role</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.UserID</td>
+                            <td>@user.Name</td>
+                            <td>@user.Class</td>
+                            <td>@user.Specification</td>
+                            <td>@user.Section</td>
+                            <td>@user.Role</td>
+                            <td class="text-center">
+                                @Html.ActionLink("Modify", "Edit", new { id = user.UserID }, new { @class = "btn btn-sm btn-info" })
+                                @Html.ActionLink("Delete", "Delete", new { id = user.UserID }, new { @class = "btn btn-sm btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

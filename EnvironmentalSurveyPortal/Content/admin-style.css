@@ -1,0 +1,92 @@
+﻿#wrapper {
+}
+
+#content-wrapper {
+    padding-top: 80px;
+    margin-left: 224px;
+}
+
+.sidebar-toggled #content-wrapper {
+    margin-left: 104px;
+}
+
+#accordionSidebar {
+    position: fixed;
+    z-index: 10000;
+}
+
+.topbar {
+    padding-left: 224px;
+}
+
+.sidebar-toggled .topbar {
+    padding-left: 104px;
+}
+
+.ql-toolbar,
+.ql-container {
+    border-radius: 25px;
+}
+
+.editor {
+    height: 500px !important;
+}
+
+select.form-control-user {
+    font-size: .8rem;
+    border-radius: 25px;
+    padding: 0 1rem !important;
+}
+
+.date-control-user {
+    font-size: .8rem;
+    border-radius: 25px;
+    padding: 0 1rem !important;
+}
+
+.date-control-user-md {
+    height: 43px;
+}
+
+.form-control-user-lg {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 0 1rem !important;
+    height: 50px;
+}
+
+.form-control-user-md {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 0 1rem !important;
+    height: 43px;
+}
+
+.field-validation-error {
+    margin-left: 1.2rem;
+}
+
+.form-group-user {
+    border: 1px solid #d1d3e2 !important;
+    border-radius: 25px !important;
+    font-size: .8rem;
+    padding: 11px 15px !important;
+}
+
+@media (max-width: 768px) {
+    #content-wrapper {
+        margin-left: 104px;
+    }
+
+    .sidebar-toggled #content-wrapper {
+        margin-left: 0;
+    }
+
+    .topbar {
+        padding-left: 124px;
+    }
+
+    .sidebar-toggled .topbar {
+        padding-left: 20px;
+    }
+}
