@@ -18,6 +18,11 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View();
         }
 
+        public ActionResult Support()
+        {
+            return View();
+        }
+
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
         {

@@ -14,11 +14,43 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbUser;
         }
 
+        public static User GetUser(string id)
+        {
+            return db.tbUser.FirstOrDefault(item => item.UserID == id);
+        }
+
         public static IEnumerable<Survey> GetAllSurvey()
         {
             return db.tbSurvey;
         }
 
+        public static bool Delete(string id)
+        {
+            var u = db.tbUser.FirstOrDefault(item => item.UserID == id);
+            if (u != null)
+            {
+                db.tbUser.Remove(u);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool EditProfile(User eUser)
+        {
+            var u = db.tbUser.FirstOrDefault(item => item.UserID == eUser.UserID);
+            if (u != null)
+            {
+                u.Name = eUser.Name;
+                u.Password = eUser.Password;
+                u.Role = eUser.Role;
+                u.Section = eUser.Section;
+                u.Specification = eUser.Specification;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public static bool InsertSurvey(Survey survey)
         {
             db.tbSurvey.Add(survey);
