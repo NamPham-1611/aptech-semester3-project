@@ -1,27 +1,16 @@
-﻿@model EnvironmentalSurveyPortal.Models.Index
-
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Survey>
 @{
-    ViewBag.Title = "Environmental Survey Portal";
+    ViewBag.Title = "Search";
 }
+
 
 <section class="main-content">
     <div class="main-content-wrapper">
-        <div class="content-body">
-            <div class="content-timeline">
-                <!--Timeline header area start -->
-                <div class="post-list-header">
-                    <span class="post-list-title">Latest surveys</span>
-
-                    @*<select class="frm-input">
-                        <option value="1">For All member</option>
-                        <option value="1">For Faculty/Staff</option>
-                        <option value="1">For Student</option>
-                    </select>*@
-                </div>
-                <!--Timeline header area end -->
-                <!--Timeline items start -->
+        <h5 class="font-weight-normal">Found @Model.Count() results for keyword <strong>"@ViewBag.TXT"</strong></h5>
+        <div class="content-timeline mt-4">
+            <div class="content-body">
                 <div class="timeline-items">
-                    @foreach (var item in Model.surveys)
+                    @foreach (var item in Model)
                     {
                         var time = DateTime.Now - item.CreateDate;
                         var timeAgo = "";
@@ -89,71 +78,44 @@
                         </div>
                     }
                 </div>
-                <!--Timeline items end -->
-                <!--Data load more button start  -->
-                <div class="load-more">
-                    <button class="load-more-button material-button" type="button">
-                        <i class="material-icons">&#xE5D5;</i>
-                        <span>Load More</span>
-                    </button>
-                </div>
-                <!--Data load more button start  -->
             </div>
-        </div>
-        <div class="content-sidebar">
-            <div class="sidebar_inner">
-                <div class="widget-item">
-                    <div class="w-header">
-                        <div class="w-title">Prized member</div>
-                        <div class="w-seperator"></div>
-                    </div>
-                    <div class="w-boxed-post">
-                        <ul>
-                            @{int i=0; }
-                            @foreach (var item in Model.prizes)
-                            {
-                                <li>
-                                    <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
-                                        <div class="box-wrapper">
-                                            <div class="box-left">
-                                                <span>@(++i)</span>
-                                            </div>
-                                            <div class="box-right" style="width:100%">
-                                                <h3 class="p-title">@item.StudentName</h3>
-                                                <div class="p-icons">
-                                                    @item.SurveyName
+
+            <div class="content-sidebar">
+                <div class="sidebar_inner">
+                    <div class="widget-item">
+                        <div class="w-header">
+                            <div class="w-title">Prized member</div>
+                            <div class="w-seperator"></div>
+                        </div>
+                        <div class="w-boxed-post">
+                            <ul>
+                                @{int i = 0; }
+                                @foreach (var item in ViewBag.prizes)
+                                {
+                                    <li>
+                                        <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(++i)</span>
+                                                </div>
+                                                <div class="box-right" style="width:100%">
+                                                    <h3 class="p-title">@item.StudentName</h3>
+                                                    <div class="p-icons">
+                                                        @item.SurveyName
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
                     </div>
+                    <div class="seperator"></div>
+                    <a href="#" class="widget-ad-box"></a>
                 </div>
-                <div class="seperator"></div>
-                <a href="#" class="widget-ad-box"></a>
             </div>
         </div>
     </div>
 </section>
 
-<script>
-    window.addEventListener("load", function () {
-        //Owl carousel initializing
-        $('#postCarousel').owlCarousel({
-            loop: true,
-            dots: true,
-            nav: true,
-            navText: ['<span><i class="material-icons">&#xE314;</i></span>', '<span><i class="material-icons">&#xE315;</i></span>'],
-            items: 1,
-            margin: 20
-        });
-        //widget carousel initialize
-        $('#widgetCarousel').owlCarousel({
-            dots: true,
-            nav: false,
-            items: 1
-        });
-    });
-</script>

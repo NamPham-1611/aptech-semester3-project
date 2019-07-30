@@ -9,16 +9,19 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Tooltip plugin (zebra) css file -->
-    <link rel="stylesheet" type="text/css" href="~/Content/zebra_tooltips.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
 
     <!-- Owl Carousel plugin css file. only used pages -->
-    <link rel="stylesheet" type="text/css" href="~/Content//owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/owl.carousel.min.css">
+
+    <!-- Tooltip plugin (zebra) css file -->
+    <link rel="stylesheet" type="text/css" href="~/Content/zebra_tooltips.min.css">
 
     <!-- Ideabox main theme css file. you have to add all pages -->
-    <link rel="stylesheet" type="text/css" href="~/Content//main-style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
 
     <!-- Ideabox responsive css file -->
-    <link rel="stylesheet" type="text/css" href="~/Content//responsive-style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/responsive-style.css">
 
 </head>
 
@@ -28,7 +31,7 @@
         <div class="header-wrapper">
 
             <!--sidebar menu toggler start -->
-            <div class="toggle-sidebar material-button">
+            <div class="toggle-sidebar material-button d-block d-md-none">
                 <i class="material-icons">&#xE5D2;</i>
             </div>
             <!--sidebar menu toggler end -->
@@ -84,15 +87,12 @@
 
             <!--header search panel start -->
             <div class="search-bar">
-                <form class="search-form">
-                    <div class="search-input-wrapper">
-                        <input type="text" name="qq" placeholder="search something..." class="search-input">
-                        <button type="submit" name="search" class="search-submit"><i class="material-icons">&#xE5C8;</i></button>
-                    </div>
-                    <span class="search-close search-toggle">
-                        <i class="material-icons">&#xE5CD;</i>
-                    </span>
-                </form>
+                <div class="search-input-wrapper">
+                    <form class="search-form" action="/Home/Search" method="GET">
+                        <input type="text" name="q" placeholder="Search surveys..." class="search-input">
+                        <button type="submit" class="search-submit"><i class="material-icons">&#xE5C8;</i></button>
+                    </form>
+                </div>
             </div>
             <!--header search panel end -->
 
@@ -143,7 +143,7 @@
                         <span class="menu-label">FAQ's</span>
                     </a>
                 </li>
-               
+
             </ul>
             <!-- sidebar menu end -->
 
@@ -180,43 +180,7 @@
                 <span class="m-modal-close"><i class="material-icons">&#xE5CD;</i></span>
             </div>
             <div class="m-modal-body">
-                <div class="m-modal-social-logins">
-                    <div class="columns column-2">
-                        <button class="frm-button facebook material-button full" type="button">Facebook</button>
-                    </div>
-                    <div class="columns column-2">
-                        <button class="frm-button twitter material-button full" type="button">Twitter</button>
-                    </div>
-                    <div class="columns column-2">
-                        <button class="frm-button google material-button full" type="button">Google</button>
-                    </div>
-                </div>
-
-                <div class="m-modal-seperator"><span>OR</span></div>
-
-                <form>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="name" placeholder="Name">
-                    </div>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="username" placeholder="Username">
-                    </div>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="email" placeholder="Email">
-                    </div>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="password" placeholder="Password">
-                    </div>
-                    <div class="frm-row">
-                        <label class="frm-check-radio-label"><input type="checkbox" name="test"> <span>I accept your <a href="#">register policy</a>.</span></label>
-                    </div>
-                    <div class="frm-row">
-                        <button class="frm-button material-button full" type="button">Register</button>
-                    </div>
-                </form>
-                <div class="frm-row">
-                    <p class="txt-center">Do you already have an account? <a href="#" data-modal="loginModal">Login</a></p>
-                </div>
+                @Html.Partial("RegisterForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Register>())
             </div>
         </div>
     </div>
@@ -230,31 +194,7 @@
                 <span class="m-modal-close"><i class="material-icons">&#xE5CD;</i></span>
             </div>
             <div class="m-modal-body">
-                <div class="m-modal-social-logins">
-                    <div class="columns column-3">
-                        <button class="frm-button facebook material-button full" type="button">Facebook</button>
-                    </div>
-                    <div class="columns column-3">
-                        <button class="frm-button google material-button full" type="button">Google</button>
-                    </div>
-                </div>
-
-                <div class="m-modal-seperator"><span>OR</span></div>
-
-                <form>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="email" placeholder="Email">
-                    </div>
-                    <div class="frm-row">
-                        <input class="frm-input" type="text" name="password" placeholder="Password">
-                    </div>
-                    <div class="frm-row">
-                        <button class="frm-button material-button full" type="button">Login</button>
-                    </div>
-                </form>
-                <div class="frm-row">
-                    <p class="txt-center">Don't you have an account yet? <a href="#" data-modal="registerModal">Register</a></p>
-                </div>
+                @Html.Partial("LoginForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Login>())
             </div>
         </div>
     </div>
@@ -294,6 +234,9 @@
 
     <!-- Ideabox theme js file. you have to add all pages. -->
     <script src="~/Scripts/main-script.js"></script>
+
+    <!-- Page js. -->
+    <script src="~/Scripts/client.js"></script>
 
 </body>
 

@@ -1,0 +1,22 @@
+﻿@model EnvironmentalSurveyPortal.Models.Login
+
+<form onsubmit="requestLogin(this, event)">
+    @Html.ValidationSummary(true, null, new { @class = "alert-danger" })
+    <div class="frm-row">
+        <input class="frm-input" type="text" name="UID" placeholder="Roll No or Employee Number">
+        @Html.ValidationMessageFor(model => model.UID, null, new { @class = "text-danger" })
+    </div>
+    <div class="frm-row">
+        <input class="frm-input" type="text" name="Password" placeholder="Password">
+        @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+    </div>
+    <div class="frm-row">
+        <button class="frm-button material-button full" type="submit">Login</button>
+    </div>
+</form>
+
+<div class="frm-row">
+    <p class="txt-center">Don't you have an account yet? <a href="#" data-modal="registerModal">Register</a></p>
+</div>
+
+

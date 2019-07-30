@@ -8,16 +8,33 @@ namespace EnvironmentalSurveyPortal.Controllers
 {
     public class HomeController : Controller
     {
+        /*----------------------------------
+        Home Page Get Action
+         -----------------------------------*/
         public ActionResult Index()
         {
             ViewBag.NoF = DAO.CountFeedback();
-            return View(DAO.GetAllSurvey());
-        }
-        public ActionResult Login()
-        {
-            return View();
+            return View(DAO.getIndex());
         }
 
+        /*----------------------------------
+        Check Login Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public PartialViewResult CheckLogin(Login l)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("LoginForm");
+            }
+
+            ModelState.AddModelError("", "Wrong User ID or password, please try again!");
+            return PartialView("LoginForm");
+        }
+
+        /*----------------------------------
+        Feedback Post Action
+         -----------------------------------*/
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
         {
@@ -30,5 +47,41 @@ namespace EnvironmentalSurveyPortal.Controllers
             }
             return new HttpStatusCodeResult(304);
         }
+
+        /*----------------------------------
+        Logout Post Action
+         -----------------------------------*/
+         [HttpPost]
+        public ActionResult Logout()
+        {
+            Session.Remove("login");
+            return RedirectToAction("login");
+        }
+
+        /*----------------------------------
+        Check Register Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public PartialViewResult CheckRegister(Register r)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("RegisterForm");
+            }
+
+            ModelState.AddModelError("", "User ID already exist!");
+            return PartialView("RegisterForm");
+        }
+
+        /*----------------------------------
+        Search Get Action
+         -----------------------------------*/
+        public ActionResult Search(string q)
+        {
+            ViewBag.TXT = q;
+            ViewBag.prizes = DAO.GetAllPrize();
+            return View(DAO.SearchSurvey(q));
+        }
+
     }
 }

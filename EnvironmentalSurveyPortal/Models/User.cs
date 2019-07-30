@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EnvironmentalSurveyPortal.Models
 {
@@ -32,5 +33,8 @@ namespace EnvironmentalSurveyPortal.Models
         [Required]
         [StringLength(10)]
         public string Role { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public bool Active { get; set; }
     }
 }
