@@ -1,0 +1,10 @@
+﻿@model EnvironmentalSurveyPortal.Models.Survey
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewBag.Title = "Edit Survey";
+}
+
+<div id="content">
+    @Html.Partial("EditSurveyForm", Model)
+</div>

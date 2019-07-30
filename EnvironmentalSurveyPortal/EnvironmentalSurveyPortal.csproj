@@ -99,7 +99,6 @@
     <Content Include="Content\admin-style.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-
     <Content Include="Content\main-style.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\quill.bubble.css" />
@@ -119,8 +118,6 @@
     <Content Include="Scripts\quill.js" />
     <Content Include="Scripts\quill.min.js" />
     <Content Include="Content\quill.snow.css" />
-
-
     <Content Include="Content\fontawesome-5.6.3\css\all.css" />
     <Content Include="Content\fontawesome-5.6.3\css\all.min.css" />
     <Content Include="Content\fontawesome-5.6.3\css\brands.css" />
@@ -198,10 +195,8 @@
     <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.min.js" />
-
     <Content Include="Scripts\sb-admin-2.min.js" />
     <Content Include="Scripts\zebra_tooltips.min.js" />
-
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +209,10 @@
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Prize.cs" />
+    <Compile Include="Models\Register.cs" />
     <Compile Include="Models\SurveyDB.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\User.cs" />
@@ -230,10 +229,14 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
-    <Content Include="Views\Admin\CreateSurvey.cshtml" />
+    <Content Include="Views\Admin\EditSurvey.cshtml" />
     <Content Include="Views\Admin\CreateAccount.cshtml" />
     <Content Include="Views\Admin\SurveyBoard.cshtml" />
     <Content Include="Views\Admin\CreateSurveyForm.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Activation.cshtml" />
+    <Content Include="Views\Admin\EditSurveyForm.cshtml" />
+    <Content Include="Views\Admin\CreateSurvey.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

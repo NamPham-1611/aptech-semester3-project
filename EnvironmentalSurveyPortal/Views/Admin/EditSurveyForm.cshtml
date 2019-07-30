@@ -5,35 +5,33 @@
         <div class="card-body p-0 d-flex justify-content-center">
             <div class="col-12 col-lg-9 py-5 px-3 px-md-5">
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Create New Survey</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Edit Survey</h1>
                 </div>
 
-                <form id="form-create-survey" class="user">
+                <form id="form-edit-survey" class="user">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user form-control-user-md" id="survey-name" placeholder="Survey Name">
+                        <input type="text" class="form-control form-control-user form-control-user-md" id="survey-name" placeholder="Survey Name" value="@Model.Name">
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group form-inline form-group-user px-3">
                         <label for="survey-for" class="text-gray-800 mr-4">Survey For</label>
-
                         <div class="form-check mr-2">
                             <input class="form-check-input" name="participants" type="checkbox" id="checkStaff">
-                            <label class="form-check-label" for="checkStaff">Faculty/Staff</label>
+                            <label class="form-check-label" name="participants" for="checkStaff">Faculty/Staff</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" name="participants" type="checkbox" id="checkStudent">
+                            <input class="form-check-input" type="checkbox" id="checkStudent">
                             <label class="form-check-label" for="checkStudent">Student</label>
                         </div>
-
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        <div id="editor" class="editor"></div>
+                        <div id="editor" class="editor">@Model.Content</div>
                         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
 
                         <script>
@@ -43,23 +41,24 @@
                             });
                         </script>
                     </div>
-
                     <div class="form-group row">
                         <div class="col-lg-6">
                             @Html.LabelFor(model => model.StartDate, new { @class = "ml-3 text-gray-800" })
-                            <input name="StartDate" type="date" id="start-date" class="form-control date-control-user date-control-user-md" placeholder="Start Date" />
+                            <input name="StartDate" type="date" id="start-date" class="form-control date-control-user date-control-user-md" value="@Model.StartDate.Date.ToString("yyyy-MM-dd")" />
                             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-lg-6">
                             @Html.LabelFor(model => model.EndDate, new { @class = "ml-3 text-gray-800" })
-                            <input type="date" id="end-date" class="form-control date-control-user date-control-user-md" placeholder="End Date" />
+
+                            <input type="date" id="end-date" class="form-control date-control-user date-control-user-md" placeholder="End Date" value="@Model.EndDate.Date.ToString("yyyy-MM-dd")" />
+
                             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <button type="button" id="btn-submit" class="btn btn-primary btn-user btn-block">
-                        Create Survey
+                        Save
                     </button>
                 </form>
             </div>
@@ -72,13 +71,28 @@
     <script>
         Toast.fire({
             type: 'success',
-            title: 'Create survey successfully'
+            title: 'Edit survey successfully'
         })
     </script>
 }
 
 <script>
-    $('#form-create-survey #btn-submit').click(function () {
+    $(document).ready(function () {
+        switch ("@Model.Participants") {
+            case "Faculty/Staff":
+                $('#checkStaff').attr("checked", "checked");
+                break;
+            case "Student":
+                $('#checkStudent').attr("checked", "checked");
+                break;
+            default:
+                $('#checkStaff').attr("checked", "checked");
+                $('#checkStudent').attr("checked", "checked");
+                    break;
+        }
+    });
+
+    $('#form-edit-survey #btn-submit').click(function () {
         var content = $('#editor .ql-editor>p').html();
         content = content == "<p><br></p>" ? "" : content;
         var checkStaff = $('#checkStaff').checked;
@@ -86,6 +100,7 @@
         var participants = checkStaff && checkStudent == true ? "All" : checkStaff == true ? "Faculty/Staff" : "Student";
 
         var data = {
+            ID: @Model.ID;
             Name: $('#survey-name').val().trim(),
             Content: content,
             Participants: participants,
@@ -95,7 +110,7 @@
         };
 
         $.post(
-            "/Admin/CreateSurvey",
+            "/Admin/EditSurvey",
             data,
             function (res) {
                 $('#content').html(res);
@@ -103,4 +118,3 @@
         );
     });
 </script>
-
