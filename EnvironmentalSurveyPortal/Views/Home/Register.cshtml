@@ -1,0 +1,109 @@
+﻿@model EnvironmentalSurveyPortal.Models.Register
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="row">
+    <div class="col-md-6 mb-5">
+        <!-- Register form -->
+        @using (Html.BeginForm("register", "home", FormMethod.Post, new { @class = "register-form card mx-xl-5" }))
+        {
+            <div class="card-body">
+                <!-- Header -->
+                <div class="form-header warm-flame-gradient rounded">
+                    <h3 class="my-3"><i class="fas fa-pencil-alt"></i>Register</h3>
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <!-- Form inputs -->
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-key prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-user prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-lock prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-lock prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.RePassword, htmlAttributes: new { @class = "" })
+
+                    @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+
+                    @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "" })
+
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-chalkboard-teacher prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "" })
+
+                    @Html.EditorFor(model => model.Class, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-info-circle prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Specification, htmlAttributes: new { @class = "" })
+
+                    @Html.EditorFor(model => model.Specification, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Specification, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="md-form font-weight-light">
+                    <i class="fas fa-info-circle prefix grey-text"></i>
+
+                    @Html.LabelFor(model => model.Section, htmlAttributes: new { @class = "" })
+
+                    @Html.EditorFor(model => model.Section, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Section, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-light-blue waves-effect waves-light" type="submit">Register</button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="options font-weight-light">
+                    <p>Already a member? <a href="/home/login">Login</a></p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,27 +1,30 @@
-﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Survey>
+﻿@model EnvironmentalSurveyPortal.Models.Index
+
 @{
     ViewBag.Title = "Environmental Survey Portal";
 }
 
 <section class="main-highlight">
-    <div class="highlight-carousel slider-carousel">
-
+    @*<div class="highlight-carousel slider-carousel">
         <div class="owl-carousel" id="postCarousel">
             <div class="item">
-
                 <article class="post-box" style="background-image: url(img/news-test-images/news-img5.jpg);">
                     <div class="post-overlay">
                         <a href="#" class="post-category" title="Title of blog post" rel="tag">Technology</a>
                         <h3 class="post-title">Facebook: Cambridge Analytica may have accessed some users’ private messages</h3>
+
                         <div class="post-meta">
                             <div class="post-meta-author-avatar">
-                                <img alt="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="avatar" height="24" width="24">
+                                @*<img alt="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="avatar" height="24" width="24">
                             </div>
+
                             <div class="post-meta-author-info">
                                 <span class="post-meta-author-name">
                                     <a href="#" title="Posts by John Doe" rel="author">John Doe</a>
                                 </span>
+
                                 <span class="middot">·</span>
+
                                 <span class="post-meta-date">
                                     <abbr class="published updated" title="December 4, 2017">12 November 2018</abbr>
                                 </span>
@@ -30,10 +33,8 @@
                     </div>
                     <a href="#" class="post-overlayLink"></a>
                 </article>
-
             </div>
             <div class="item">
-
                 <article class="post-box" style="background-image: url(img/news-test-images/news-img4.jpg);">
                     <div class="post-overlay">
                         <a href="#" class="post-category" title="Title of blog post" rel="tag">Technology</a>
@@ -42,10 +43,12 @@
                             <div class="post-meta-author-avatar">
                                 <img alt="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="avatar" height="24" width="24">
                             </div>
+
                             <div class="post-meta-author-info">
                                 <span class="post-meta-author-name">
                                     <a href="#" title="Posts by John Doe" rel="author">John Doe</a>
                                 </span>
+
                                 <span class="middot">·</span>
                                 <span class="post-meta-date">
                                     <abbr class="published updated" title="December 4, 2017">12 November 2018</abbr>
@@ -55,10 +58,8 @@
                     </div>
                     <a href="#" class="post-overlayLink"></a>
                 </article>
-
             </div>
             <div class="item">
-
                 <article class="post-box" style="background-image: url(img/news-test-images/news-img7.jpg);">
                     <div class="post-overlay">
                         <a href="#" class="post-category" title="Title of blog post" rel="tag">Technology</a>
@@ -80,10 +81,8 @@
                     </div>
                     <a href="#" class="post-overlayLink"></a>
                 </article>
-
             </div>
             <div class="item">
-
                 <article class="post-box" style="background-image: url(img/news-test-images/news-img10.jpg);">
                     <div class="post-overlay">
                         <a href="#" class="post-category" title="Title of blog post" rel="tag">Technology</a>
@@ -105,12 +104,11 @@
                     </div>
                     <a href="#" class="post-overlayLink"></a>
                 </article>
-
             </div>
         </div>
-
-    </div>
+    </div>*@
 </section>
+
 <section class="main-content">
     <div class="main-content-wrapper">
         <div class="content-body">
@@ -118,16 +116,17 @@
                 <!--Timeline header area start -->
                 <div class="post-list-header">
                     <span class="post-list-title">Latest surveys</span>
-                    <select class="frm-input">
+
+                    @*<select class="frm-input">
+                        <option value="1">For All member</option>
                         <option value="1">For Faculty/Staff</option>
                         <option value="1">For Student</option>
-                    </select>
+                    </select>*@
                 </div>
                 <!--Timeline header area end -->
                 <!--Timeline items start -->
                 <div class="timeline-items">
-
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.surveys)
                     {
                         var time = DateTime.Now - item.CreateDate;
                         var timeAgo = "";
@@ -161,35 +160,39 @@
                         {
                             timeAgo = time.Seconds + " second ago";
                         }
-
                         <div class="timeline-item">
                             <div class="timeline-left">
                                 <div class="timeline-left-wrapper">
-                                    <a href="#" class="timeline-category" data-zebra-tooltip title="For Student"><i class="material-icons">&#xE894;</i></a>
+                                    <a href="#" class="timeline-category" data-zebra-tooltip title="For @item.Participants">
+                                        <i class="material-icons">&#xE894;</i>
+                                    </a>
                                     <span class="timeline-date">@timeAgo</span>
                                 </div>
                             </div>
+
                             <div class="timeline-right">
                                 <div class="timeline-post-image">
                                     <a href="#">
-                                        <img src="img/news-test-images/news-img8.jpg" width="260">
+                                        @*<img src="img/news-test-images/news-img8.jpg" width="260">*@
                                     </a>
                                 </div>
+
                                 <div class="timeline-post-content">
-                                    <a href="#" class="timeline-category-name">For Student</a>
+                                    <a href="#" class="timeline-category-name">For @item.Participants</a>
+
                                     <a href="#">
                                         <h3 class="timeline-post-title">@item.Name</h3>
                                     </a>
+
                                     <div class="timeline-post-info">
                                         <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                         <span class="dot"></span>
-                                        <span class="comment">32 practipates</span>
+                                        <span class="comment">@item.NumOfParticipants practipates</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-
                 </div>
                 <!--Timeline items end -->
                 <!--Data load more button start  -->
@@ -201,88 +204,40 @@
                 </div>
                 <!--Data load more button start  -->
             </div>
-
         </div>
         <div class="content-sidebar">
             <div class="sidebar_inner">
-
                 <div class="widget-item">
                     <div class="w-header">
-                        <div class="w-title">Popular Surveys</div>
+                        <div class="w-title">Prized member</div>
                         <div class="w-seperator"></div>
                     </div>
                     <div class="w-boxed-post">
                         <ul>
-                            <li class="active">
-                                <a href="#" style="background-image: url(img/news-test-images/news-img7.jpg);">
-                                    <div class="box-wrapper">
-                                        <div class="box-left">
-                                            <span>1</span>
-                                        </div>
-                                        <div class="box-right">
-                                            <h3 class="p-title">Things to Consider When Choosing City Moving Companies</h3>
-                                            <div class="p-icons">
-                                                213 likes . 124 comments
+                            @{int i=0; }
+                            @foreach (var item in Model.prizes)
+                            {
+                                <li>
+                                    <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
+                                        <div class="box-wrapper">
+                                            <div class="box-left">
+                                                <span>@(++i)</span>
+                                            </div>
+                                            <div class="box-right" style="width:100%">
+                                                <h3 class="p-title">@item.StudentName</h3>
+                                                <div class="p-icons">
+                                                    @item.SurveyName
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
-                                    <div class="box-wrapper">
-                                        <div class="box-left">
-                                            <span>2</span>
-                                        </div>
-                                        <div class="box-right">
-                                            <h3 class="p-title">Things to Consider When Choosing City Moving Companies</h3>
-                                            <div class="p-icons">
-                                                213 likes . 124 comments
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-image: url(img/news-test-images/news-img6.jpg);">
-                                    <div class="box-wrapper">
-                                        <div class="box-left">
-                                            <span>3</span>
-                                        </div>
-                                        <div class="box-right">
-                                            <h3 class="p-title">Things to Consider When Choosing City Moving Companies</h3>
-                                            <div class="p-icons">
-                                                213 likes . 124 comments
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-image: url(img/news-test-images/news-img3.jpg);">
-                                    <div class="box-wrapper">
-                                        <div class="box-left">
-                                            <span>4</span>
-                                        </div>
-                                        <div class="box-right">
-                                            <h3 class="p-title">Things to Consider When Choosing City Moving Companies</h3>
-                                            <div class="p-icons">
-                                                213 likes . 124 comments
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
-
                 <div class="seperator"></div>
-
-                <a href="#" class="widget-ad-box">
-                    <img src="img/adbox300x250.png" width="300" height="250">
-                </a>
-
+                <a href="#" class="widget-ad-box"></a>
             </div>
         </div>
     </div>
@@ -299,7 +254,6 @@
             items: 1,
             margin: 20
         });
-
         //widget carousel initialize
         $('#widgetCarousel').owlCarousel({
             dots: true,
@@ -308,4 +262,3 @@
         });
     });
 </script>
-

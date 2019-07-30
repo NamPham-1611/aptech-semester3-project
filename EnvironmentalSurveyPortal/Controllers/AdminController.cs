@@ -9,15 +9,20 @@ namespace EnvironmentalSurveyPortal.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
         public ActionResult Index()
         {
+            
             return View();
         }
 
         public ActionResult AllUsers()
         {
             return View(DAO.GetAllUser());
+        }
+
+        public ActionResult SurveyBoard()
+        {
+            return View(DAO.GetAllSurvey());
         }
 
         public ActionResult CreateSurvey()
@@ -45,9 +50,40 @@ namespace EnvironmentalSurveyPortal.Controllers
             return PartialView("CreateSurveyForm");
         }
 
-        public ActionResult SurveyBoard()
+        public ActionResult EditSurvey(int ID)
         {
-            return View(DAO.GetAllSurvey());
+            var t = DAO.GetSurveyByID(ID);
+            return View(t);
+        }
+
+        [HttpPost]
+        public ActionResult EditSurvey(Survey survey)
+        {
+            if (ModelState.IsValid)
+            {
+                if (survey.StartDate < survey.EndDate)
+                {
+                    if (DAO.UpdateSurvey(survey))
+                    {
+                        ViewBag.Successed = true;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "An error occur! Please try again!");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "End date must be greater than start date");
+                }
+            }
+            return PartialView("EditSurveyForm", survey);
+        }
+
+        public ActionResult DeleteSurvey(int ID)
+        {
+            DAO.DeleteSurvey(ID);
+            return RedirectToAction("SurveyBoard");
         }
 
         public ActionResult CreateAccount()

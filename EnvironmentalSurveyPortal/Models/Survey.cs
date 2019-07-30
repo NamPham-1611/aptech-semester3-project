@@ -23,10 +23,16 @@ namespace EnvironmentalSurveyPortal.Models
         [StringLength(1000)]
         public string Content { get; set; }
 
+        public string Participants { get; set; }
+
+        public int NumOfParticipants { get; set; }
+
         [Required]
+        [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
