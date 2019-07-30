@@ -83,5 +83,13 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View(DAO.SearchSurvey(q));
         }
 
+        /*----------------------------------
+        Support Get Action
+         -----------------------------------*/
+        public ActionResult Support()
+        {
+            return View();
+        }
+
     }
 }
