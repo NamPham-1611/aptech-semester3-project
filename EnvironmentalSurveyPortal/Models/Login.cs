@@ -11,7 +11,7 @@ namespace EnvironmentalSurveyPortal.Models
         [Required(ErrorMessage = "User name required")]
         [StringLength(10, ErrorMessage = "User name can not longer than 10 characters")]
         [Display(Name = "User ID")]
-        public string UserID { get; set; }
+        public string UID { get; set; }
 
         [Required(ErrorMessage = "Password required")]
         [StringLength(30, ErrorMessage = "Password can not longer than 30 characters")]

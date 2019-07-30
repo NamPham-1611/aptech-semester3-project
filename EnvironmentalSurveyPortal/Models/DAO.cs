@@ -22,6 +22,13 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbUser;
         }
 
+        // Get all users
+        public static IEnumerable<Survey> SearchSurvey(string txt)
+        {
+            txt = txt.ToLower();
+            return db.tbSurvey.Where(item => item.Name.ToLower().Contains(txt) || item.Content.ToLower().Contains(txt));
+        }
+
         //Get user by user id
         public static User GetUserByID(string ID)
         {

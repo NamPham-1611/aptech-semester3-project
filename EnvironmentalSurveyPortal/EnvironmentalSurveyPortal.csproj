@@ -99,7 +99,7 @@
     <Content Include="Content\admin-style.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\main-style.css" />
+    <Content Include="Content\client-style.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\quill.bubble.css" />
     <Content Include="Content\quill.core.css" />
@@ -107,13 +107,13 @@
     <Content Include="Content\sb-admin-2.min.css" />
     <Content Include="Content\sweetalert2.min.css" />
     <Content Include="Content\zebra_tooltips.min.css" />
+    <Content Include="Scripts\client.js" />
     <Content Include="Scripts\main-script.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\chart-area-demo.js" />
     <Content Include="Scripts\chart-pie-demo.js" />
     <Content Include="Scripts\Chart.min.js" />
-    <Content Include="Scripts\jquery.easing.min.js" />
     <Content Include="Scripts\quill.core.js" />
     <Content Include="Scripts\quill.js" />
     <Content Include="Scripts\quill.min.js" />
@@ -135,11 +135,7 @@
     <Content Include="Content\fontawesome-5.6.3\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-5.6.3\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-5.6.3\webfonts\fa-solid-900.svg" />
-    <Content Include="Content\mdb.css" />
-    <Content Include="Content\mdb.lite.css" />
-    <Content Include="Content\mdb.lite.min.css" />
-    <Content Include="Content\mdb.min.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\client-custom-style.css" />
     <Content Include="Global.asax" />
     <Content Include="fonts\roboto\Roboto-Bold.eot" />
     <Content Include="fonts\roboto\Roboto-Bold.ttf" />
@@ -178,21 +174,9 @@
     <Content Include="fonts\quicksand\Quicksand-Medium.ttf" />
     <Content Include="fonts\quicksand\Quicksand-Regular.ttf" />
     <Content Include="Scripts\quill.min.js.map" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Images\city_skyscraper_building_tower_architecture-1390937.jpg" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\mdb.js" />
-    <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\sb-admin-2.min.js" />
@@ -206,6 +190,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
@@ -224,7 +209,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
@@ -233,10 +217,11 @@
     <Content Include="Views\Admin\CreateAccount.cshtml" />
     <Content Include="Views\Admin\SurveyBoard.cshtml" />
     <Content Include="Views\Admin\CreateSurveyForm.cshtml" />
-    <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Home\Activation.cshtml" />
     <Content Include="Views\Admin\EditSurveyForm.cshtml" />
     <Content Include="Views\Admin\CreateSurvey.cshtml" />
+    <Content Include="Views\Home\RegisterForm.cshtml" />
+    <Content Include="Views\Home\LoginForm.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

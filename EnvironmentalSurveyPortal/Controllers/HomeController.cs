@@ -8,49 +8,33 @@ namespace EnvironmentalSurveyPortal.Controllers
 {
     public class HomeController : Controller
     {
-        //Check login status
-        [NonAction]
-        public bool CheckLogin()
-        {
-            if (Session["login"] == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
+        /*----------------------------------
+        Home Page Get Action
+         -----------------------------------*/
         public ActionResult Index()
         {
-                ViewBag.NoF = DAO.CountFeedback();
-                return View(DAO.getIndex());
+            ViewBag.NoF = DAO.CountFeedback();
+            return View(DAO.getIndex());
         }
 
+        /*----------------------------------
+        Check Login Post Action
+         -----------------------------------*/
         [HttpPost]
-        public ActionResult Login(Login l)
+        public PartialViewResult CheckLogin(Login l)
         {
             if (ModelState.IsValid)
             {
-                var t = DAO.GetLoginUser(l.UserID,l.Password);
-
-                if (t != null)
-                {
-                    Session["login"] = t;
-                    ViewBag.User = t.Name;
-                    return RedirectToAction("index");
-                }
-
-                else
-                {
-                    ViewBag.User = "";
-                    ModelState.AddModelError("", "Wrong User ID or password, please try again!");
-                    return View();
-                }
+                return PartialView("LoginForm");
             }
 
             ModelState.AddModelError("", "Wrong User ID or password, please try again!");
-            return View();
+            return PartialView("LoginForm");
         }
 
+        /*----------------------------------
+        Feedback Post Action
+         -----------------------------------*/
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
         {
@@ -63,39 +47,40 @@ namespace EnvironmentalSurveyPortal.Controllers
             }
             return new HttpStatusCodeResult(304);
         }
+
+        /*----------------------------------
+        Logout Post Action
+         -----------------------------------*/
+         [HttpPost]
         public ActionResult Logout()
         {
             Session.Remove("login");
             return RedirectToAction("login");
         }
 
-        public ActionResult Register()
-        {
-            return View();
-        }
-
+        /*----------------------------------
+        Check Register Post Action
+         -----------------------------------*/
         [HttpPost]
-        public ActionResult Register(Register r)
+        public PartialViewResult CheckRegister(Register r)
         {
-            var t = DAO.GetUserByID(r.UserID);
-
-            if (t == null)
+            if (ModelState.IsValid)
             {
-                var NewUser = new User() { UserID = r.UserID, Name = r.Name, Password = r.Password, Class = r.Class, Specification = r.Specification, Section = r.Section, Role = "null", Active = true };
-                DAO.InsertUser(NewUser);
-                return RedirectToAction("login");
+                return PartialView("RegisterForm");
             }
 
-            else
-            {
-                ModelState.AddModelError("", "User ID already exist!");
-                return View();
-            }
+            ModelState.AddModelError("", "User ID already exist!");
+            return PartialView("RegisterForm");
         }
 
-        public ActionResult Activation()
+        /*----------------------------------
+        Search Get Action
+         -----------------------------------*/
+        public ActionResult Search(string q)
         {
-            return View();
+            ViewBag.TXT = q;
+            ViewBag.prizes = DAO.GetAllPrize();
+            return View(DAO.SearchSurvey(q));
         }
 
     }
