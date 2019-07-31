@@ -14,6 +14,11 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbUser;
         }
 
+        public static Support GetSupport()
+        {
+            return db.tbSupport.FirstOrDefault();
+        }
+
         public static User GetUser(string id)
         {
             return db.tbUser.FirstOrDefault(item => item.UserID == id);
@@ -46,6 +51,21 @@ namespace EnvironmentalSurveyPortal.Models
                 u.Role = eUser.Role;
                 u.Section = eUser.Section;
                 u.Specification = eUser.Specification;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool EditSupport(Support e)
+        {
+            var u = db.tbSupport.FirstOrDefault();
+            if (u != null)
+            {
+                u.Address = e.Address;
+                u.Email = e.Email;
+                u.Phone = e.Phone;
+                u.Website = e.Website;
                 db.SaveChanges();
                 return true;
             }

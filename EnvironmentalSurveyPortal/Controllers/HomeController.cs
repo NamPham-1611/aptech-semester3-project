@@ -20,7 +20,8 @@ namespace EnvironmentalSurveyPortal.Controllers
 
         public ActionResult Support()
         {
-            return View();
+            var model = DAO.GetSupport();
+            return View(model);
         }
 
         [HttpPost]

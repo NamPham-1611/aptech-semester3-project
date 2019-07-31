@@ -15,6 +15,19 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View();
         }
 
+        public ActionResult EditSupport()
+        {
+            return View(DAO.GetSupport());
+        }
+        
+        [HttpPost]
+        public ActionResult EditSupport(Support e)
+        {
+
+            DAO.EditSupport(e);
+            return RedirectToAction("Index");
+
+        }
         public ActionResult EditProfile(string id)
         {
             return View(DAO.GetUser(id));
