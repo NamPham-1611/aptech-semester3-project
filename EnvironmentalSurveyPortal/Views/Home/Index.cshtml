@@ -67,22 +67,22 @@
 
                             <div class="timeline-right">
                                 <div class="timeline-post-image">
-                                    <a href="#">
-                                        @*<img src="img/news-test-images/news-img8.jpg" width="260">*@
+                                    <a href="/Home/Survey/@item.ID">
+                                        <img src="img/news-test-images/news-img8.jpg" width="150">
                                     </a>
                                 </div>
 
                                 <div class="timeline-post-content">
                                     <a href="#" class="timeline-category-name">For @item.Participants</a>
 
-                                    <a href="#">
+                                    <a href="/Home/Survey/@item.ID">
                                         <h3 class="timeline-post-title">@item.Name</h3>
                                     </a>
-
+                                    <p>@string.Join(" ", item.Content.Split().Take(30))...</p>
                                     <div class="timeline-post-info">
                                         <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                         <span class="dot"></span>
-                                        <span class="comment">@item.NumOfParticipants practipates</span>
+                                        <span class="comment">@(ViewBag.Counter.ContainsKey(item.ID) ? ViewBag.Counter[item.ID] : 0) practipates</span>
                                     </div>
                                 </div>
                             </div>

@@ -17,6 +17,9 @@
     <!-- Tooltip plugin (zebra) css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/zebra_tooltips.min.css">
 
+    <!-- Sweetalert css file -->
+    <link rel="stylesheet" type="text/css" href="~/Content/sweetalert2.min.css">
+
     <!-- Ideabox main theme css file. you have to add all pages -->
     <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
 
@@ -71,13 +74,33 @@
                         <a href="#" class="material-button search-toggle"><i class="material-icons">&#xE8B6;</i></a>
                     </li>
                     <li>
-                        <a href="#" class="material-button submenu-toggle"><i class="material-icons">&#xE7FD;</i> <span class="hide-on-tablet">Account</span></a>
-                        <div class="header-submenu">
-                            <ul>
-                                <li><a href="#" data-modal="loginModal">Login</a></li>
-                                <li><a href="#" data-modal="registerModal">Register</a></li>
-                            </ul>
-                        </div>
+                        @if (ViewBag.User != null)
+                        {
+                            <a href="#" class="material-button submenu-toggle">
+                                <i class="material-icons">&#xE7FD;</i>
+                                <span class="hide-on-tablet">@ViewBag.User.Name</span>
+                            </a>
+                            <div class="header-submenu">
+                                <ul>
+                                    <li><a href="/Home/Profile/@ViewBag.User.UserID">Profile</a></li>
+                                    <li><a href="/Home/Logout" class="text-danger"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="#" class="material-button submenu-toggle">
+                                <i class="material-icons">&#xE7FD;</i>
+                                <span class="hide-on-tablet">Account</span>
+                            </a>
+                            <div class="header-submenu">
+                                <ul>
+                                    <li><a href="#" data-modal="loginModal">Login</a></li>
+                                    <li><a href="#" data-modal="registerModal">Register</a></li>
+                                </ul>
+                            </div>
+                        }
+
                     </li>
                     <li class="hide-on-mobile"><a href="#" class="material-button" data-modal="newsletterModal"><i class="material-icons">&#xE0E1;</i></a></li>
                 </ul>
@@ -180,7 +203,7 @@
                 <span class="m-modal-close"><i class="material-icons">&#xE5CD;</i></span>
             </div>
             <div class="m-modal-body">
-                @Html.Partial("RegisterForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Register>())
+                @Html.Partial("RegisterForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.RegisterAccount>())
             </div>
         </div>
     </div>
@@ -194,7 +217,7 @@
                 <span class="m-modal-close"><i class="material-icons">&#xE5CD;</i></span>
             </div>
             <div class="m-modal-body">
-                @Html.Partial("LoginForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Login>())
+                @Html.Partial("LoginForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.LoginAccount>())
             </div>
         </div>
     </div>
@@ -226,11 +249,14 @@
 
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
+    <!-- Owl Carousel plugin js file -->
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+
     <!-- Tooltip plugin (zebra) js file -->
     <script src="~/Scripts/zebra_tooltips.min.js"></script>
 
-    <!-- Owl Carousel plugin js file -->
-    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <!-- Sweetalert js file -->
+    <script src="~/Scripts/sweetalert2.min.js"></script>
 
     <!-- Ideabox theme js file. you have to add all pages. -->
     <script src="~/Scripts/main-script.js"></script>

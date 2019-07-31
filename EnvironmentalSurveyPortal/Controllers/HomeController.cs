@@ -13,23 +13,74 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Index()
         {
-            ViewBag.NoF = DAO.CountFeedback();
-            return View(DAO.getIndex());
+            ViewBag.Counter = DAO.CountFeedback();
+            ViewBag.User = Auth.CheckLoginState(Request);
+            return View(DAO.GetDataForIndex());
         }
 
         /*----------------------------------
         Check Login Post Action
          -----------------------------------*/
         [HttpPost]
-        public PartialViewResult CheckLogin(Login l)
+        public PartialViewResult CheckLogin(LoginAccount l)
         {
             if (ModelState.IsValid)
             {
+                var u = Auth.CheckAccount(l);
+                if (u != null)
+                {
+                    HttpCookie authCookie = new HttpCookie("UID", u.UID);
+                    authCookie.Expires = DateTime.Now.AddDays(60);
+                    Response.Cookies.Add(authCookie);
+                    Response.Flush();
+                }
+                else
+                {
+                    Response.StatusCode = 201;
+                    ModelState.AddModelError("", "Account has not been activated !");
+                }
+                
                 return PartialView("LoginForm");
             }
-
+            Response.StatusCode = 201;
             ModelState.AddModelError("", "Wrong User ID or password, please try again!");
             return PartialView("LoginForm");
+        }
+
+        /*----------------------------------
+        Check Register Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public PartialViewResult CheckRegister(User u)
+        {
+            if (ModelState.IsValid)
+            {
+                if (DAO.InsertUser(u))
+                {
+                   
+                }
+                else
+                {
+                    Response.StatusCode = 201;
+                    ModelState.AddModelError("", "Account already exist !");
+                }
+                return PartialView("RegisterForm");
+            }
+
+            Response.StatusCode = 201;
+            return PartialView("RegisterForm");
+        }
+
+        /*----------------------------------
+        Logout Get Action
+         -----------------------------------*/
+        public ActionResult Logout()
+        {
+            HttpCookie authCookie = new HttpCookie("UID", "");
+            authCookie.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Add(authCookie);
+
+            return RedirectToAction("Index");
         }
 
         /*----------------------------------
@@ -49,31 +100,6 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Logout Post Action
-         -----------------------------------*/
-         [HttpPost]
-        public ActionResult Logout()
-        {
-            Session.Remove("login");
-            return RedirectToAction("login");
-        }
-
-        /*----------------------------------
-        Check Register Post Action
-         -----------------------------------*/
-        [HttpPost]
-        public PartialViewResult CheckRegister(Register r)
-        {
-            if (ModelState.IsValid)
-            {
-                return PartialView("RegisterForm");
-            }
-
-            ModelState.AddModelError("", "User ID already exist!");
-            return PartialView("RegisterForm");
-        }
-
-        /*----------------------------------
         Search Get Action
          -----------------------------------*/
         public ActionResult Search(string q)
@@ -81,6 +107,14 @@ namespace EnvironmentalSurveyPortal.Controllers
             ViewBag.TXT = q;
             ViewBag.prizes = DAO.GetAllPrize();
             return View(DAO.SearchSurvey(q));
+        }
+
+        /*----------------------------------
+        Support Get Action
+         -----------------------------------*/
+        public ActionResult Support()
+        {
+            return View();
         }
 
     }

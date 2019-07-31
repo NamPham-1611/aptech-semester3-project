@@ -8,103 +8,118 @@ namespace EnvironmentalSurveyPortal.Models
     public class DAO
     {
         private static SurveyDB db = new SurveyDB();
-        public static Index getIndex()
+
+        /*----------------------------------
+        Get Data For Index Page Method
+         -----------------------------------*/
+        public static Index GetDataForIndex()
         {
             var indexModel = new Index { surveys = GetAllSurvey(), prizes = GetAllPrize() };
             return indexModel;
         }
 
-        // User DAO
-
-        // Get all users
+        /*----------------------------------
+        Get All User Method
+         -----------------------------------*/
         public static IEnumerable<User> GetAllUser()
         {
             return db.tbUser;
         }
 
-        // Get all users
+        /*----------------------------------
+        Get All Survey Method
+         -----------------------------------*/
         public static IEnumerable<Survey> SearchSurvey(string txt)
         {
             txt = txt.ToLower();
             return db.tbSurvey.Where(item => item.Name.ToLower().Contains(txt) || item.Content.ToLower().Contains(txt));
         }
 
-        //Get user by user id
-        public static User GetUserByID(string ID)
+        /*----------------------------------
+        Get User By UID Method
+         -----------------------------------*/
+        public static User GetUserByUID(string UID)
         {
-            return db.tbUser.Where(x => x.UserID == ID).FirstOrDefault();
+            return db.tbUser.FirstOrDefault(item => item.UID == UID);
         }
 
-        //Get user by login information
+        /*----------------------------------
+        Get User Request Login Method
+         -----------------------------------*/
         public static User GetLoginUser(string ID, string Password)
         {
-            return db.tbUser.Where(x => x.UserID == ID && x.Password == Password).FirstOrDefault();
+            return db.tbUser.Where(x => x.UID == ID && x.Password == Password).FirstOrDefault();
         }
 
-        //Insert user
-        public static void InsertUser(User u)
+        /*----------------------------------
+        Insert User Method
+         -----------------------------------*/
+        public static bool InsertUser(User u)
         {
-            db.tbUser.Add(u);
-            db.SaveChanges();
-        }
-
-        //Delete user
-        public static void DeleteUser(string ID)
-        {
-            db.tbUser.Remove(GetUserByID(ID));
-            db.SaveChanges();
-        }
-
-        //Check activation status
-        public bool CheckActivation(string ID)
-        {
-            var t = GetUserByID(ID);
-            if (t != null && t.Active == true)
+            var x = db.tbUser.FirstOrDefault(item => item.UID == u.UID);
+            if (x == null)
             {
+                db.tbUser.Add(u);
+                db.SaveChanges();
                 return true;
             }
+
             return false;
         }
 
+        /*----------------------------------
+        Active User Method
+         -----------------------------------*/
+        public static bool SetActiveUser(string uid)
+        {
+            var x = db.tbUser.FirstOrDefault(item => item.UID == uid);
+            if (x != null)
+            {
+                x.isActive = true;
+                db.SaveChanges();
+                return true;
+            }
 
-        // Survey DAO
+            return false;
+        }
 
-        //Get survey by survey id
+        /*----------------------------------
+        Delete User Method
+         -----------------------------------*/
+        public static void DeleteUser(string ID)
+        {
+            db.tbUser.Remove(GetUserByUID(ID));
+            db.SaveChanges();
+        }
+
+
+        /*----------------------------------
+        Get Survey By ID Method
+         -----------------------------------*/
         public static Survey GetSurveyByID(int ID)
         {
             return db.tbSurvey.Where(x => x.ID == ID).FirstOrDefault();
         }
+
+        /*----------------------------------
+        Get Popular Surveys Method
+         -----------------------------------*/
         //public static IEnumerable<Survey> GetPopularSurvey()
         //{
-        //    var surveyNum = db.tbSurvey.Count();
-        //    List<Survey> topPopular = new List<Survey>();
-        //    db.tbSurvey.Find()
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        for (int j = 0; j < surveyNum; j++)
-        //        {
-
-        //        }
-        //        if (db.tbSurvey.par > db.tbSurvey[i + 1])
-        //        {
-
-        //        }
-
-        //        if (topPopular.Count() == 4)
-        //        {
-        //            return topPopular;
-        //        }
-        //    }
-        //    return topPopular;
+            
         //}
 
-        //Get all surveys
+        /*----------------------------------
+        Get All Surveys Method
+         -----------------------------------*/
         public static IEnumerable<Survey> GetAllSurvey()
         {
             return db.tbSurvey;
         }
 
-        // Insert new survey
+        /*----------------------------------
+        Insert Surveys Method
+         -----------------------------------*/
         public static bool InsertSurvey(Survey survey)
         {
             db.tbSurvey.Add(survey);
@@ -112,7 +127,9 @@ namespace EnvironmentalSurveyPortal.Models
             return true;
         }
 
-        // Update survey
+        /*----------------------------------
+        Update Surveys Method
+         -----------------------------------*/
         public static bool UpdateSurvey(Survey survey)
         {
             var t = GetSurveyByID(survey.ID);
@@ -131,7 +148,9 @@ namespace EnvironmentalSurveyPortal.Models
             return false;
         }
 
-        // Delete survey by ID
+        /*----------------------------------
+        Delete The Survey Method
+         -----------------------------------*/
         public static bool DeleteSurvey(int ID)
         {
             try
@@ -146,13 +165,18 @@ namespace EnvironmentalSurveyPortal.Models
             }
             return true;
         }
-        // Prized participants
+
+        /*----------------------------------
+        Get All Prize Method
+         -----------------------------------*/
         public static IEnumerable<Prize> GetAllPrize()
         {
             return db.tbPrize;
         }
 
-        // Feed back DAO
+        /*----------------------------------
+        Insert Feedback Method
+         -----------------------------------*/
         public static bool InsertFeedback(Feedback feedback)
         {
             db.tbFeedback.Add(feedback);
@@ -165,6 +189,9 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbFeedback;
         }
 
+        /*----------------------------------
+        Count Feedback of Surveys Method
+         -----------------------------------*/
         public static IDictionary<int, int> CountFeedback()
         {
             return db.tbFeedback
@@ -172,5 +199,6 @@ namespace EnvironmentalSurveyPortal.Models
                    .Select(g => new { sid = g.Key, count = g.Count() })
                    .ToDictionary(k => k.sid, i => i.count);
         }
+
     }
 }

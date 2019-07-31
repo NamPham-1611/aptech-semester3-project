@@ -1,29 +1,33 @@
-﻿@model EnvironmentalSurveyPortal.Models.Register
+﻿@model EnvironmentalSurveyPortal.Models.RegisterAccount
 
     <form onsubmit="requestRegister(this, event)">
         @Html.ValidationSummary(true, null, new { @class = "alert-danger" })
         <div class="frm-row">
-            <input class="frm-input" type="text" name="UserID" placeholder="Roll No or Employee Number">
-            @Html.ValidationMessageFor(model => model.UserID, null, new { @class = "text-danger" })
+            @Html.EditorFor(model => model.UID, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Roll No or Employee Number" } })
+            @Html.ValidationMessageFor(model => model.UID, null, new { @class = "text-danger" })
         </div>
         <div class="frm-row">
-            <input class="frm-input" type="text" name="Password" placeholder="Password">
+            @Html.EditorFor(model => model.Password, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Password" } })
             @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
         </div>
         <div class="frm-row">
-            <input class="frm-input" type="text" name="Name" placeholder="Fullname">
+            @Html.EditorFor(model => model.RePassword, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Retype Password" } })
+            @Html.ValidationMessageFor(model => model.RePassword, null, new { @class = "text-danger" })
+        </div>
+        <div class="frm-row">
+            @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Your Name" } })
             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
         </div>
         <div class="frm-row">
-            <input class="frm-input" type="text" name="Class" placeholder="Class">
+            @Html.EditorFor(model => model.Class, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Class" } })
             @Html.ValidationMessageFor(model => model.Class, null, new { @class = "text-danger" })
         </div>
         <div class="frm-row">
-            <input class="frm-input" type="text" name="Specification" placeholder="Specification">
+            @Html.EditorFor(model => model.Specification, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Specification" } })
             @Html.ValidationMessageFor(model => model.Specification, null, new { @class = "text-danger" })
         </div>
         <div class="frm-row">
-            <input class="frm-input" type="text" name="Section" placeholder="Section">
+            @Html.EditorFor(model => model.Section, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Section" } })
             @Html.ValidationMessageFor(model => model.Section, null, new { @class = "text-danger" })
         </div>
 

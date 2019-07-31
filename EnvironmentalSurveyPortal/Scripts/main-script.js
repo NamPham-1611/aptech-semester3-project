@@ -306,7 +306,8 @@ $(document).on('click', '[data-modal]', function(e){
 	e.preventDefault();
 	$('.m-modal-box').hide();
 	var modalId = $(this).attr('data-modal');
-	$('#'+modalId).show();
+    $('#' + modalId).show();
+    $('#' + modalId + " input:eq()").focus();
 });
 /*close popup modal clicked close button*/
 $(document).on('click', '.m-modal-close, .m-modal-overlay', function(e){

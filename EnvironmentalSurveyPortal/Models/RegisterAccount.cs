@@ -6,46 +6,48 @@ using System.Web;
 
 namespace EnvironmentalSurveyPortal.Models
 {
-    public class Register
+    public class RegisterAccount
     {
+        [Key]
         [Required(ErrorMessage = "Roll No/Employee Number required")]
         [StringLength(10, ErrorMessage = "User ID can not longer than 10 characters")]
         [Display(Name = "Roll No or Employee Number")]
-        public string UserID { get; set; }
+        public string UID { get; set; }
 
         [Required(ErrorMessage = "Name required")]
-        [StringLength(10, ErrorMessage = "User name can not longer than 10 characters")]
+        [StringLength(30, ErrorMessage = "User name can not longer than 30 characters")]
         [Display(Name = "User Name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Password required")]
-        [StringLength(30, ErrorMessage = "Password can not longer than 10 characters")]
+        [StringLength(30, ErrorMessage = "Password can not longer than 30 characters")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Retype password required")]
-        [StringLength(30, ErrorMessage = "Password can not longer than 10 characters")]
+        [StringLength(30, ErrorMessage = "Password can not longer than 30 characters")]
         [DataType(DataType.Password)]
         [Display(Name = "Retype Password")]
         [Compare("Password")]
         public string RePassword { get; set; }
 
-        [Required(ErrorMessage = "Email required")]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Class required")]
         [Display(Name = "Class")]
+        [StringLength(20)]
         public string Class { get; set; }
 
-        [Required(ErrorMessage = "Specification required")]
         [Display(Name = "Specification")]
+        [StringLength(20)]
         public string Specification { get; set; }
 
-        [Required(ErrorMessage = "Section required")]
         [Display(Name = "Section")]
+        [StringLength(20)]
         public string Section { get; set; }
+
+        [StringLength(10)]
+        public string Role { get; set; }
+
+        [ScaffoldColumn(true)]
+        public bool isActive { get; set; }
     }
 }
