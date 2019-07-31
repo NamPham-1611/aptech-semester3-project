@@ -24,16 +24,16 @@ namespace EnvironmentalSurveyPortal.Models
         }
     }
 
-    public class DBInit : DropCreateDatabaseAlways<SurveyDB>
+    public class DBInit : DropCreateDatabaseIfModelChanges<SurveyDB>
     {
         protected override void Seed(SurveyDB context)
         {
             List<User> userList = new List<User>
             {
-                new User { UserID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1803.M1", Role="Student", Active=true },
-                new User { UserID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1803.M1", Role="Student", Active=true  },
-                new User { UserID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1803.M1", Role="Student", Active=true },
-                new User { UserID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1803.M1", Role="Student", Active=true }
+                new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1803.M1", isActive=true },
+                new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1803.M1" },
+                new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1803.M1" },
+                new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1803.M1" }
             };
 
             userList.ForEach(item => context.tbUser.Add(item));

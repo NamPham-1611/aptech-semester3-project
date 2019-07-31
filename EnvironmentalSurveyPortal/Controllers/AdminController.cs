@@ -11,13 +11,18 @@ namespace EnvironmentalSurveyPortal.Controllers
     {
         public ActionResult Index()
         {
-            
             return View();
         }
 
         public ActionResult AllUsers()
         {
             return View(DAO.GetAllUser());
+        }
+
+        public ActionResult ActiveUser(string id)
+        {
+            DAO.SetActiveUser(id);
+            return RedirectToAction("AllUsers");
         }
 
         public ActionResult SurveyBoard()

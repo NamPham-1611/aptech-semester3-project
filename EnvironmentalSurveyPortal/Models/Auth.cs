@@ -9,13 +9,26 @@ namespace EnvironmentalSurveyPortal.Models
     {
         public static User CheckAccount(LoginAccount l)
         {
-            return DAO.GetLoginUser(l.UID, l.Password);
+            var x = DAO.GetLoginUser(l.UID, l.Password);
+            if (x.isActive)
+            {
+                return x;
+            }
+            return null;
         }
 
-        public static User CheckLoginState(HttpRequest req)
+        public static User CheckLoginState(HttpRequestBase req)
         {
-            string uid = req.Cookies["UID"].Value;
-            return DAO.GetUserByID(uid);
+            string uid = "";
+            try
+            {
+                uid = req.Cookies.Get("UID").Value;
+            }
+            catch (Exception) { }
+
+            return DAO.GetUserByUID(uid);
         }
+
+        
     }
 }

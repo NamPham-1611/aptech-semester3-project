@@ -25,6 +25,7 @@
                         <th>Specification</th>
                         <th>Section</th>
                         <th>Role</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -32,15 +33,25 @@
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.UserID</td>
+                            <td>@user.UID</td>
                             <td>@user.Name</td>
                             <td>@user.Class</td>
                             <td>@user.Specification</td>
                             <td>@user.Section</td>
                             <td>@user.Role</td>
                             <td class="text-center">
-                                @Html.ActionLink("Modify", "Edit", new { id = user.UserID }, new { @class = "btn btn-sm btn-info" })
-                                @Html.ActionLink("Delete", "Delete", new { id = user.UserID }, new { @class = "btn btn-sm btn-danger" })
+                                @if (user.isActive)
+                                {
+                                    <span class="badge badge-success">Activated</span>
+                                }
+                                else
+                                {
+                                    <a href="/Admin/ActiveUser/@user.UID" class="badge badge-warning zebra_tooltips" title="Click to Active">Pending</a>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("Edit", "Edit", new { id = user.UID }, new { @class = "btn btn-sm btn-info" })
+                                @Html.ActionLink("Delete", "Delete", new { id = user.UID }, new { @class = "btn btn-sm btn-danger" })
                             </td>
                         </tr>
                     }
@@ -53,3 +64,5 @@
 
 </div>
 <!-- End of Main Content -->
+
+
