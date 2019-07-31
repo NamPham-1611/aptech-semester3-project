@@ -9,15 +9,25 @@ namespace EnvironmentalSurveyPortal.Controllers
 {
     public class AdminController : Controller
     {
+        /*----------------------------------
+        Dashboard Page Get Action
+         -----------------------------------*/
         public ActionResult Index()
         {
             return View();
         }
 
+        /*----------------------------------
+        Edit User Page Get Action
+         -----------------------------------*/
         public ActionResult EditProfile(string id)
         {
-            return View(DAO.GetUser(id));
+            return View(DAO.GetUserByUID(id));
         }
+
+        /*----------------------------------
+        Edit User Post Action
+         -----------------------------------*/
         [HttpPost]
         public ActionResult EditProfile(User eUser)
         {
@@ -26,6 +36,10 @@ namespace EnvironmentalSurveyPortal.Controllers
             return RedirectToAction("Index");
 
         }
+
+        /*----------------------------------
+        Delete User Action
+         -----------------------------------*/
         [HttpDelete]
         public ActionResult Delete(string id)
         {
@@ -36,11 +50,18 @@ namespace EnvironmentalSurveyPortal.Controllers
             ModelState.AddModelError("", "Delete User failed");
             return RedirectToAction("Index");
         }
+
+        /*----------------------------------
+        User List Page Get Action
+         -----------------------------------*/
         public ActionResult AllUsers()
         {
             return View(DAO.GetAllUser());
         }
 
+        /*----------------------------------
+        Active User Get Action
+         -----------------------------------*/
         public ActionResult ActiveUser(string id)
         {
             DAO.SetActiveUser(id);
@@ -52,11 +73,17 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View(DAO.GetAllSurvey());
         }
 
+        /*----------------------------------
+        Create User Page Get Action
+         -----------------------------------*/
         public ActionResult CreateSurvey()
         {
             return View();
         }
 
+        /*----------------------------------
+        Create User Post Action
+         -----------------------------------*/
         [HttpPost]
         public ActionResult CreateSurvey(Survey survey)
         {
@@ -77,12 +104,18 @@ namespace EnvironmentalSurveyPortal.Controllers
             return PartialView("CreateSurveyForm");
         }
 
+        /*----------------------------------
+        Edit Survey Page Get Action
+         -----------------------------------*/
         public ActionResult EditSurvey(int ID)
         {
             var t = DAO.GetSurveyByID(ID);
             return View(t);
         }
 
+        /*----------------------------------
+        Edit Survey Post Action
+         -----------------------------------*/
         [HttpPost]
         public ActionResult EditSurvey(Survey survey)
         {
@@ -107,12 +140,18 @@ namespace EnvironmentalSurveyPortal.Controllers
             return PartialView("EditSurveyForm", survey);
         }
 
+        /*----------------------------------
+        Delete Survey Get Action
+         -----------------------------------*/
         public ActionResult DeleteSurvey(int ID)
         {
             DAO.DeleteSurvey(ID);
             return RedirectToAction("SurveyBoard");
         }
 
+        /*----------------------------------
+        Create Account Page Get Action
+         -----------------------------------*/
         public ActionResult CreateAccount()
         {
             return View();
