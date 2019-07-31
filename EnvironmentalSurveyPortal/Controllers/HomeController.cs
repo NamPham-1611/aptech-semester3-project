@@ -114,7 +114,7 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Support()
         {
-            return View();
+            return View(DAO.);
         }
 
     }
