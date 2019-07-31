@@ -73,7 +73,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Create User Page Get Action
+        Create Survey Page Get Action
          -----------------------------------*/
         public ActionResult CreateSurvey()
         {
@@ -81,7 +81,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Create User Post Action
+        Create Survey Post Action
          -----------------------------------*/
         [HttpPost]
         public ActionResult CreateSurvey(Survey survey)
@@ -155,5 +155,23 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             return View();
         }
-    }
+
+        /*----------------------------------
+        Edit Support Infomation Page Get Action
+        -----------------------------------*/
+        public ActionResult EditSupportInfomation()
+        {
+            return View(DAO.GetSupportInfomation());
+        }
+
+        /*----------------------------------
+       Edit Support Infomation Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public ActionResult EditSupportInfomation(Support e)
+        {
+
+            DAO.EditSupportInfomation(e);
+            return RedirectToAction("Index");
+        }
 }
