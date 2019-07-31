@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@functions{ 
+    string activeMenu(string actionName)
+    {
+        string currentAction = Request.RequestContext.RouteData.Values["Action"].ToString();
+        if(currentAction == actionName)
+        {
+            return "active";
+
+        }
+        return "";
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,16 +70,16 @@
                 <!-- header left menu start -->
                 <ul class="header-navigation" data-show-menu-on-mobile>
                     <li>
-                        <a href="/" class="material-button active">HOME</a>
+                        <a href="/" class="material-button @activeMenu("Index")">HOME</a>
                     </li>
                     <li>
-                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle">SURVEYS</a>
+                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">SURVEYS</a>
                     </li>
                     <li>
-                        <a href="/Home/Support" class="material-button submenu-toggle">SUPPORT</a>
+                        <a href="/Home/Support" class="material-button submenu-toggle @activeMenu("Support")">SUPPORT</a>
                     </li>
                     <li>
-                        <a href="/Home/FAQ" class="material-button submenu-toggle">FAQ's @*<i class="material-icons">&#xE313;</i>*@</a>
+                        <a href="/Home/FAQ" class="material-button submenu-toggle @activeMenu("FAQ")">FAQ's @*<i class="material-icons">&#xE313;</i>*@</a>
                     </li>
                 </ul>
                 <!-- header left menu end -->

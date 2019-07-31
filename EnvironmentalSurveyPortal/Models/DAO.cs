@@ -224,5 +224,13 @@ namespace EnvironmentalSurveyPortal.Models
                    .ToDictionary(k => k.sid, i => i.count);
         }
 
+        /*----------------------------------
+        Get Support Infomation Method
+         -----------------------------------*/
+        public static Support GetSupportInfomation()
+        {
+            return db.tbSupport.FirstOrDefault();
+        }
+
     }
 }
