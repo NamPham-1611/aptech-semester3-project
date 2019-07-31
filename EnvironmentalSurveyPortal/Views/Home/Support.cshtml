@@ -1,8 +1,7 @@
-﻿
+﻿@model EnvironmentalSurveyPortal.Models.Support
 @{
-    ViewBag.Title = "Suport";
+    ViewBag.Title = "Support Infomation";
 }
-
 <!-- Contact Us Section -->
 <section class="Material-contact-section section-padding section-dark">
     <div class="container">
@@ -20,22 +19,20 @@
                 </div>
                 <p></p>
                 <div class="find-widget">
-                    Company:  <a href="http://aptech.fpt.edu.vn/">FPT</a>
+                    Address: <a href="#">@Model.Address</a>
                 </div>
                 <div class="find-widget">
-                    Address: <a href="#">590 Cách Mạng Tháng 8, Phường 11, Quận 3, Hồ Chí Minh 723564</a>
+                    Phone:  <a href="#">@Model.Email</a>
                 </div>
                 <div class="find-widget">
-                    Phone:  <a href="#">028 3846 0846</a>
+                    Phone:  <a href="#">@Model.Phone</a>
                 </div>
 
                 <div class="find-widget">
-                    Website:  <a href="http://aptech.fpt.edu.vn/">aptech.fpt.edu.vn</a>
-                </div>
-                <div class="find-widget">
-                    Program: <a href="#">Mon to Sat: 08:30 AM - 05:00 PM</a>
+                    Website:  <a href="@Model.Website">@Model.Website</a>
                 </div>
             </div>
+
             <!-- contact form -->
             <div class="col-md-6 wow animated fadeInRight" data-wow-delay=".2s">
                 <form class="shake" role="form" method="post" id="contactForm" name="contact-form" data-toggle="validator">
