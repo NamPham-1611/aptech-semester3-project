@@ -20,7 +20,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         /*----------------------------------
         Edit User Page Get Action
          -----------------------------------*/
-        public ActionResult EditProfile(string id)
+        public ActionResult EditUser(string id)
         {
             return View(DAO.GetUserByUID(id));
         }
@@ -29,7 +29,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         Edit User Post Action
          -----------------------------------*/
         [HttpPost]
-        public ActionResult EditProfile(User eUser)
+        public ActionResult EditUser(User eUser)
         {
 
             DAO.UpdateUser(eUser);

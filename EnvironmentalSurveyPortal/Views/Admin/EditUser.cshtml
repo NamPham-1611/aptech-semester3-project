@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    ViewBag.Title = "EditUser";
+    ViewBag.Title = "Edit User Infomation";
 }
 
 <div id="content">
@@ -12,10 +12,10 @@
                 <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Edit User</h1>
                 </div>
-                <form>
+                <form method="post">
                     <div class="row">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.UserID)
+                        @Html.HiddenFor(model => model.UID)
 
                         @{ 
                             var roleSelectList = new List<SelectListItem>
