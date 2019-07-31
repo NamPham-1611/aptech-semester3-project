@@ -22,7 +22,7 @@ namespace EnvironmentalSurveyPortal.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(11, MinimumLength =10)]
+        [StringLength(11, MinimumLength = 10)]
         public string Phone { get; set; }
 
         [StringLength(100)]

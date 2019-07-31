@@ -198,6 +198,7 @@
     <Compile Include="Models\LoginAccount.cs" />
     <Compile Include="Models\Prize.cs" />
     <Compile Include="Models\RegisterAccount.cs" />
+    <Compile Include="Models\Support.cs" />
     <Compile Include="Models\SurveyDB.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\User.cs" />
