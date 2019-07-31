@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EnvironmentalSurveyPortal.Models
 {
-    public class Register
+    public class RegisterAccount
     {
         [Required(ErrorMessage = "Roll No/Employee Number required")]
         [StringLength(10, ErrorMessage = "User ID can not longer than 10 characters")]

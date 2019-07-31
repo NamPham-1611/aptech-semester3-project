@@ -21,10 +21,19 @@ namespace EnvironmentalSurveyPortal.Controllers
         Check Login Post Action
          -----------------------------------*/
         [HttpPost]
-        public PartialViewResult CheckLogin(Login l)
+        public PartialViewResult CheckLogin(LoginAccount l)
         {
             if (ModelState.IsValid)
             {
+                var u = Auth.CheckAccount(l);
+                if (u != null)
+                {
+                    HttpCookie authCookie = new HttpCookie("UID", u.UserID);
+                    authCookie.Expires = DateTime.Now.AddDays(60);
+                    Response.Cookies.Add(authCookie);
+                    Response.Flush();
+                }
+                
                 return PartialView("LoginForm");
             }
 
@@ -62,7 +71,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         Check Register Post Action
          -----------------------------------*/
         [HttpPost]
-        public PartialViewResult CheckRegister(Register r)
+        public PartialViewResult CheckRegister(RegisterAccount r)
         {
             if (ModelState.IsValid)
             {

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EnvironmentalSurveyPortal.Models
 {
-    public class Login
+    public class LoginAccount
     {
         [Required(ErrorMessage = "User name required")]
         [StringLength(10, ErrorMessage = "User name can not longer than 10 characters")]

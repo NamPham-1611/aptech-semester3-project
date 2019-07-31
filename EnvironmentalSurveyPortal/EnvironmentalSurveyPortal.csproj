@@ -195,9 +195,9 @@
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Index.cs" />
-    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\LoginAccount.cs" />
     <Compile Include="Models\Prize.cs" />
-    <Compile Include="Models\Register.cs" />
+    <Compile Include="Models\RegisterAccount.cs" />
     <Compile Include="Models\SurveyDB.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\User.cs" />
