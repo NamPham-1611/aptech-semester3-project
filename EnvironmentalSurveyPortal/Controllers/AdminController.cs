@@ -32,9 +32,8 @@ namespace EnvironmentalSurveyPortal.Controllers
         public ActionResult EditProfile(User eUser)
         {
 
-            DAO.EditProfile(eUser);
+            DAO.UpdateUser(eUser);
             return RedirectToAction("Index");
-
         }
 
         /*----------------------------------
@@ -43,7 +42,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpDelete]
         public ActionResult Delete(string id)
         {
-            if (DAO.Delete(id))
+            if (DAO.DeleteUser(id))
             {
                 return RedirectToAction("Index");
             }

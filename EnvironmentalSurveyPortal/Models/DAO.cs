@@ -84,12 +84,36 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Update User Method
+        -----------------------------------*/
+        public static bool UpdateUser(User user)
+        {
+            var u = db.tbUser.FirstOrDefault(item => item.UID == user.UID);
+            if (u != null)
+            {
+                u.Name = user.Name;
+                u.Password = user.Password;
+                u.Role = user.Role;
+                u.Section = user.Section;
+                u.Specification = user.Specification;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
         Delete User Method
          -----------------------------------*/
-        public static void DeleteUser(string ID)
+        public static bool DeleteUser(string uid)
         {
-            db.tbUser.Remove(GetUserByUID(ID));
-            db.SaveChanges();
+            var x = GetUserByUID(uid);
+            if (x != null)
+            {
+                db.tbUser.Remove(x);
+                db.SaveChanges();
+            }
+            return false;
         }
 
 
