@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ideabox - Material Blog/Magazine Template</title>
+    <title>Enviroment Survey Portal</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,900&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,9 +19,20 @@
 
     <!-- Ideabox responsive css file -->
     <link rel="stylesheet" type="text/css" href="~/Content//responsive-style.css">
-
+    <link href="~/Content/quill.snow.css" rel="stylesheet" />
+    <script src="~/Scripts/quill.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/sweetalert2.min.js"></script>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    </script>
 </head>
-
 <body>
     <!-- header start -->
     <header class="header">
@@ -143,7 +154,7 @@
                         <span class="menu-label">FAQ's</span>
                     </a>
                 </li>
-               
+
             </ul>
             <!-- sidebar menu end -->
 
@@ -255,11 +266,9 @@
             </div>
         </div>
     </div>
+
     <!-- Newsletter popup html source end -->
-
     <div class="overlay"></div>
-
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
     <!-- Tooltip plugin (zebra) js file -->
     <script src="~/Scripts/zebra_tooltips.min.js"></script>
@@ -269,7 +278,5 @@
 
     <!-- Ideabox theme js file. you have to add all pages. -->
     <script src="~/Scripts/main-script.js"></script>
-
 </body>
-
 </html>

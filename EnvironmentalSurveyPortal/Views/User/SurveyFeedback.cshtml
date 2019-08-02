@@ -1,0 +1,46 @@
+﻿@model EnvironmentalSurveyPortal.Models.Survey
+
+@{
+    ViewBag.Title = "Survey Feedback";
+}
+
+@Model.Name
+<p>@Model.StartDate.ToShortDateString()-@Model.EndDate.ToShortDateString()</p>
+<div id="surveyContent">@Model.Content</div>
+<div id="editor"></div>
+
+<button id="sendFeedBack">Send Feedback</button>
+
+<script>
+    $(function () {
+        var quill = new Quill('#surveyContent', {
+            modules: {
+                toolbar: false,
+            },
+            readOnly: true,
+            theme: 'snow'
+        });
+        var quill0 = new Quill('#editor', {
+            placeholder: 'Write Feedback here...',
+            theme: 'snow'
+        });
+    });
+    $('#sendFeedBack').click(function () {
+        var content = $('#editor .ql-editor').html() == "<p><br></p>" ? "" : $('#editor .ql-editor').html();
+        var data = {
+            SurveyID: @Model.ID,
+            UserID: "@ViewBag.UserID",
+            Content: content
+        };
+        $.post(
+            "/User/SurveyFeedback",
+            data,
+            function () {
+                Toast.fire({
+                    type: 'success',
+                    title: 'Send Feedback Successfully'
+                });
+            }
+        );
+    });
+</script>

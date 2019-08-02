@@ -203,6 +203,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -230,13 +231,14 @@
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
     <Content Include="Views\Admin\EditSurvey.cshtml" />
-    <Content Include="Views\Admin\CreateAccount.cshtml" />
+    <Content Include="Views\Admin\RegisteringUser.cshtml" />
     <Content Include="Views\Admin\SurveyBoard.cshtml" />
     <Content Include="Views\Admin\CreateSurveyForm.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Activation.cshtml" />
     <Content Include="Views\Admin\EditSurveyForm.cshtml" />
     <Content Include="Views\Admin\CreateSurvey.cshtml" />
+    <Content Include="Views\User\SurveyFeedback.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

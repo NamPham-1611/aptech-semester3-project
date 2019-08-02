@@ -10,6 +10,8 @@ namespace EnvironmentalSurveyPortal.Models
     {
         [Key]
         public int PrizeID { get; set; }
+
+        [StringLength(10)]
         public string UserID { get; set; }
         public int SurveyID { get; set; }
         public string StudentName { get; set; }

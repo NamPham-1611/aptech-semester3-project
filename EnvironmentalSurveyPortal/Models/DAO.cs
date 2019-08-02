@@ -10,45 +10,62 @@ namespace EnvironmentalSurveyPortal.Models
         private static SurveyDB db = new SurveyDB();
         public static Index getIndex()
         {
-            var indexModel = new Index { surveys = GetAllSurvey(), prizes = GetAllPrize() };
+            var indexModel = new Index { surveys = GetAllSurveys(), prizes = GetAllPrize() };
             return indexModel;
         }
 
-        // User DAO
+        // User
 
         // Get all users
         public static IEnumerable<User> GetAllUser()
         {
-            return db.tbUser;
+            return db.tbUser.Where(x => x.Active == true);
+        }
+        public static IEnumerable<User> GetAllRegisteringUser()
+        {
+            return db.tbUser.Where(x => x.Active == false);
         }
 
-        //Get user by user id
+        // Get user by user id
         public static User GetUserByID(string ID)
         {
             return db.tbUser.Where(x => x.UserID == ID).FirstOrDefault();
         }
 
-        //Get user by login information
+        // Get user by login information
         public static User GetLoginUser(string ID, string Password)
         {
             return db.tbUser.Where(x => x.UserID == ID && x.Password == Password).FirstOrDefault();
         }
 
-        //Insert user
+        // Accept user
+        public static bool AcceptUser(User u)
+        {
+            var t = GetUserByID(u.UserID);
+            if (t != null)
+            {
+                t.Active = true;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        // Insert user
         public static void InsertUser(User u)
         {
             db.tbUser.Add(u);
             db.SaveChanges();
         }
 
-        //Delete user
+        // Delete user
         public static void DeleteUser(string ID)
         {
             db.tbUser.Remove(GetUserByID(ID));
             db.SaveChanges();
         }
 
-        //Check activation status
+        // Check activation status
         public bool CheckActivation(string ID)
         {
             var t = GetUserByID(ID);
@@ -60,39 +77,16 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
 
-        // Survey DAO
+        // Survey
 
-        //Get survey by survey id
+        // Get survey by survey id
         public static Survey GetSurveyByID(int ID)
         {
             return db.tbSurvey.Where(x => x.ID == ID).FirstOrDefault();
         }
-        //public static IEnumerable<Survey> GetPopularSurvey()
-        //{
-        //    var surveyNum = db.tbSurvey.Count();
-        //    List<Survey> topPopular = new List<Survey>();
-        //    db.tbSurvey.Find()
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        for (int j = 0; j < surveyNum; j++)
-        //        {
 
-        //        }
-        //        if (db.tbSurvey.par > db.tbSurvey[i + 1])
-        //        {
-
-        //        }
-
-        //        if (topPopular.Count() == 4)
-        //        {
-        //            return topPopular;
-        //        }
-        //    }
-        //    return topPopular;
-        //}
-
-        //Get all surveys
-        public static IEnumerable<Survey> GetAllSurvey()
+        // Get all surveys
+        public static IEnumerable<Survey> GetAllSurveys()
         {
             return db.tbSurvey;
         }
@@ -115,6 +109,7 @@ namespace EnvironmentalSurveyPortal.Models
                 t.Name = survey.Name;
                 t.Content = survey.Content;
                 t.Participants = survey.Participants;
+                t.NumOfParticipants = survey.NumOfParticipants;
                 t.StartDate = survey.StartDate;
                 t.EndDate = survey.EndDate;
                 db.SaveChanges();
@@ -139,18 +134,23 @@ namespace EnvironmentalSurveyPortal.Models
             }
             return true;
         }
+
         // Prized participants
         public static IEnumerable<Prize> GetAllPrize()
         {
             return db.tbPrize;
         }
 
-        // Feed back DAO
+        // Feed back
         public static bool InsertFeedback(Feedback feedback)
         {
-            db.tbFeedback.Add(feedback);
-            db.SaveChanges();
-            return true;
+            if (feedback != null)
+            {
+                db.tbFeedback.Add(feedback);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public static IEnumerable<Feedback> GetAllFeedback()

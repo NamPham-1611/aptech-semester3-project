@@ -18,13 +18,15 @@ namespace EnvironmentalSurveyPortal.Controllers
             }
             return true;
         }
-
+        
+        //Index page
         public ActionResult Index()
         {
                 ViewBag.NoF = DAO.CountFeedback();
                 return View(DAO.getIndex());
         }
 
+        // Post login infomation
         [HttpPost]
         public ActionResult Login(Login l)
         {
@@ -51,6 +53,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View();
         }
 
+        // Post feedback
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
         {
@@ -63,17 +66,20 @@ namespace EnvironmentalSurveyPortal.Controllers
             }
             return new HttpStatusCodeResult(304);
         }
+
+        // Logout
         public ActionResult Logout()
         {
             Session.Remove("login");
             return RedirectToAction("login");
         }
 
+        // Register form
         public ActionResult Register()
         {
             return View();
         }
-
+         // Post register infomation
         [HttpPost]
         public ActionResult Register(Register r)
         {
@@ -93,10 +99,10 @@ namespace EnvironmentalSurveyPortal.Controllers
             }
         }
 
+        // View activation status
         public ActionResult Activation()
         {
             return View();
         }
-
     }
 }

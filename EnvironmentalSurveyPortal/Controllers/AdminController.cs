@@ -22,7 +22,7 @@ namespace EnvironmentalSurveyPortal.Controllers
 
         public ActionResult SurveyBoard()
         {
-            return View(DAO.GetAllSurvey());
+            return View(DAO.GetAllSurveys());
         }
 
         public ActionResult CreateSurvey()
@@ -86,7 +86,21 @@ namespace EnvironmentalSurveyPortal.Controllers
             return RedirectToAction("SurveyBoard");
         }
 
-        public ActionResult CreateAccount()
+        public ActionResult RegisteringUser()
+        {
+            return View(DAO.GetAllRegisteringUser());
+        }
+
+        public ActionResult AcceptUser(User u)
+        {
+            DAO.AcceptUser(u);
+            return RedirectToAction("AllUsers");
+        }
+        public ActionResult FeedbackMark()
+        {
+            return View();
+        }
+        public ActionResult Reject()
         {
             return View();
         }

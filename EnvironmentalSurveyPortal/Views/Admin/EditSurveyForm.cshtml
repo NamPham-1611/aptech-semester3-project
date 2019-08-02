@@ -44,7 +44,7 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             @Html.LabelFor(model => model.StartDate, new { @class = "ml-3 text-gray-800" })
-                            <input name="StartDate" type="date" id="start-date" class="form-control date-control-user date-control-user-md" value="@Model.StartDate.Date.ToString("yyyy-MM-dd")" />
+                            <input name="StartDate" type="date" id="start-date" class="form-control date-control-user date-control-user-md" value="@Model.StartDate.Date.ToString(" yyyy-MM-dd")" />
                             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                         </div>
 
@@ -88,7 +88,7 @@
             default:
                 $('#checkStaff').attr("checked", "checked");
                 $('#checkStudent').attr("checked", "checked");
-                    break;
+                break;
         }
     });
 
@@ -100,13 +100,13 @@
         var participants = checkStaff && checkStudent == true ? "All" : checkStaff == true ? "Faculty/Staff" : "Student";
 
         var data = {
-            ID: @Model.ID;
-            Name: $('#survey-name').val().trim(),
-            Content: content,
-            Participants: participants,
-            NumOfParticipants: 0,
-            StartDate: $('#start-date').val().trim(),
-            EndDate: $('#end-date').val().trim()
+        ID: @Model.ID,
+        Name: $('#survey-name').val().trim(),
+        Content: content,
+        Participants: participants,
+        NumOfParticipants: 0,
+        StartDate: $('#start-date').val().trim(),
+        EndDate: $('#end-date').val().trim()
         };
 
         $.post(
