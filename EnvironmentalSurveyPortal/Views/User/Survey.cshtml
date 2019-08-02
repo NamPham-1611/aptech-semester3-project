@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Survey>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Participants)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumOfParticipants)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Participants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumOfParticipants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate.ToShortDateString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate.ToShortDateString())
+            </td>
+            <td>
+                @Html.ActionLink("Join", "SurveyFeedback", new { id = item.ID })
+            </td>
+        </tr>
+    }
+</table>

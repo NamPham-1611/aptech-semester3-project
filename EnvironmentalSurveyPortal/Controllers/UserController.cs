@@ -26,12 +26,16 @@ namespace EnvironmentalSurveyPortal.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SurveyFeedback()
+        public ActionResult Survey()
         {
-            ViewBag.UserID = "ST1099153";
-            //ViewBag.UserID = ((User)Session["login"]).UserID;
-            return View(DAO.GetSurveyByID(1));
-            //return RedirectToAction("Index", "Home");
+            return View(DAO.GetAllActiveSurveys());
+        }
+
+        public ActionResult SurveyFeedback(int ID)
+        {
+            Session["login"]=DAO.GetUserByID("ST1099153");
+            ViewBag.UserID = ((User)Session["login"]).UserID;
+            return View(DAO.GetSurveyByID(ID));
         }
 
         [HttpPost]
@@ -42,7 +46,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                 DAO.InsertFeedback(feedback);
                 ViewBag.Successed = true;
             }
-            return View(DAO.GetSurveyByID(1));
+            return View();
         }
     }
 }

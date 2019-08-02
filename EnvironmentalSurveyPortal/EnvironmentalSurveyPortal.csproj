@@ -239,6 +239,7 @@
     <Content Include="Views\Admin\EditSurveyForm.cshtml" />
     <Content Include="Views\Admin\CreateSurvey.cshtml" />
     <Content Include="Views\User\SurveyFeedback.cshtml" />
+    <Content Include="Views\User\Survey.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

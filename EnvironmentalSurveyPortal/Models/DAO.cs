@@ -91,6 +91,12 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbSurvey;
         }
 
+        // Get all active surveys
+        public static IEnumerable<Survey> GetAllActiveSurveys()
+        {
+            return db.tbSurvey.Where(x=>x.EndDate>=DateTime.Now);
+        }
+
         // Insert new survey
         public static bool InsertSurvey(Survey survey)
         {
