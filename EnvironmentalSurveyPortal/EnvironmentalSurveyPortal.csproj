@@ -107,8 +107,8 @@
     <Content Include="Content\sb-admin-2.min.css" />
     <Content Include="Content\sweetalert2.min.css" />
     <Content Include="Content\zebra_tooltips.min.css" />
-    <Content Include="Scripts\client.js" />
-    <Content Include="Scripts\main-script.js" />
+    <Content Include="Scripts\client-script.js" />
+    <Content Include="Scripts\admin-script.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\chart-area-demo.js" />
@@ -174,7 +174,6 @@
     <Content Include="fonts\quicksand\Quicksand-Medium.ttf" />
     <Content Include="fonts\quicksand\Quicksand-Regular.ttf" />
     <Content Include="Scripts\quill.min.js.map" />
-    <Content Include="Images\city_skyscraper_building_tower_architecture-1390937.jpg" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -186,6 +185,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -194,8 +194,8 @@
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\Index.cs" />
     <Compile Include="Models\LoginAccount.cs" />
+    <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\Prize.cs" />
     <Compile Include="Models\RegisterAccount.cs" />
     <Compile Include="Models\Support.cs" />
@@ -212,7 +212,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Shared\AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
     <Content Include="Views\Admin\EditSurvey.cshtml" />
     <Content Include="Views\Admin\CreateAccount.cshtml" />
@@ -225,7 +225,9 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
-    <Content Include="Views\Admin\EditSupportInfomation.cshtml" />
+    <Content Include="Views\Admin\EditSupportInfo.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Home\SurveyBoard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -235,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

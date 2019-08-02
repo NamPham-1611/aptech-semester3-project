@@ -924,6 +924,7 @@ a{
 	left: 24px;
 	top: 50%;
 	margin-top: -24px;
+    cursor: default;
 }
 .timeline-date{
 	background-color: #FFF;
@@ -957,6 +958,13 @@ a{
 	display: table-cell;
 	vertical-align: middle;
 	position: relative;
+}
+.timeline-post-image .image{
+    width: 150px;
+    height: 115px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 .timeline-post-image a{
 	position: relative;
@@ -1086,6 +1094,9 @@ a{
 	width: 100%;
 	height: 240px;
 	overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .post-list-item .post-image{
 	position: absolute;
@@ -1093,6 +1104,7 @@ a{
 	height: 100%;
 	object-fit: cover;
 }
+
 .post-list-item .post-title{
 	position: absolute;
 	margin: 0;
@@ -1181,10 +1193,14 @@ a{
 	border-top: solid 1px #EEE;
 	font-size: 14px;
 }
-.post-list-item .read-more{
-	text-decoration: none;
-	position: relative;
-	color: #333;
+.post-list-item .post-meta p{
+    height: 60px;
+    text-align: justify;
+}
+.post-list-item .read-more {
+    text-decoration: none;
+    position: relative;
+    color: #333;
 }
 .post-list-item .read-more:hover{
 	color: #dc2430;
@@ -2149,14 +2165,14 @@ blockquote span{
 .sidebar_inner{
 	width: 300px;
 }
-.seperator{
-	width: 100%;
-	height: 14px;
-	background-image: url(../img/seperator.png);
-	background-position: top left;
-	background-repeat: repeat-x;
-	background-size: 6px;
-	margin-bottom: 20px;
+.seperator {
+    width: 100%;
+    height: 14px;
+    background-image: url(../Images/seperator.png);
+    background-position: top left;
+    background-repeat: repeat-x;
+    background-size: 6px;
+    margin-bottom: 20px;
 }
 .widget-item{
 	width: 100%;
@@ -2183,7 +2199,7 @@ blockquote span{
 	display: table-cell;
 	height: 10px;
 	width: 100%;
-	background-image: url(../img/seperator.png);
+	background-image: url(../Images/seperator.png);
 	background-position: top left;
 	background-repeat: repeat-x;
 	background-size: 6px;
@@ -2352,8 +2368,8 @@ blockquote span{
 	transition: color 200ms linear; 
 }
 .w-boxed-post ul li a .box-wrapper{
-	display: table;
 	background-color: #f6f6f6;
+    width: 100%;
 }
 .w-boxed-post ul li a .box-wrapper .box-left{
 	display: table-cell;

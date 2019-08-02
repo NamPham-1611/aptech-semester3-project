@@ -1,0 +1,185 @@
+﻿@model EnvironmentalSurveyPortal.Models.Pagination
+
+@{
+      ViewBag.Title = "SurveyBoard";
+}
+
+    <section class="main-content">
+        <div class="main-content-wrapper">
+            <div class="content-body">
+                <div class="content-timeline">
+                    <!--Timeline header area start -->
+                    <div class="post-list-header">
+                        <span class="post-list-title text-danger">All surveys</span>
+                    </div>
+                    <!--Timeline header area end -->
+                    <!--Timeline items start -->
+                    <div class="timeline-items">
+                        @foreach (var item in Model.Surveys)
+                        {
+                            var time = DateTime.Now - item.CreateDate;
+                            var timeAgo = "";
+                            if (time.Days != 0)
+                            {
+                                var months = time.Days / 30;
+                                var years = months / 12;
+
+                                if (years != 0)
+                                {
+                                    timeAgo = years + " years ago";
+                                }
+                                else if (months != 0)
+                                {
+                                    timeAgo = months + " month ago";
+                                }
+                                else
+                                {
+                                    timeAgo = time.Days + " day ago";
+                                }
+                            }
+                            else if (time.Hours != 0)
+                            {
+                                timeAgo = time.Hours + " hour ago";
+                            }
+                            else if (time.Minutes != 0)
+                            {
+                                timeAgo = time.Minutes + " minute ago";
+                            }
+                            else
+                            {
+                                timeAgo = time.Seconds + " second ago";
+                            }
+                            <div class="timeline-item">
+                                <div class="timeline-left">
+                                    <div class="timeline-left-wrapper">
+                                        <span class="timeline-category" data-zebra-tooltip title="@item.CreateDate">
+                                            <i class="material-icons">&#xE894;</i>
+                                        </span>
+                                        <span class="timeline-date">@timeAgo</span>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-right">
+                                    <div class="timeline-post-image">
+                                        <a href="/Home/Survey/@item.ID">
+                                            <div class="image" style="background-image: url(@item.Image" )"></div>
+                                        </a>
+                                    </div>
+
+                                    <div class="timeline-post-content">
+                                        <a href="#" class="timeline-category-name">For @item.For</a>
+
+                                        <a href="/Home/Survey/@item.ID">
+                                            <h3 class="timeline-post-title">@item.Name</h3>
+                                        </a>
+                                        <p>@string.Join(" ", item.Content.Split().Take(30))...</p>
+                                        <div class="timeline-post-info">
+                                            <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
+                                            <span class="dot"></span>
+                                            <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0)Practipates</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!--Timeline items end -->
+
+                    <!--pagination start  -->
+                    <div class="text-center mt-5">
+                        <ul class="pagination d-inline-flex">
+                            <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                                <a class="page-link" href="/Home/SurveyBoard/@(Model.CurrentPage-1)">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= Model.TotalPage; i++)
+                            {
+                                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                                    <a class="page-link" href="/Home/SurveyBoard/@i">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(Model.CurrentPage >= Model.TotalPage ? "disabled" : "")">
+                                <a class="page-link" href="/Home/SurveyBoard/@(Model.CurrentPage+1)">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--pagination end  -->
+                </div>
+            </div>
+
+            <div class="content-sidebar">
+                <div class="sidebar_inner">
+                    <div class="widget-item">
+                        <div class="w-header">
+                            <div class="w-title">Prized member</div>
+                            <div class="w-seperator"></div>
+                        </div>
+                        <div class="w-boxed-post">
+                            <ul>
+                                @{int index = 0; }
+                                @foreach (var item in ViewBag.Prizes)
+                                {
+                                    <li class="@(index == 0 ? "active" : "")">
+                                        <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(++index)</span>
+                                                </div>
+                                                <div class="box-right" style="width:100%">
+                                                    <h3 class="p-title">@item.User.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.Survey.Name
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="widget-item">
+                        <div class="w-header">
+                            <div class="w-title">Popular Surveys</div>
+                            <div class="w-seperator"></div>
+                        </div>
+                        <div class="w-boxed-post">
+                            <ul>
+                                @{ int count = 0; }
+                                @foreach (var item in ViewBag.Popular)
+                                {
+                                    <li class="@(count == 0 ? "active" : "")">
+                                        <a href="#" style="background-image: url(/Images/@item.Image);">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(++count)</span>
+                                                </div>
+                                                <div class="box-right">
+                                                    <h3 class="p-title">@item.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.Feedbacks.Count Practitipates
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="seperator"></div>
+                    <a href="#" class="widget-ad-box">
+                        <img src="~/Images/adbox300x250.png" width="300" height="250">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+

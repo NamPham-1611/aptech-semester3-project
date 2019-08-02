@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,18 +9,33 @@ namespace EnvironmentalSurveyPortal.Controllers
 {
     public class HomeController : Controller
     {
+
         /*----------------------------------
-        Home Page Get Action
+        Get /Home
          -----------------------------------*/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            ViewBag.Counter = DAO.CountFeedback();
+            int currentPage = id != null ? int.Parse(id.ToString()) : 1;
             ViewBag.User = Auth.CheckLoginState(Request);
-            return View(DAO.GetDataForIndex());
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
+            return View(DAO.GetPaginationData(currentPage));
         }
 
         /*----------------------------------
-        Check Login Post Action
+        Get /Home/SurveyBoard
+         -----------------------------------*/
+        public ActionResult SurveyBoard(int? id)
+        {
+            int currentPage = id != null ? int.Parse(id.ToString()) : 1;
+            ViewBag.User = Auth.CheckLoginState(Request);
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
+            return View(DAO.GetPaginationData(currentPage));
+        }
+
+        /*----------------------------------
+        Post /Home/CheckLogin
          -----------------------------------*/
         [HttpPost]
         public PartialViewResult CheckLogin(LoginAccount l)
@@ -48,7 +64,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Check Register Post Action
+        Post /Home/CheckRegister
          -----------------------------------*/
         [HttpPost]
         public PartialViewResult CheckRegister(User u)
@@ -72,7 +88,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Logout Get Action
+        Get /Home/Logout
          -----------------------------------*/
         public ActionResult Logout()
         {
@@ -84,7 +100,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Feedback Post Action
+        Post /Home/Feedback
          -----------------------------------*/
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
@@ -100,21 +116,22 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
-        Search Get Action
+        Get /Home/Search
          -----------------------------------*/
         public ActionResult Search(string q)
         {
             ViewBag.TXT = q;
-            ViewBag.prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.SearchSurvey(q));
         }
 
         /*----------------------------------
-        Support Get Action
+        Get /Home/Support
          -----------------------------------*/
         public ActionResult Support()
         {
-            return View(DAO.GetSupportInfomation());
+            return View(DAO.GetSupportInfo());
         }
 
     }

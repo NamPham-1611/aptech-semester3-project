@@ -47,25 +47,45 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<Survey> surveyList = new List<Survey>
             {
-                new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", Participants="Student", NumOfParticipants=10, StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9) },
+                new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", Participants="All",NumOfParticipants=11, StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9) },
+                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images//Images/news-img1.jpg" },
 
-                new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", Participants="Faculty/Staff", NumOfParticipants=12, StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9) },
+                new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Quis nostrud exercitation", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", Participants="Student", NumOfParticipants=13, StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9) }
+                new Survey {Name="Quis nostrud exercitation", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,3,9), Image="/Images/news-img1.jpg" },
+
+                new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,4,9), Image="/Images/news-img1.jpg" },
+
+                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
+
+                new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,6,9), Image="/Images/news-img1.jpg" },
+
+                new Survey {Name="Quis nostrud exercitation", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,7,9), Image="/Images/news-img1.jpg" }
             };
 
             surveyList.ForEach(item => context.tbSurvey.Add(item));
+
+            /*----------------------------------
+            Init Feedback Data
+            -----------------------------------*/
+            List<Feedback> feedbackList = new List<Feedback>
+            {
+                new Feedback { User = userList[0], Survey=surveyList[0], Content="This is a content" },
+                new Feedback { User = userList[1], Survey=surveyList[0], Content="This is a content" },
+                new Feedback { User = userList[2], Survey=surveyList[1], Content="This is a content" }
+            };
+
+            feedbackList.ForEach(item => context.tbFeedback.Add(item));
 
             /*----------------------------------
             Init Prize Data
             -----------------------------------*/
             List<Prize> prizeList = new List<Prize>
             {
-                new Prize{PrizeID=1,UserID="ST1098221",StudentName="Pham Tan Nam Thanh",SurveyID=1,SurveyName="Survey 1"},
-                new Prize{PrizeID=1,UserID="ST1098221",StudentName="Pham Phuong Nam",SurveyID=2,SurveyName="Survey 2"},
-                new Prize{PrizeID=1,UserID="ST1098221",StudentName="Pham Tan Nam Thanh",SurveyID=3,SurveyName="Survey 3"},
+                new Prize{User=userList[0], Survey=surveyList[0]},
+                new Prize{User=userList[1], Survey=surveyList[1]},
+                new Prize{User=userList[2], Survey=surveyList[2]}
             };
 
             prizeList.ForEach(item => context.tbPrize.Add(item));

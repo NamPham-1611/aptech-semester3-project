@@ -10,15 +10,15 @@ namespace EnvironmentalSurveyPortal.Models
     public class User
     {
         [Key]
-        [Required()]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [StringLength(10)]
         public string UID { get; set; }
 
-        [Required()]
+        [Required]
         [StringLength(30)]
         public string Name { get; set; }
 
-        [Required()]
+        [Required]
         [StringLength(30)]
         public string Password { get; set; }
 
@@ -34,7 +34,10 @@ namespace EnvironmentalSurveyPortal.Models
         [StringLength(10)]
         public string Role { get; set; } = "Student";
 
-        [ScaffoldColumn(true)]
         public bool isActive { get; set; } = false;
+
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+
+        public virtual ICollection<Prize> Prizes { get; set; }
     }
 }

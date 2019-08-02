@@ -1,6 +1,7 @@
 ﻿using EnvironmentalSurveyPortal.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,7 +15,8 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Index()
         {
-            return View();
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+            return View(DAO.CounterForDashboard());
         }
 
         /*----------------------------------
@@ -22,6 +24,7 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult EditUser(string id)
         {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
             return View(DAO.GetUserByUID(id));
         }
 
@@ -33,21 +36,16 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
 
             DAO.UpdateUser(eUser);
-            return RedirectToAction("Index");
+            return RedirectToAction("AllUsers");
         }
 
         /*----------------------------------
-        Delete User Action
+        Delete User Get Action
          -----------------------------------*/
-        [HttpDelete]
-        public ActionResult Delete(string id)
+        public ActionResult DeleteUser(string id)
         {
-            if (DAO.DeleteUser(id))
-            {
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", "Delete User failed");
-            return RedirectToAction("Index");
+            DAO.DeleteUser(id);            
+            return RedirectToAction("AllUsers");
         }
 
         /*----------------------------------
@@ -55,6 +53,7 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult AllUsers()
         {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
             return View(DAO.GetAllUser());
         }
 
@@ -69,6 +68,7 @@ namespace EnvironmentalSurveyPortal.Controllers
 
         public ActionResult SurveyBoard()
         {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
             return View(DAO.GetAllSurvey());
         }
 
@@ -77,6 +77,7 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult CreateSurvey()
         {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
             return View();
         }
 
@@ -108,8 +109,8 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult EditSurvey(int ID)
         {
-            var t = DAO.GetSurveyByID(ID);
-            return View(t);
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+            return View(DAO.GetSurveyByID(ID));
         }
 
         /*----------------------------------
@@ -153,25 +154,39 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult CreateAccount()
         {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
             return View();
         }
 
         /*----------------------------------
         Edit Support Infomation Page Get Action
         -----------------------------------*/
-        public ActionResult EditSupportInfomation()
+        public ActionResult EditSupportInfo()
         {
-            return View(DAO.GetSupportInfomation());
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+            return View(DAO.GetSupportInfo());
         }
 
         /*----------------------------------
        Edit Support Infomation Post Action
         -----------------------------------*/
         [HttpPost]
-        public ActionResult EditSupportInfomation(Support e)
+        public ActionResult EditSupportInfo(Support e)
         {
-
-            DAO.EditSupportInfomation(e);
-            return RedirectToAction("Index");
+            DAO.EditSupportInfo(e);
+            return RedirectToAction("EditSupportInfo");
         }
+
+        /*----------------------------------
+      Upload File Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public string Upload(HttpPostedFileBase file)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+            var physicPath = Server.MapPath("~/Images/" + fileName);
+            file.SaveAs(physicPath);
+            return "/Images/" + fileName;
+        }
+    }
 }

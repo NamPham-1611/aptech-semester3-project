@@ -1,4 +1,4 @@
-﻿@model EnvironmentalSurveyPortal.Models.Index
+﻿@model EnvironmentalSurveyPortal.Models.Pagination
 
 @{
     ViewBag.Title = "Environmental Survey Portal";
@@ -10,18 +10,13 @@
             <div class="content-timeline">
                 <!--Timeline header area start -->
                 <div class="post-list-header">
-                    <span class="post-list-title">Latest surveys</span>
-
-                    @*<select class="frm-input">
-                        <option value="1">For All member</option>
-                        <option value="1">For Faculty/Staff</option>
-                        <option value="1">For Student</option>
-                    </select>*@
+                    <div class="post-list-title text-danger">Latest surveys</div>
                 </div>
                 <!--Timeline header area end -->
-                <!--Timeline items start -->
-                <div class="timeline-items">
-                    @foreach (var item in Model.surveys)
+
+                <div class="post-lists">
+
+                    @foreach (var item in Model.Surveys)
                     {
                         var time = DateTime.Now - item.CreateDate;
                         var timeAgo = "";
@@ -55,51 +50,64 @@
                         {
                             timeAgo = time.Seconds + " second ago";
                         }
-                        <div class="timeline-item">
-                            <div class="timeline-left">
-                                <div class="timeline-left-wrapper">
-                                    <a href="#" class="timeline-category" data-zebra-tooltip title="For @item.Participants">
-                                        <i class="material-icons">&#xE894;</i>
-                                    </a>
-                                    <span class="timeline-date">@timeAgo</span>
+
+                        <div class="columns column-3">
+                            <div class="post-list-item">
+                                <div class="post-top" style="background-image: url('@item.Image')">
+                                    <h3 class="post-title">
+                                        <a href="/Home/Survey/@item.ID"><span>@item.Name</span></a>
+                                    </h3>
                                 </div>
-                            </div>
+                                <div class="post-bottom">
 
-                            <div class="timeline-right">
-                                <div class="timeline-post-image">
-                                    <a href="/Home/Survey/@item.ID">
-                                        <img src="img/news-test-images/news-img8.jpg" width="150">
-                                    </a>
-                                </div>
-
-                                <div class="timeline-post-content">
-                                    <a href="#" class="timeline-category-name">For @item.Participants</a>
-
-                                    <a href="/Home/Survey/@item.ID">
-                                        <h3 class="timeline-post-title">@item.Name</h3>
-                                    </a>
-                                    <p>@string.Join(" ", item.Content.Split().Take(30))...</p>
                                     <div class="timeline-post-info">
+
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons mr-1">&#xE894;</i><span class="mr-2">@timeAgo</span>
+                                            <a href="#" class="timeline-category-name">For @item.For</a>
+                                        </div>
+
                                         <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                         <span class="dot"></span>
-                                        <span class="comment">@(ViewBag.Counter.ContainsKey(item.ID) ? ViewBag.Counter[item.ID] : 0) practipates</span>
+                                        <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
+                                    </div>
+                                    <div class="post-meta">
+                                        <p>@string.Join(" ", item.Content.Split().Take(20))...</p>
+                                        <a href="/Home/Survey/@item.ID" class="read-more">Read more <i class="material-icons"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
+
                 </div>
-                <!--Timeline items end -->
-                <!--Data load more button start  -->
-                <div class="load-more">
-                    <button class="load-more-button material-button" type="button">
-                        <i class="material-icons">&#xE5D5;</i>
-                        <span>Load More</span>
-                    </button>
+
+                <!--pagination start  -->
+                <div class="text-center">
+                    <ul class="pagination d-inline-flex">
+                        <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                            <a class="page-link" href="/Home/Index/@(Model.CurrentPage-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= Model.TotalPage; i++)
+                        {
+                            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                                <a class="page-link" href="/Home/Index/@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.CurrentPage >= Model.TotalPage ? "disabled" : "")">
+                            <a class="page-link" href="/Home/Index/@(Model.CurrentPage+1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!--Data load more button start  -->
+                <!--pagination end  -->
             </div>
+
         </div>
+
         <div class="content-sidebar">
             <div class="sidebar_inner">
                 <div class="widget-item">
@@ -109,19 +117,19 @@
                     </div>
                     <div class="w-boxed-post">
                         <ul>
-                            @{int i=0; }
-                            @foreach (var item in Model.prizes)
+                            @{int index = 0; }
+                            @foreach (var item in ViewBag.Prizes)
                             {
-                                <li>
-                                    <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
+                                <li class="@(index == 0 ? "active" : "")">
+                                    <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
                                         <div class="box-wrapper">
                                             <div class="box-left">
-                                                <span>@(++i)</span>
+                                                <span>@(++index)</span>
                                             </div>
                                             <div class="box-right" style="width:100%">
-                                                <h3 class="p-title">@item.StudentName</h3>
+                                                <h3 class="p-title">@item.User.Name</h3>
                                                 <div class="p-icons">
-                                                    @item.SurveyName
+                                                    @item.Survey.Name
                                                 </div>
                                             </div>
                                         </div>
@@ -131,8 +139,42 @@
                         </ul>
                     </div>
                 </div>
+
+                <div class="widget-item">
+                    <div class="w-header">
+                        <div class="w-title">Popular Surveys</div>
+                        <div class="w-seperator"></div>
+                    </div>
+                    <div class="w-boxed-post">
+                        <ul>
+                            @{ int count = 0; }
+                            @foreach (var item in ViewBag.Popular)
+                            {
+                                <li class="@(count == 0 ? "active" : "")">
+                                    <a href="#" style="background-image: url(/Images/@item.Image);">
+                                        <div class="box-wrapper">
+                                            <div class="box-left">
+                                                <span>@(++count)</span>
+                                            </div>
+                                            <div class="box-right">
+                                                <h3 class="p-title">@item.Name</h3>
+                                                <div class="p-icons">
+                                                    @item.Feedbacks.Count Practitipates
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="seperator"></div>
-                <a href="#" class="widget-ad-box"></a>
+                <a href="#" class="widget-ad-box">
+                    <img src="~/Images/adbox300x250.png" width="300" height="250">
+                </a>
             </div>
         </div>
     </div>

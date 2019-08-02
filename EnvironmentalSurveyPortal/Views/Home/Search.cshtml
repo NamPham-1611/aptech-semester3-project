@@ -47,7 +47,7 @@
                         <div class="timeline-item">
                             <div class="timeline-left">
                                 <div class="timeline-left-wrapper">
-                                    <a href="#" class="timeline-category" data-zebra-tooltip title="For @item.Participants">
+                                    <a href="#" class="timeline-category" data-zebra-tooltip title="For @item.For">
                                         <i class="material-icons">&#xE894;</i>
                                     </a>
                                     <span class="timeline-date">@timeAgo</span>
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="timeline-post-content">
-                                    <a href="#" class="timeline-category-name">For @item.Participants</a>
+                                    <a href="#" class="timeline-category-name">For @item.For</a>
 
                                     <a href="#">
                                         <h3 class="timeline-post-title">@item.Name</h3>
@@ -71,7 +71,7 @@
                                     <div class="timeline-post-info">
                                         <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                         <span class="dot"></span>
-                                        <span class="comment">@item.NumOfParticipants practipates</span>
+                                        <span class="comment">@item.Feedbacks.Count practipates</span>
                                     </div>
                                 </div>
                             </div>
@@ -89,19 +89,19 @@
                         </div>
                         <div class="w-boxed-post">
                             <ul>
-                                @{int i = 0; }
-                                @foreach (var item in ViewBag.prizes)
+                                @{int index = 0; }
+                                @foreach (var item in ViewBag.Prizes)
                                 {
-                                    <li>
-                                        <a href="#" style="background-image: url(img/news-test-images/news-img5.jpg);">
+                                    <li class="@(index == 0 ? "active" : "")">
+                                        <a href="#" style="background-image: url(http://tevratgundogdu.com/works/ideabox-html-template/img/news-test-images/news-img7.jpg);">
                                             <div class="box-wrapper">
                                                 <div class="box-left">
-                                                    <span>@(++i)</span>
+                                                    <span>@(++index)</span>
                                                 </div>
                                                 <div class="box-right" style="width:100%">
-                                                    <h3 class="p-title">@item.StudentName</h3>
+                                                    <h3 class="p-title">@item.User.Name</h3>
                                                     <div class="p-icons">
-                                                        @item.SurveyName
+                                                        @item.Survey.Name
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,8 +111,42 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="widget-item">
+                        <div class="w-header">
+                            <div class="w-title">Popular Surveys</div>
+                            <div class="w-seperator"></div>
+                        </div>
+                        <div class="w-boxed-post">
+                            <ul>
+                                @{ int count = 0; }
+                                @foreach (var item in ViewBag.Popular)
+                                {
+                                    <li class="@(count == 0 ? "active" : "")">
+                                        <a href="#" style="background-image: url(http://tevratgundogdu.com/works/ideabox-html-template/img/news-test-images/news-img7.jpg);">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(++count)</span>
+                                                </div>
+                                                <div class="box-right">
+                                                    <h3 class="p-title">@item.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.Feedbacks.Count Practitipates
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="seperator"></div>
-                    <a href="#" class="widget-ad-box"></a>
+                    <a href="#" class="widget-ad-box">
+                        <img src="~/Images/adbox300x250.png" width="300" height="250">
+                    </a>
                 </div>
             </div>
         </div>

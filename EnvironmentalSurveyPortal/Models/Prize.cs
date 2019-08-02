@@ -9,10 +9,8 @@ namespace EnvironmentalSurveyPortal.Models
     public class Prize
     {
         [Key]
-        public int PrizeID { get; set; }
-        public string UserID { get; set; }
-        public int SurveyID { get; set; }
-        public string StudentName { get; set; }
-        public string SurveyName { get; set; }
+        public int ID { get; set; }
+        public virtual User User { get; set; }
+        public virtual Survey Survey { get; set; }
     }
 }

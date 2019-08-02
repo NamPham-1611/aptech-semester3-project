@@ -8,15 +8,8 @@ namespace EnvironmentalSurveyPortal.Models
     public class DAO
     {
         private static SurveyDB db = new SurveyDB();
-
-        /*----------------------------------
-        Get Data For Index Page Method
-         -----------------------------------*/
-        public static Index GetDataForIndex()
-        {
-            var indexModel = new Index { surveys = GetAllSurvey(), prizes = GetAllPrize() };
-            return indexModel;
-        }
+        private static int limitItem = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LimitItem"]);
+        private static int limitAlert = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LimitAlert"]);
 
         /*----------------------------------
         Get All User Method
@@ -84,6 +77,14 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Get User InActive Method
+         -----------------------------------*/
+        public static IEnumerable<User> GetInActiveUsers()
+        {
+            return db.tbUser.Where(item => item.isActive == false).Take(limitAlert).ToList();
+        }
+
+        /*----------------------------------
         Update User Method
         -----------------------------------*/
         public static bool UpdateUser(User user)
@@ -126,12 +127,27 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Get Pagination Data Method
+         -----------------------------------*/
+        public static Pagination GetPaginationData(int pageNumber)
+        {
+            int skip = limitItem * (pageNumber - 1);
+            var count = db.tbSurvey.Count();
+            var surveys = db.tbSurvey.OrderByDescending(item => item.CreateDate).Skip(skip).Take(limitItem);
+
+            decimal numPage = (decimal) count / limitItem;
+            int totalPage = (int)Math.Ceiling(numPage);
+
+            return new Pagination { CurrentPage = pageNumber, TotalItem = count,TotalPage = totalPage, Surveys = surveys };
+        }
+
+        /*----------------------------------
         Get Popular Surveys Method
          -----------------------------------*/
-        //public static IEnumerable<Survey> GetPopularSurvey()
-        //{
-            
-        //}
+        public static IEnumerable<Survey> GetPopularSurveys(int quantity)
+        {
+            return db.tbSurvey.Where(item => item.Feedbacks.Count > 0).OrderByDescending(item => item.Feedbacks.Count).Take(quantity); ;
+        }
 
         /*----------------------------------
         Get All Surveys Method
@@ -162,7 +178,7 @@ namespace EnvironmentalSurveyPortal.Models
             {
                 t.Name = survey.Name;
                 t.Content = survey.Content;
-                t.Participants = survey.Participants;
+                t.For = survey.For;
                 t.StartDate = survey.StartDate;
                 t.EndDate = survey.EndDate;
                 db.SaveChanges();
@@ -214,23 +230,43 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
-        Count Feedback of Surveys Method
-         -----------------------------------*/
-        public static IDictionary<int, int> CountFeedback()
-        {
-            return db.tbFeedback
-                   .GroupBy(f => f.SurveyID)
-                   .Select(g => new { sid = g.Key, count = g.Count() })
-                   .ToDictionary(k => k.sid, i => i.count);
-        }
-
-        /*----------------------------------
         Get Support Infomation Method
          -----------------------------------*/
-        public static Support GetSupportInfomation()
+        public static Support GetSupportInfo()
         {
             return db.tbSupport.FirstOrDefault();
         }
 
+        /*----------------------------------
+        Edit Support Infomation Method
+         -----------------------------------*/
+        public static bool EditSupportInfo(Support e)
+        {
+            var u = db.tbSupport.FirstOrDefault();
+            if (u != null)
+            {
+                u.Address = e.Address;
+                u.Email = e.Email;
+                u.Phone = e.Phone;
+                u.Website = e.Website;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
+        Counter For Dashboard Method
+         -----------------------------------*/
+        public static IDictionary<string, int> CounterForDashboard()
+        {
+            Dictionary<string, int> counter = new Dictionary<string, int>();
+
+            counter.Add("survey", db.tbSurvey.Count());
+            counter.Add("feedback", db.tbFeedback.Count());
+            counter.Add("user", db.tbUser.Count());
+
+            return counter;
+        }
     }
 }

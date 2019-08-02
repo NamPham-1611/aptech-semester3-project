@@ -12,55 +12,53 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user form-control-user-md" id="survey-name" placeholder="Survey Name">
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group form-inline form-group-user px-3">
-                        <label for="survey-for" class="text-gray-800 mr-4">Survey For</label>
-
-                        <div class="form-check mr-2">
-                            <input class="form-check-input" name="participants" type="checkbox" id="checkStaff">
-                            <label class="form-check-label" for="checkStaff">Faculty/Staff</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" name="participants" type="checkbox" id="checkStudent">
-                            <label class="form-check-label" for="checkStudent">Student</label>
-                        </div>
-
+                        @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "form-control form-control-user form-control-user-md", placeholder="Survey Name" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        <div id="editor" class="editor"></div>
+                        @Html.EditorFor(model => model.Content, null, new { htmlAttributes = new { @class = "form-control form-control-user", placeholder = "Write content here...", rows=10 } })
                         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
 
-                        <script>
-                            var quill = new Quill('#editor', {
-                                placeholder: 'Write content here...',
-                                theme: 'snow'
-                            });
-                        </script>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Image, new { @class = "ml-3 text-gray-800" })
+                        <input hidden type="text" name="Image" value="" />
+                        <div class="image-preview">
+                            <label class="h1 text-center">Photo</label>
+                            <div class="upload-wrapper">
+                                <label class="btn btn-primary">Upload
+                                    <input type="file" />
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                            @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
+                            <select class="form-control form-control-user form-control-user-md" name="For">
+                                <option value="All">All</option>
+                                <option value="Student">Student</option>
+                                <option value="Faculty/Staff">Faculty/Staff</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.For, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg-4">
                             @Html.LabelFor(model => model.StartDate, new { @class = "ml-3 text-gray-800" })
-                            <input name="StartDate" type="date" id="start-date" class="form-control date-control-user date-control-user-md" placeholder="Start Date" />
+                            @Html.EditorFor(model => model.StartDate, null, new { htmlAttributes = new { @class = "form-control date-control-user date-control-user-md" } })
                             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             @Html.LabelFor(model => model.EndDate, new { @class = "ml-3 text-gray-800" })
-                            <input type="date" id="end-date" class="form-control date-control-user date-control-user-md" placeholder="End Date" />
+                            @Html.EditorFor(model => model.EndDate, null, new { htmlAttributes = new { @class = "form-control date-control-user date-control-user-md" } })
                             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    <button type="button" id="btn-submit" class="btn btn-primary btn-user btn-block">
-                        Create Survey
-                    </button>
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Create Survey</button>
                 </form>
             </div>
         </div>
@@ -78,29 +76,39 @@
 }
 
 <script>
-    $('#form-create-survey #btn-submit').click(function () {
-        var content = $('#editor .ql-editor>p').html();
-        content = content == "<p><br></p>" ? "" : content;
-        var checkStaff = $('#checkStaff').checked;
-        var checkStudent = $('#checkStudent').checked;
-        var participants = checkStaff && checkStudent == true ? "All" : checkStaff == true ? "Faculty/Staff" : "Student";
+    $('#form-create-survey').submit(function (e) {
+        e.preventDefault();
 
-        var data = {
-            Name: $('#survey-name').val().trim(),
-            Content: content,
-            Participants: participants,
-            NumOfParticipants: 0,
-            StartDate: $('#start-date').val().trim(),
-            EndDate: $('#end-date').val().trim()
-        };
+        var formData = new FormData(this);
 
-        $.post(
-            "/Admin/CreateSurvey",
-            data,
-            function (res) {
+        $.ajax({
+            url: "/Admin/CreateSurvey",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (res) {
                 $('#content').html(res);
             }
-        );
+        });
+    });
+
+    $('#form-create-survey .image-preview input').change(function () {
+        var formData = new FormData();
+        formData.append("file", this.files[0]);
+
+        $.ajax({
+            url: "/Admin/Upload",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (res) {
+                $('#form-create-survey .image-preview .h1').remove();
+                $('#form-create-survey .image-preview').css("background-image", "url('" + res + "')");
+                $('#form-create-survey input[name="Image"]').val(res);
+            }
+        });
     });
 </script>
 

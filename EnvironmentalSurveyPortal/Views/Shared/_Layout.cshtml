@@ -16,16 +16,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ideabox - Material Blog/Magazine Template</title>
+    <title>@ViewBag.Title</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,900&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/Content//support.css">
+    <!-- Fontawesome css file -->
+    <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-5.6.3/css/all.min.css">
 
     <!-- Tooltip plugin (zebra) css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
@@ -41,6 +38,9 @@
 
     <!-- Ideabox main theme css file. you have to add all pages -->
     <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
+
+    <!-- Ideabox main theme css file. you have to add all pages -->
+    <link rel="stylesheet" type="text/css" href="~/Content/client-custom-style.css">
 
     <!-- Ideabox responsive css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/responsive-style.css">
@@ -73,13 +73,13 @@
                         <a href="/" class="material-button @activeMenu("Index")">HOME</a>
                     </li>
                     <li>
-                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">SURVEYS</a>
+                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">ALL SURVEYS</a>
                     </li>
                     <li>
                         <a href="/Home/Support" class="material-button submenu-toggle @activeMenu("Support")">SUPPORT</a>
                     </li>
                     <li>
-                        <a href="/Home/FAQ" class="material-button submenu-toggle @activeMenu("FAQ")">FAQ's @*<i class="material-icons">&#xE313;</i>*@</a>
+                        <a href="/Home/FAQ" class="material-button submenu-toggle @activeMenu("FAQ")">FAQ's</a>
                     </li>
                 </ul>
                 <!-- header left menu end -->
@@ -101,7 +101,7 @@
                             </a>
                             <div class="header-submenu">
                                 <ul>
-                                    <li><a href="/Home/Profile/@ViewBag.User.UserID">Profile</a></li>
+                                    <li><a href="/Home/Profile/@ViewBag.User.UID">Profile</a></li>
                                     <li><a href="/Home/Logout" class="text-danger"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                                 </ul>
                             </div>
@@ -170,7 +170,7 @@
                 <li>
                     <a href="/Home/SurveyBoard" class="material-button">
                         <span class="menu-icon"><i class="material-icons">&#xE038;</i></span>
-                        <span class="menu-label">Surveys</span>
+                        <span class="menu-label">All Surveys</span>
                     </a>
                 </li>
                 <li>
@@ -277,11 +277,9 @@
     <!-- Sweetalert js file -->
     <script src="~/Scripts/sweetalert2.min.js"></script>
 
-    <!-- Ideabox theme js file. you have to add all pages. -->
-    <script src="~/Scripts/main-script.js"></script>
+    <!-- Main script -->
+    <script src="~/Scripts/client-script.js"></script>
 
-    <!-- Page js. -->
-    <script src="~/Scripts/client.js"></script>
 
 </body>
 
