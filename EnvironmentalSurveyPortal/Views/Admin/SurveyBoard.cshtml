@@ -39,7 +39,7 @@
                                     <td>@item.EndDate.ToString("dd-MM-yyyy")</td>
                                     <td class="text-center">
                                         @Html.ActionLink("Feedbacks", "EditSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-info" })
-                                        @Html.ActionLink("Modify", "EditSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-warning" })
+                                        @Html.ActionLink("Edit", "EditSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-warning" })
                                         @Html.ActionLink("Delete", "DeleteSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-danger" })
                                     </td>
                                 </tr>

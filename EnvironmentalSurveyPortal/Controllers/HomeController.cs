@@ -35,6 +35,33 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
+        Get /Home/Survey
+         -----------------------------------*/
+        public ActionResult Survey(int id)
+        {
+            ViewBag.User = Auth.CheckLoginState(Request);
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
+            return View(DAO.GetSurveyByID(id));
+        }
+
+        /*----------------------------------
+        Post /Home/Feedback
+         -----------------------------------*/
+        [HttpPost]
+        public HttpStatusCodeResult Feedback(Feedback feedback)
+        {
+            if (ModelState.IsValid)
+            {
+                if (DAO.InsertFeedback(feedback))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+            }
+            return new HttpStatusCodeResult(304);
+        }
+
+        /*----------------------------------
         Post /Home/CheckLogin
          -----------------------------------*/
         [HttpPost]
@@ -97,22 +124,6 @@ namespace EnvironmentalSurveyPortal.Controllers
             Response.Cookies.Add(authCookie);
 
             return RedirectToAction("Index");
-        }
-
-        /*----------------------------------
-        Post /Home/Feedback
-         -----------------------------------*/
-        [HttpPost]
-        public HttpStatusCodeResult Feedback(Feedback feedback)
-        {
-            if (ModelState.IsValid)
-            {
-                if (DAO.InsertFeedback(feedback))
-                {
-                    return new HttpStatusCodeResult(200);
-                }
-            }
-            return new HttpStatusCodeResult(304);
         }
 
         /*----------------------------------

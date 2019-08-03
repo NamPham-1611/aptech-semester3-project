@@ -107,8 +107,7 @@ select.form-control-user {
     overflow: hidden;
 }
 
-form .image-preview .upload-wrapper,
-{
+.image-preview .upload-wrapper {
     position: absolute;
     display: flex;
     align-items: center;
@@ -121,10 +120,10 @@ form .image-preview .upload-wrapper,
     transition: all 500ms;
 }
 
-    form .image-preview:hover .upload-wrapper {
-        opacity: 1;
-    }
+.image-preview:hover .upload-wrapper {
+    opacity: 1;
+}
 
-    form .image-preview .upload-wrapper input {
-        display: none;
-    }
+.image-preview .upload-wrapper input {
+    display: none;
+}

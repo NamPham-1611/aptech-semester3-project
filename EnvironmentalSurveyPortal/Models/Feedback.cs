@@ -14,14 +14,18 @@ namespace EnvironmentalSurveyPortal.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        public virtual Survey Survey { get; set; }
-        public virtual User User { get; set; }
-
         [AllowHtml]
         [Required]
         [StringLength(1000)]
         public string Content { get; set; }
 
         public DateTime Time { get; set; } = DateTime.Now;
+
+        public int SurveyID { get; set; }
+        public virtual Survey Survey { get; set; }
+
+        public string UserUID { get; set; }
+        public virtual User User { get; set; }
+
     }
 }

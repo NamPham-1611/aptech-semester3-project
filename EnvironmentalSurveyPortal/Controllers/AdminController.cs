@@ -15,8 +15,7 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Index()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.CounterForDashboard());
+            return RedirectToAction("SurveyBoard");
         }
 
         /*----------------------------------

@@ -1,4 +1,5 @@
-﻿function requestLogin(form, event) {
+﻿
+function requestLogin(form, event) {
     event.preventDefault();
     var formData = new FormData(form);
 
@@ -46,6 +47,15 @@ function requestRegister(form, event) {
     });
 }
 
+$("#registerModal .accordion input").map(function () {
+    var radioBox = $(this);
+    var selector = radioBox.attr("data-target");
+    if (radioBox.prop("checked")) {
+        $(selector).collapse('show');
+    } else {
+        $(selector).collapse('hide');
+    }
+});
 
 //sidebar navigation close method.
 var closeNavigate = function () {
@@ -220,15 +230,6 @@ var GetIEVersion = function () {
 
 
 $(document).ready(function () {
-
-    //initialize zebra tooltip plugin.
-    new $.Zebra_Tooltips($('[data-zebra-tooltip]'), {
-        'animation_speed': 50,
-        'animation_offset': 10,
-        'hide_delay': 0,
-        'show_delay': 0
-    });
-
     //first creating mobile menu for mobile screen sizes
     createMobileMenu();
 
@@ -249,6 +250,7 @@ $(document).ready(function () {
     $('.search-toggle').on('click', function (e) {
         e.preventDefault();
         $('.search-bar').toggleClass('active');
+        $('.search-bar input').focus();
     });
 
     //playerlist height setting. for internet explorer

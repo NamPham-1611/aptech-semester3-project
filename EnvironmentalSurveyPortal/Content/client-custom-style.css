@@ -16,75 +16,6 @@
     font-weight: bold;
 }
 
-body {
-    background-color: #F8F9FC;
-}
-
-.navbar-top {
-    /*background-image: url(../Images/decor/stickynavBG.jpg);*/
-}
-
-    
-
-    .navbar-top .btn-logout {
-        font-size: 16px;
-    }
-
-.body-content {
-    position: relative;
-    z-index: 2;
-    margin-top: 86px;
-}
-
-.card {
-    border-radius: 25px;
-}
-
-    .card .card-title {
-        font-family: "Quicksand";
-        font-weight: bold;
-        border-radius: 25px 25px 0 0;
-    }
-
-.editor-container .editor {
-    height: 200px !important;
-    padding: 10px;
-}
-
-.ql-toolbar,
-.ql-container {
-    border-radius: 25px;
-}
-
-.pagination {
-    justify-content: center;
-}
-
-.btn-logout {
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.btn {
-    border-radius: 25px;
-}
-
-.op-80 {
-    opacity: 0.8;
-}
-
-.op-90 {
-    opacity: 0.9;
-}
-
-.op-100 {
-    opacity: 1;
-}
-
 .page-item .page-link {
     color: #dc2430;
 }
@@ -103,4 +34,12 @@ body {
     border-color: transparent;
     outline: none;
     box-shadow: none;
+}
+
+.editor {
+    height: 500px !important;
+}
+
+#registerModal .custom-control-label{
+    line-height: 1.9;
 }

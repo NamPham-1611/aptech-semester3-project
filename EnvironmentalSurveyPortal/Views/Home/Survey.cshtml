@@ -1,0 +1,178 @@
+﻿@model EnvironmentalSurveyPortal.Models.Survey
+
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/quill.snow.css">
+<script src="~/Scripts/quill.min.js"></script>
+<section class="main-content">
+    <div class="main-content-wrapper">
+        <div class="content-body">
+            <h4 class="text-justify text-uppercase text-danger">@Model.Name</h4>
+            <p class="text-justify">@Model.Content</p>
+
+            <hr class="mb-4" />
+            @if (ViewBag.User != null)
+            {
+                if (Model.For == ViewBag.User.Role || Model.For == "All")
+                {
+                    <form id="form-survey-feedback">
+                        <input hidden="hidden" type="text" name="UserUID" value="@ViewBag.User.UID" />
+                        <input hidden="hidden" type="text" name="SurveyID" value="@Model.ID" />
+                        <p id="validation-editor" class="text-danger mb-0"></p>
+                        <div class="editor" id="editor"></div>
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <span class="h5 text-danger">This survey is for @Model.For</span>
+                }
+            }
+            else
+            {
+                <span class="h5 text-danger">You need login to post</span>
+            }
+
+        </div>
+
+        <div class="content-sidebar">
+            <div class="sidebar_inner">
+                <div class="widget-item">
+                    <div class="w-header">
+                        <div class="w-title">Prized member</div>
+                        <div class="w-seperator"></div>
+                    </div>
+                    <div class="w-boxed-post">
+                        <ul>
+                            @{int index = 0; }
+                            @foreach (var item in ViewBag.Prizes)
+                            {
+                                <li class="@(index == 0 ? "active" : "")">
+                                    <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
+                                        <div class="box-wrapper">
+                                            <div class="box-left">
+                                                <span>@(++index)</span>
+                                            </div>
+                                            <div class="box-right" style="width:100%">
+                                                <h3 class="p-title">@item.User.Name</h3>
+                                                <div class="p-icons">
+                                                    @item.Survey.Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="widget-item">
+                    <div class="w-header">
+                        <div class="w-title">Popular Surveys</div>
+                        <div class="w-seperator"></div>
+                    </div>
+                    <div class="w-boxed-post">
+                        <ul>
+                            @{ int count = 0; }
+                            @foreach (var item in ViewBag.Popular)
+                            {
+                                <li class="@(count == 0 ? "active" : "")">
+                                    <a href="#" style="background-image: url(/Images/@item.Image);">
+                                        <div class="box-wrapper">
+                                            <div class="box-left">
+                                                <span>@(++count)</span>
+                                            </div>
+                                            <div class="box-right">
+                                                <h3 class="p-title">@item.Name</h3>
+                                                <div class="p-icons">
+                                                    @item.Feedbacks.Count Practitipates
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="seperator"></div>
+                <a href="#" class="widget-ad-box">
+                    <img src="~/Images/adbox300x250.png" width="300" height="250">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    var toolbarOptions = [
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+
+
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }]
+    ];
+
+    var quill = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+        placeholder: 'Write your post here...'
+    });
+
+    window.onload = function () {
+        $("#form-survey-feedback").submit(function (e) {
+
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            var content = $("#form-survey-feedback #editor .ql-editor").html();
+
+            content = content == "<p><br></p>" ? "" : content;
+
+            formData.append("Content", content);
+
+            if (content == "") {
+                $("#validation-editor").text("Please. Complete your post before submitting !");
+                return false;
+            }
+
+            $.ajax({
+                url: "/Home/Feedback",
+                data: formData,
+                contentType: false,
+                processData: false,
+                type: "POST",
+                statusCode: {
+                    200: function (responseObject, textStatus, jqXHR) {
+                        Swal.fire({
+                            title: 'Successful. Your post has been submitted !',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Close'
+                        });
+                    },
+                    201: function (res, textStatus, errorThrown) {
+                        $("#validation-editor").text("Please. Complete your post before submitting !");
+                    }
+                }
+            });
+
+        });
+    }
+</script>

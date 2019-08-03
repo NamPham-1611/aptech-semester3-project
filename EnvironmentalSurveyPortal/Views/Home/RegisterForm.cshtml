@@ -18,23 +18,59 @@
             @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Your Name" } })
             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
         </div>
-        <div class="frm-row">
-            @Html.EditorFor(model => model.Class, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Class" } })
-            @Html.ValidationMessageFor(model => model.Class, null, new { @class = "text-danger" })
-        </div>
-        <div class="frm-row">
-            @Html.EditorFor(model => model.Specification, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Specification" } })
-            @Html.ValidationMessageFor(model => model.Specification, null, new { @class = "text-danger" })
-        </div>
-        <div class="frm-row">
-            @Html.EditorFor(model => model.Section, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Section" } })
-            @Html.ValidationMessageFor(model => model.Section, null, new { @class = "text-danger" })
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="bg-secondary p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="radio" name="Role" class="custom-control-input" id="checkStudent" data-target="#student" checked="checked" value="Student">
+                        <label class="custom-control-label text-white" for="checkStudent">You are student</label>
+                    </div>
+                </div>
+
+                <div id="student" class="collapse show">
+                    <div class="frm-row mt-2">
+                        @Html.EditorFor(model => model.Class, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Class" } })
+                        @Html.ValidationMessageFor(model => model.Class, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mt-2">
+                <div class="bg-secondary p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="radio" name="Role" class="custom-control-input" id="checkStaff" data-target="#staff" value="Faculty/Staff">
+                        <label class="custom-control-label text-white" for="checkStaff">You are faculty/staff</label>
+                    </div>
+                </div>
+                <div id="staff" class="collapse">
+                    <div class="frm-row mt-2">
+                        @Html.EditorFor(model => model.Specification, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Specification" } })
+                        @Html.ValidationMessageFor(model => model.Specification, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="frm-row">
+                        @Html.EditorFor(model => model.Section, null, new { htmlAttributes = new { @class = "frm-input", placeholder = "Section" } })
+                        @Html.ValidationMessageFor(model => model.Section, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="frm-row">
+        <div class="frm-row mt-2">
             <button class="frm-button material-button full" type="submit">Register</button>
         </div>
     </form>
 <div class="frm-row">
     <p class="txt-center">Do you already have an account? <a href="#" data-modal="loginModal">Login</a></p>
 </div>
+<script>
+    $("#registerModal .accordion input").change(function () {
+    var radioBox = $(this);
+    var selector = radioBox.attr("data-target");
+    if (radioBox.prop("checked")) {
+        $('.collapse').collapse('hide');
+        $('.collapse input').val("");
+        $(selector).collapse('show');
+    }
+});
+</script>

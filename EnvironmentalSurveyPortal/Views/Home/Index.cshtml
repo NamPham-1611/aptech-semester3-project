@@ -121,7 +121,7 @@
                             @foreach (var item in ViewBag.Prizes)
                             {
                                 <li class="@(index == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
+                                    <a href="#" style="background-image: url('@item.Survey.Image');">
                                         <div class="box-wrapper">
                                             <div class="box-left">
                                                 <span>@(++index)</span>
@@ -151,7 +151,7 @@
                             @foreach (var item in ViewBag.Popular)
                             {
                                 <li class="@(count == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url(/Images/@item.Image);">
+                                    <a href="#" style="background-image: url('@item.Image');">
                                         <div class="box-wrapper">
                                             <div class="box-left">
                                                 <span>@(++count)</span>
@@ -179,23 +179,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    window.addEventListener("load", function () {
-        //Owl carousel initializing
-        $('#postCarousel').owlCarousel({
-            loop: true,
-            dots: true,
-            nav: true,
-            navText: ['<span><i class="material-icons">&#xE314;</i></span>', '<span><i class="material-icons">&#xE315;</i></span>'],
-            items: 1,
-            margin: 20
-        });
-        //widget carousel initialize
-        $('#widgetCarousel').owlCarousel({
-            dots: true,
-            nav: false,
-            items: 1
-        });
-    });
-</script>

@@ -20,31 +20,13 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,900&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Fontawesome css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-5.6.3/css/all.min.css">
-
-    <!-- Tooltip plugin (zebra) css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
-
-    <!-- Owl Carousel plugin css file. only used pages -->
-    <link rel="stylesheet" type="text/css" href="~/Content/owl.carousel.min.css">
-
-    <!-- Tooltip plugin (zebra) css file -->
-    <link rel="stylesheet" type="text/css" href="~/Content/zebra_tooltips.min.css">
-
-    <!-- Sweetalert css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/sweetalert2.min.css">
-
-    <!-- Ideabox main theme css file. you have to add all pages -->
     <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
-
-    <!-- Ideabox main theme css file. you have to add all pages -->
     <link rel="stylesheet" type="text/css" href="~/Content/client-custom-style.css">
-
-    <!-- Ideabox responsive css file -->
     <link rel="stylesheet" type="text/css" href="~/Content/responsive-style.css">
-
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -59,9 +41,7 @@
             <!--sidebar menu toggler end -->
             <!--logo start -->
             <div class="logo-box">
-                <h1>
-                    <a href="index.html" class="logo"></a>
-                </h1>
+                <a href="/" class="h3 text-white font-weight-bold">ENV SURVEY</a>
             </div>
             <!--logo end -->
 
@@ -96,13 +76,14 @@
                         @if (ViewBag.User != null)
                         {
                             <a href="#" class="material-button submenu-toggle">
-                                <i class="material-icons">&#xE7FD;</i>
-                                <span class="hide-on-tablet">@ViewBag.User.Name</span>
+                                @*<i class="material-icons">&#xE7FD;</i>*@
+                                <img src="~/Images/icons/icons8-male-user-32.png" alt="Avatar" />
+                                <span class="hide-on-tablet ml-1">@ViewBag.User.Name</span>
                             </a>
                             <div class="header-submenu">
                                 <ul>
-                                    <li><a href="/Home/Profile/@ViewBag.User.UID">Profile</a></li>
-                                    <li><a href="/Home/Logout" class="text-danger"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                                    <li><a href="/Home/Profile/@ViewBag.User.UID"><i class="fas fa-id-card mr-1"></i>Profile</a></li>
+                                    <li><a href="/Home/Logout" class="text-danger"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a></li>
                                 </ul>
                             </div>
                         }
@@ -266,18 +247,8 @@
 
     <div class="overlay"></div>
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
-    <!-- Owl Carousel plugin js file -->
-    <script src="~/Scripts/owl.carousel.min.js"></script>
-
-    <!-- Tooltip plugin (zebra) js file -->
-    <script src="~/Scripts/zebra_tooltips.min.js"></script>
-
-    <!-- Sweetalert js file -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/sweetalert2.min.js"></script>
-
-    <!-- Main script -->
     <script src="~/Scripts/client-script.js"></script>
 
 

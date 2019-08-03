@@ -62,7 +62,7 @@
                                 <div class="timeline-right">
                                     <div class="timeline-post-image">
                                         <a href="/Home/Survey/@item.ID">
-                                            <div class="image" style="background-image: url(@item.Image" )"></div>
+                                            <div class="image" style="background-image: url('@item.Image')"></div>
                                         </a>
                                     </div>
 
@@ -72,11 +72,11 @@
                                         <a href="/Home/Survey/@item.ID">
                                             <h3 class="timeline-post-title">@item.Name</h3>
                                         </a>
-                                        <p>@string.Join(" ", item.Content.Split().Take(30))...</p>
+                                        <p>@string.Join(" ", item.Content.Split().Take(20))...</p>
                                         <div class="timeline-post-info">
                                             <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                             <span class="dot"></span>
-                                            <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0)Practipates</span>
+                                            <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                 @foreach (var item in ViewBag.Prizes)
                                 {
                                     <li class="@(index == 0 ? "active" : "")">
-                                        <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
+                                        <a href="#" style="background-image: url('@item.Survey.Image');">
                                             <div class="box-wrapper">
                                                 <div class="box-left">
                                                     <span>@(++index)</span>
@@ -153,7 +153,7 @@
                                 @foreach (var item in ViewBag.Popular)
                                 {
                                     <li class="@(count == 0 ? "active" : "")">
-                                        <a href="#" style="background-image: url(/Images/@item.Image);">
+                                        <a href="#" style="background-image: url('@item.Image');">
                                             <div class="box-wrapper">
                                                 <div class="box-left">
                                                     <span>@(++count)</span>

@@ -142,23 +142,17 @@ a{
 	float: left;
 }
 .logo-box{
-	width: 122px;
+	width: auto;
 	height: 27px;
 	display: block;
 	float: left;
 	margin: 14px;
+    font-family: 'Proxima Nova', Roboto;
 }
-.logo-box h1{
-	margin: 0;
-	padding: 0;
-	display: inline-block;
+.logo-box a:hover {
+    text-decoration: none;
 }
-.logo{
-	width: 122px;
-	height: 27px;
-	display: block;
-	background-image: url(../img/logo.png);
-}
+
 .header-menu{
 	display: inline-block;
 	float: left;

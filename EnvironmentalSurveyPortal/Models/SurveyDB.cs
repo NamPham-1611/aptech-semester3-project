@@ -49,7 +49,7 @@ namespace EnvironmentalSurveyPortal.Models
             {
                 new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images//Images/news-img1.jpg" },
+                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
 
                 new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
 

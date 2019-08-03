@@ -211,7 +211,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
     <Content Include="Views\Admin\EditSurvey.cshtml" />
@@ -228,6 +227,7 @@
     <Content Include="Views\Admin\EditSupportInfo.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Home\SurveyBoard.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
