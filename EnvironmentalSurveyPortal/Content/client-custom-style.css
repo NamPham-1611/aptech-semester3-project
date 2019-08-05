@@ -43,3 +43,10 @@
 #registerModal .custom-control-label{
     line-height: 1.9;
 }
+
+.disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

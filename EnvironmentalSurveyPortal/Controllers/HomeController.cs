@@ -51,14 +51,11 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public HttpStatusCodeResult Feedback(Feedback feedback)
         {
-            if (ModelState.IsValid)
+            if (DAO.InsertFeedback(feedback))
             {
-                if (DAO.InsertFeedback(feedback))
-                {
-                    return new HttpStatusCodeResult(200);
-                }
+                return new HttpStatusCodeResult(200);
             }
-            return new HttpStatusCodeResult(304);
+            return new HttpStatusCodeResult(201);
         }
 
         /*----------------------------------
@@ -86,7 +83,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                 return PartialView("LoginForm");
             }
             Response.StatusCode = 201;
-            ModelState.AddModelError("", "Wrong User ID or password, please try again!");
+            ModelState.AddModelError("", "Wrong User SurveyID or password, please try again!");
             return PartialView("LoginForm");
         }
 

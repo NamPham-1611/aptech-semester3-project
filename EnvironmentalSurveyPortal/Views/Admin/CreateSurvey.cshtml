@@ -6,5 +6,5 @@
 }
 
 <div id="content">
-    @Html.Partial("CreateSurveyForm", Model)
+    @Html.Partial("CreateSurveyForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Survey>())
 </div>

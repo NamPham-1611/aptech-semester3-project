@@ -18,12 +18,6 @@ namespace EnvironmentalSurveyPortal.Models
         [StringLength(200)]
         public string Name { get; set; }
 
-        [AllowHtml]
-        [Required]
-        [StringLength(1000)]
-        [DataType(DataType.MultilineText)]
-        public string Content { get; set; }
-
         [StringLength(20)]
         public string For { get; set; }
 
@@ -45,5 +39,6 @@ namespace EnvironmentalSurveyPortal.Models
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<SurveyQuestion> Questions { get; set; }
     }
 }

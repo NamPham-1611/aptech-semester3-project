@@ -17,3 +17,23 @@ function requestDeleteUser(uid) {
         }
     });
 }
+
+function requestDeleteSurvey(id) {
+    Swal.fire({
+        title: 'Are you sure you want to delete this survey ?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.get(
+                "/Admin/DeleteSurvey/" + id,
+                function (res) {
+                    window.location.reload();
+                }
+            );
+        }
+    });
+}

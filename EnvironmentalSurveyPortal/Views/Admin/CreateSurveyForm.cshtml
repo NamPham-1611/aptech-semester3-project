@@ -17,18 +17,31 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.EditorFor(model => model.Content, null, new { htmlAttributes = new { @class = "form-control form-control-user", placeholder = "Write content here...", rows = 10 } })
-                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                        <label class="ml-3 text-gray-800">Survey Content</label>
+                        <div class="survey-content border p-3 p-lg-5">
+
+                            <div class="questions-wrapper"></div>
+
+                            <div class="input-group mb-2 mt-5">
+                                <input id="in-new-question" type="text" class="form-control form-control-user form-control-user-md font-weight-bold" placeholder="New Question" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success form-control-user-md" type="button" onclick="addQuestion()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Image, new { @class = "ml-3 text-gray-800" })
                         <input hidden type="text" name="Image" value="" />
                         <div class="image-preview">
+                            <img style="height: 100%; width:auto;" src="" />
                             <label class="h1 text-center">Photo</label>
                             <div class="upload-wrapper">
                                 <label class="btn btn-primary">
-                                    Upload
+                                    <i class="fas fa-upload mr-2"></i>Upload
                                     <input type="file" />
                                 </label>
                             </div>
@@ -39,7 +52,6 @@
                         <div class="col-lg-4">
                             @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
                             <select class="form-control form-control-user form-control-user-md" name="For">
-                                <option value="All">All</option>
                                 <option value="Student">Student</option>
                                 <option value="Faculty/Staff">Faculty/Staff</option>
                             </select>
@@ -77,21 +89,132 @@
 }
 
 <script>
+    var GenerateID = 1;
+
+    var questions = [];
+
+    function deleteQuestion(qIndex) {
+        $("#question-group-" + qIndex).remove();
+        questions.splice(qIndex, 1);
+        updateNO();
+    }
+
+    function addQuestion() {
+        var questionContent = $("#in-new-question").val().trim();
+       
+        if (questionContent != "") {
+            var question = {
+                ID: GenerateID++,
+                Content: questionContent,
+                Answers: []
+            };
+
+            questions.push(question);
+
+            let index = question.length - 1;
+
+            $(".questions-wrapper").append(
+                `<div id="question-group-` + index + `" class="question-group p-3 ` + (questions.length != 0 ? "mt-5" : "") + `">
+                    <h6 class="font-weight-bold"><span class="no">`+ questions.ID + `</span>. ` + questionContent +`</h6>
+                    <div class="row" id="option-wrapper`+ question.ID +`">
+
+                    </div>
+                    <a class="btn-del btn btn-danger" onclick="deleteQuestion(`+ index +`)" title="Click to remove question"><i class="fas fa-times"></i></a>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="input-group my-2 col-12 col-md-4">
+                            <input type="text" class="form-control form-control-user form-control-user-sm" placeholder="New Option" id="input`+question.ID+`" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-success form-control-user-sm" onclick="addAnswer(`+ question.ID +`)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            );
+
+            updateNO();
+            $("#in-new-question").val("");
+        }
+        
+    }
+
+    function addAnswer(qID) {
+        var input = $("#input" + qID);
+        var answerContent = input.val().trim();
+
+        if (answerContent != "") {
+
+            var answer = {
+                ID: GenerateID++,
+                content: answerContent
+            };
+
+            questions.forEach(function (item, i) {
+                if (item.ID == qID) {
+                    item.Answers.push(answer);
+
+                    let index = item.Answers.length - 1;
+
+                    $("#option-wrapper" + qID).append(
+                        `<div class="col-6 col-lg-4" id="answer-group-` + answer.ID +`">
+                        <div class="custom-control custom-radio disable-select">
+                            <input disabled type="radio" class="custom-control-input">
+                            <label class="custom-control-label" onclick="deleteAnswer(`+ qID + `,` + answer.ID + `)" title="Click to remove option">` + answerContent + `</label>
+                        </div>
+                    </div>`
+                    );
+
+                    input.val("");
+                }
+            });
+
+            
+        }
+    }
+
+    function deleteAnswer(qID, aID) {
+        questions.some(function (question) {
+            if (question.ID == qID) {
+                question.Answers.some(function (answer, i) {
+                    if (answer.ID == aID) {
+                        question.Answers.splice(i, 1);
+                        $("#option-wrapper" + qID + " " + "#answer-group-" + aID).remove();
+                        return true;
+                    }
+                });
+                return true;
+            }
+        });
+    }
+
+    function updateNO() {
+        $("span[class='no']").map(function (i, item) {
+            $(item).text(i + 1);
+        });
+    }
+
     $('#form-create-survey').submit(function (e) {
         e.preventDefault();
 
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: "/Admin/CreateSurvey",
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            success: function (res) {
-                $('#content').html(res);
-            }
+        var formData = $(this).serializeArray();
+        var data = {};
+        $.each(formData, function(i, v) {
+            data[v.name] = v.value;
         });
+
+        data["Questions"] = questions;
+
+        $.post(
+            "/Admin/CreateSurvey",
+            { survey: data },
+            function (res) {
+                 $('#content').html(res);
+            }
+        );
+
     });
 
     $('#form-create-survey .image-preview input').change(function () {
@@ -106,7 +229,7 @@
             type: 'POST',
             success: function (res) {
                 $('#form-create-survey .image-preview .h1').remove();
-                $('#form-create-survey .image-preview').css("background-image", "url('" + res + "')");
+                $('#form-create-survey .image-preview img').attr("src", res);
                 $('#form-create-survey input[name="Image"]').val(res);
             }
         });

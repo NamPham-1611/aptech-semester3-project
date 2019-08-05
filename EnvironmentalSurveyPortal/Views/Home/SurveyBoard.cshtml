@@ -1,7 +1,7 @@
 ﻿@model EnvironmentalSurveyPortal.Models.Pagination
 
 @{
-      ViewBag.Title = "SurveyBoard";
+      ViewBag.Title = "Survey Board";
 }
 
     <section class="main-content">
@@ -72,7 +72,6 @@
                                         <a href="/Home/Survey/@item.ID">
                                             <h3 class="timeline-post-title">@item.Name</h3>
                                         </a>
-                                        <p>@string.Join(" ", item.Content.Split().Take(20))...</p>
                                         <div class="timeline-post-info">
                                             <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
                                             <span class="dot"></span>

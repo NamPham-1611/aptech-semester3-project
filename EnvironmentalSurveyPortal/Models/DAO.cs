@@ -25,7 +25,7 @@ namespace EnvironmentalSurveyPortal.Models
         public static IEnumerable<Survey> SearchSurvey(string txt)
         {
             txt = txt.ToLower();
-            return db.tbSurvey.Where(item => item.Name.ToLower().Contains(txt) || item.Content.ToLower().Contains(txt));
+            return db.tbSurvey.Where(item => item.Name.ToLower().Contains(txt));
         }
 
         /*----------------------------------
@@ -119,7 +119,7 @@ namespace EnvironmentalSurveyPortal.Models
 
 
         /*----------------------------------
-        Get Survey By ID Method
+        Get Survey By SurveyID Method
          -----------------------------------*/
         public static Survey GetSurveyByID(int ID)
         {
@@ -177,8 +177,8 @@ namespace EnvironmentalSurveyPortal.Models
             if (t != null)
             {
                 t.Name = survey.Name;
-                t.Content = survey.Content;
                 t.For = survey.For;
+                t.Image = survey.Image;
                 t.StartDate = survey.StartDate;
                 t.EndDate = survey.EndDate;
                 db.SaveChanges();
@@ -207,6 +207,56 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Insert Survey Answer Method
+         -----------------------------------*/
+        public static int InsertAnswer(SurveyAnswer answer)
+        {
+            db.tbAnswer.Add(answer);
+            db.SaveChanges();
+            return answer.ID;
+        }
+
+        /*----------------------------------
+        Delete Survey Answer Method
+         -----------------------------------*/
+        public static bool DeleteAnswer(int id)
+        {
+            var x = db.tbAnswer.First(i => i.ID == id);
+            if(x != null)
+            {
+                db.tbAnswer.Remove(x);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
+        Insert Survey Question Method
+         -----------------------------------*/
+        public static int InsertQuestion(SurveyQuestion question)
+        {
+            db.tbQuestion.Add(question);
+            db.SaveChanges();
+            return question.ID;
+        }
+
+        /*----------------------------------
+        Delete Survey Question Method
+         -----------------------------------*/
+        public static bool DeleteQuestion(int id)
+        {
+            var x = db.tbQuestion.First(i => i.ID == id);
+            if (x != null)
+            {
+                db.tbQuestion.Remove(x);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
         Get All Prize Method
          -----------------------------------*/
         public static IEnumerable<Prize> GetAllPrize()
@@ -219,9 +269,30 @@ namespace EnvironmentalSurveyPortal.Models
          -----------------------------------*/
         public static bool InsertFeedback(Feedback feedback)
         {
+            foreach (var item in feedback.Answers)
+            {
+                item.Question = db.tbQuestion.FirstOrDefault(i => i.ID == item.Question.ID);
+            }
+
             db.tbFeedback.Add(feedback);
             db.SaveChanges();
             return true;
+        }
+
+        /*----------------------------------
+        Get Feedback By SurveyID Method
+        -----------------------------------*/
+        public static IEnumerable<Feedback> GetFeedbackBySurveyID(int id)
+        {
+            return db.tbFeedback.Where(item => item.Survey.ID == id);
+        }
+
+        /*----------------------------------
+        Get Feedback By SurveyID Method
+         -----------------------------------*/
+        public static Feedback GetFeedbackByID(int id)
+        {
+            return db.tbFeedback.FirstOrDefault(item => item.ID == id);
         }
 
         public static IEnumerable<Feedback> GetAllFeedback()

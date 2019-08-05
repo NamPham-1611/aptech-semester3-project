@@ -10,7 +10,7 @@ namespace EnvironmentalSurveyPortal.Models
     {
         [Key]
         [Required(ErrorMessage = "Roll No/Employee Number required")]
-        [StringLength(10, ErrorMessage = "User ID can not longer than 10 characters")]
+        [StringLength(10, ErrorMessage = "User SurveyID can not longer than 10 characters")]
         [Display(Name = "Roll No or Employee Number")]
         public string UID { get; set; }
 

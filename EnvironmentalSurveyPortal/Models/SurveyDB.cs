@@ -14,8 +14,11 @@ namespace EnvironmentalSurveyPortal.Models
 
         public virtual DbSet<User> tbUser { get; set; }
         public virtual DbSet<Survey> tbSurvey { get; set; }
+        public virtual DbSet<SurveyQuestion> tbQuestion { get; set; }
+        public virtual DbSet<SurveyAnswer> tbAnswer { get; set; }
         public virtual DbSet<Prize> tbPrize { get; set; }
         public virtual DbSet<Feedback> tbFeedback { get; set; }
+        public virtual DbSet<FeedbackAnswer> tbFeedbackAnswer { get; set; }
         public virtual DbSet<Support> tbSupport { get; set; }
         public virtual DbSet<FAQ> tbFAQ { get; set; }
 
@@ -47,33 +50,93 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<Survey> surveyList = new List<Survey>
             {
-                new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image="/Images/news-img1.jpg" },
+                new Survey {
+                    Name ="The Formosa Environmental Disaster",
+                    For ="Student",
+                    StartDate = new DateTime(2019,2,9),
+                    EndDate = new DateTime(2019,9,9),
+                    Image ="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Consectetur adipiscing", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Quis nostrud exercitation", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,3,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Quis nostrud exercitation", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,3,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Lorem ipsum dolor sit amet", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,4,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Lorem ipsum dolor sit amet", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,4,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Consectetur adipiscing", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Ut enim ad minim veniam", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,6,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,6,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Quis nostrud exercitation", Content="Abc Abc Abc Abc. Abc Abc Abc Abc. ", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,7,9), Image="/Images/news-img1.jpg" }
+                new Survey {Name="Quis nostrud exercitation", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,7,9), Image="/Images/news-img1.jpg" }
             };
 
             surveyList.ForEach(item => context.tbSurvey.Add(item));
+
+            /*----------------------------------
+            Init Questions Data
+            -----------------------------------*/
+            List<SurveyQuestion> questionList = new List<SurveyQuestion>
+            {
+                new SurveyQuestion { Content=" How concerned are you about air pollution?", Survey=surveyList[0] },
+                new SurveyQuestion { Content="How concerned are you about the extinction of endangered animals?", Survey=surveyList[0] },
+                new SurveyQuestion { Content="Should the United States government's laws restricting pollution be more strict, less strict, or about as strict as they are now?", Survey=surveyList[0] },
+                new SurveyQuestion { Content="The term 'global warming' is often used to refer to the idea that the world's average temperature may be about 5 degrees Fahrenheit higher in 75 years than it is now. Do you think global warming is good or bad?", Survey=surveyList[0] }
+            };
+
+            questionList.ForEach(item => context.tbQuestion.Add(item));
+
+            /*----------------------------------
+            Init Answers Data
+            -----------------------------------*/
+            List<SurveyAnswer> answerList = new List<SurveyAnswer>
+            {
+                new SurveyAnswer { Content="Extremely concerned", Question=questionList[0] },
+                new SurveyAnswer { Content="Very concerned", Question=questionList[0] },
+                new SurveyAnswer { Content="Moderately concerned", Question=questionList[0] },
+                new SurveyAnswer { Content="Slightly concerned", Question=questionList[0] },
+                new SurveyAnswer { Content="Not at all concerned", Question=questionList[0] },
+
+                new SurveyAnswer { Content="Extremely concerned", Question=questionList[1] },
+                new SurveyAnswer { Content="Very concerned", Question=questionList[1] },
+                new SurveyAnswer { Content="Moderately concerned", Question=questionList[1] },
+                new SurveyAnswer { Content="Slightly concerned", Question=questionList[1] },
+                new SurveyAnswer { Content="Not at all concerned", Question=questionList[1] },
+
+                new SurveyAnswer { Content="Much more strict", Question=questionList[2] },
+                new SurveyAnswer { Content="Somewhat more strict", Question=questionList[2] },
+                new SurveyAnswer { Content="Slightly less strict", Question=questionList[2] },
+                new SurveyAnswer { Content="Slightly more strict", Question=questionList[2] },
+                new SurveyAnswer { Content="Somewhat less strict", Question=questionList[2] },
+                new SurveyAnswer { Content="Much less strict", Question=questionList[2] },
+                new SurveyAnswer { Content="About as strict as they are now", Question=questionList[2] },
+
+                new SurveyAnswer { Content="Very good", Question=questionList[3] },
+                new SurveyAnswer { Content="Good", Question=questionList[3] },
+                new SurveyAnswer { Content="Neither good nor bad", Question=questionList[3] },
+                new SurveyAnswer { Content="Bad", Question=questionList[3] },
+                new SurveyAnswer { Content="Very Bad", Question=questionList[3] },
+            };
+
+            answerList.ForEach(item => context.tbAnswer.Add(item));
 
             /*----------------------------------
             Init Feedback Data
             -----------------------------------*/
             List<Feedback> feedbackList = new List<Feedback>
             {
-                new Feedback { User = userList[0], Survey=surveyList[0], Content="This is a content" },
-                new Feedback { User = userList[1], Survey=surveyList[0], Content="This is a content" },
-                new Feedback { User = userList[2], Survey=surveyList[1], Content="This is a content" }
+                new Feedback {
+                    User = userList[0],
+                    Survey =surveyList[0],
+                    Answers=new List<FeedbackAnswer>
+                    {
+                        new FeedbackAnswer { Question=questionList[0], Answer=answerList[0] },
+                        new FeedbackAnswer { Question=questionList[1], Answer=answerList[7] },
+                        new FeedbackAnswer { Question=questionList[2], Answer=answerList[12] },
+                        new FeedbackAnswer { Question=questionList[3], Answer=answerList[18] }
+                    }
+                }
             };
 
             feedbackList.ForEach(item => context.tbFeedback.Add(item));

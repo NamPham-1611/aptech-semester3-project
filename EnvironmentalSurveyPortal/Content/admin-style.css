@@ -62,6 +62,13 @@ select.form-control-user {
     height: 43px;
 }
 
+.form-control-user-sm {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 0 1rem !important;
+    height: 35px;
+}
+
 .field-validation-error {
     margin-left: 1.2rem;
 }
@@ -91,13 +98,14 @@ select.form-control-user {
     }
 }
 
-#form-create-survey .image-preview {
+form .image-preview {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 250px;
+    height: 300px;
+    padding: 15px 0;
     background-color: #dbdbdb;
     border-radius: 25px;
     background-repeat: no-repeat;
@@ -107,7 +115,7 @@ select.form-control-user {
     overflow: hidden;
 }
 
-.image-preview .upload-wrapper {
+form .image-preview .upload-wrapper {
     position: absolute;
     display: flex;
     align-items: center;
@@ -120,10 +128,78 @@ select.form-control-user {
     transition: all 500ms;
 }
 
-.image-preview:hover .upload-wrapper {
+form .image-preview:hover .upload-wrapper {
     opacity: 1;
 }
 
-.image-preview .upload-wrapper input {
+form .image-preview .upload-wrapper input {
     display: none;
+}
+
+form .survey-content,
+form .question-group {
+    border: 1px solid #d1d3e2 !important;
+    border-radius: 25px;
+    position: relative;
+}
+
+form .question-group .btn-del{
+    position:absolute;
+    top: -5px;
+    right: -5px;
+    border-radius: 50%;
+    padding: 0;
+    width: 27px;
+    height: 27px;
+    color: #ffffff;
+}
+
+#form-create-survey .custom-control .custom-control-label:hover,
+#form-edit-survey .custom-control .custom-control-label:hover {
+    text-decoration: line-through;
+    color: #e74a3b;
+    cursor: pointer;
+}
+
+
+form .question-group .btn-del:hover {
+    background-color: #b10000;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#in-new-question {
+    font-size: 16px;
+}
+
+input:focus {
+    box-shadow: none !important;
+}
+
+a.btn {
+    position: relative;
+}
+
+a.btn span.badge {
+    position: absolute;
+    top: -10px;
+    right: 0;
+}
+
+table th.survey-name,
+table td.survey-name {
+    max-width: 300px;
+}
+
+.form-login {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: auto;
+    transform: translate(-50%, -50%)
+}
+
+.form-login .alert {
+    border-radius: 25px;
 }

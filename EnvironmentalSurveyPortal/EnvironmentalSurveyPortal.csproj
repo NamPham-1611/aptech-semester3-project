@@ -194,6 +194,7 @@
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\FeedbackAnswer.cs" />
     <Compile Include="Models\LoginAccount.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\Prize.cs" />
@@ -201,6 +202,8 @@
     <Compile Include="Models\Support.cs" />
     <Compile Include="Models\SurveyDB.cs" />
     <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\SurveyAnswer.cs" />
+    <Compile Include="Models\SurveyQuestion.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -228,6 +231,10 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Home\SurveyBoard.cshtml" />
     <Content Include="Views\Home\Survey.cshtml" />
+    <Content Include="Views\Admin\Feedback.cshtml" />
+    <Content Include="Views\Admin\Feedbacks.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\CreateAccountForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,86 @@
+﻿@model EnvironmentalSurveyPortal.Models.RegisterAccount
+
+<div class="container-fluid">
+    <div class="card o-hidden border-0 shadow-lg mb-5">
+        <div class="card-body d-flex justify-content-center py-5 px-3 px-md-5">
+            <div class="col-12 col-lg-9 col-xl-6">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                </div>
+                <form class="user" action="/Admin/CreateAccount" method="post">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="UID" placeholder="Roll No / Employee Number">
+                        @Html.ValidationMessageFor(model => model.UID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="Name" placeholder="Fullname">
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" name="Password" placeholder="Password">
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" name="RePassword" placeholder="Repeat Password">
+                        @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" Name="Class" placeholder="Class">
+                        @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" Name="Specification" placeholder="Specification">
+                        @Html.ValidationMessageFor(model => model.Specification, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="Section" placeholder="Section">
+                        @Html.ValidationMessageFor(model => model.Section, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control form-control-user form-control-user-lg" name="Role">
+                            <option value="">Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Faculty/Staff</option>
+                            <option value="student">Student</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.Successed != null)
+{
+    <script>
+        Toast.fire({
+            type: 'success',
+            title: 'Create account successfully'
+        })
+    </script>
+}
+<script>
+    $("form").submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "/Admin/CreateAccount",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (res) {
+                $("#content").html(res);
+            }
+        });
+    });
+</script>

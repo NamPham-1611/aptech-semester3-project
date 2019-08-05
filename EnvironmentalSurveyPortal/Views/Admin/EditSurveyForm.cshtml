@@ -1,34 +1,96 @@
 ﻿@model EnvironmentalSurveyPortal.Models.Survey
+@{
+    List<SelectListItem> selectList = new List<SelectListItem>
+{
+        new SelectListItem { Value="Student", Text="Student" },
+        new SelectListItem { Value="Faculty/Staff", Text="Faculy/Staff" }
+    };
+}
 
 <div class="container-fluid">
     <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
         <div class="card-body p-0 d-flex justify-content-center">
-            <div class="col-12 col-lg-9 py-5 px-3 px-md-5">
+            <div class="col-12 col-xl-9 py-5 px-3 px-md-5">
                 <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Edit Survey</h1>
                 </div>
 
-                <form id="form-create-survey" class="user">
+                <form id="form-edit-survey" class="user">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
 
                     <div class="form-group">
+                        <label class="ml-3 text-gray-800">Survey Name</label>
                         @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "form-control form-control-user form-control-user-md", placeholder = "Survey Name" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        @Html.EditorFor(model => model.Content, null, new { htmlAttributes = new { @class = "form-control form-control-user", placeholder = "Write content here...", rows = 10 } })
-                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                        <label class="ml-3 text-gray-800">Survey Content</label>
+                        <div class="survey-content border p-3 p-lg-5">
+
+                            <div class="questions-wrapper">
+                                @{ var countQuestions = 0; }
+                                @foreach (var question in Model.Questions)
+                                {
+                                    <div id="@("question-group-"+question.ID)" class="question-group p-3 @(countQuestions != 0 ? "mt-5" : "")">
+                                        <h6 class="font-weight-bold"><span class="no">@(++countQuestions)</span>. @question.Content</h6>
+                                        <div class="row" id="@("option-wrapper"+question.ID)">
+                                            @if (question.Answers != null)
+                                            {
+                                                foreach (var answer in question.Answers)
+                                                {
+                                                    <div class="col-6 col-lg-4" id=@("answer-group-"+answer.ID)>
+                                                        <div class="custom-control custom-radio disable-select">
+                                                            <input type="radio" name="@("question"+question.ID)" id="@("answer"+answer.ID)"
+                                                                   class="custom-control-input" q-id="@question.ID" a-id="@answer.ID" disabled>
+                                                            <label class="custom-control-label" for="@("answer"+answer.ID)" onclick="requestDeleteAnswer(@answer.ID)" title="Click to remove option">@answer.Content</label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <a class="btn-del btn btn-danger" onclick="requestDeleteQuestion(@question.ID)" title="Click to remove question">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+
+                                        <div class="row">
+                                            <div class="col-md-4"></div>
+                                            <div class="input-group my-2 col-12 col-md-4">
+                                                <input type="text" class="form-control form-control-user form-control-user-sm" placeholder="New Option" id="@("input"+question.ID)" />
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-outline-success form-control-user-sm" onclick="requestAddAnswer(@question.ID)">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="input-group mb-2 mt-5">
+                                <input id="in-new-question" type="text" class="form-control form-control-user form-control-user-md font-weight-bold" placeholder="New Question" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success form-control-user-md" type="button" onclick="requestAddQuestion()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Image, new { @class = "ml-3 text-gray-800" })
-                        <input hidden type="text" name="Image" value="" />
-                        <div class="image-preview" style="background-image: url('@Html.DisplayFor(model => model.Image)')">
+                        <input hidden type="text" name="Image" value="@Model.Image" />
+                        <div class="image-preview" style="background-image: url('@Model.Image')">
                             <label class="h1 text-center">Photo</label>
                             <div class="upload-wrapper">
                                 <label class="btn btn-primary">
-                                    Upload
+                                    <i class="fas fa-upload mr-2"></i>Upload
                                     <input type="file" />
                                 </label>
                             </div>
@@ -37,12 +99,8 @@
 
                     <div class="form-group row">
                         <div class="col-lg-4">
-                            @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
-                            <select class="form-control form-control-user form-control-user-md" name="For">
-                                <option value="All">All</option>
-                                <option value="Student">Student</option>
-                                <option value="Faculty/Staff">Faculty/Staff</option>
-                            </select>
+                            <label class="ml-3 text-gray-800">Survey For</label>
+                            @Html.DropDownListFor(model => model.For, selectList, new { @class = "form-control form-control-user form-control-user-md" })
                             @Html.ValidationMessageFor(model => model.For, "", new { @class = "text-danger" })
                         </div>
 
@@ -59,7 +117,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Create Survey</button>
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Save</button>
                 </form>
             </div>
         </div>
@@ -77,6 +135,116 @@
 }
 
 <script>
+    var countQuestion = @countQuestions;
+
+    function requestAddAnswer(qID) {
+        var answerContent = $("#input" + qID).val().trim();
+
+        var data = {
+            answer: {
+                questionID: qID,
+                content: answerContent
+            }
+        };
+
+        if (answerContent != "") {
+            $.ajax({
+                url: "/Admin/AddAnswer",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    $("#option-wrapper" + qID).append(
+                        `<div class="col-6 col-lg-4" id="answer-group-`+res+`">
+                        <div class="custom-control custom-radio disable-select">
+                            <input disabled type="radio" name="question`+ qID + `" id="answer` + res + `"
+                                    class="custom-control-input" q-id="`+ qID + `" a-id="` + res + `">
+                            <label class="custom-control-label" for=""answer`+ res + `" onclick="requestDeleteAnswer(`+ res +`)" title="Click to remove option">` + answerContent + `</label>
+                        </div>
+                    </div>`
+                    );
+                    $("#input" + qID).val("");
+                }
+            });
+        }
+    }
+
+    function requestDeleteAnswer(aID) {
+        $.post(
+            "/Admin/DeleteAnswer",
+            { answerID: aID },
+            function (res) {
+                if (res == "OK")
+                    $("#answer-group-" + aID).remove();
+            }
+        );
+    }
+
+    function requestDeleteQuestion(qID) {
+        $.post(
+            "/Admin/DeleteQuestion",
+            { questionID: qID },
+            function (res) {
+                if (res == "OK") {
+                    $("#question-group-" + qID).remove();
+                    countQuestion--;
+                    updateNO();
+                }
+            }
+        );
+    }
+
+    function requestAddQuestion() {
+        var questionContent = $("#in-new-question").val().trim();
+
+        if (questionContent != "") {
+            $.post(
+                "/Admin/AddQuestion",
+                {
+                    question: {
+                        Content: questionContent,
+                        SurveyID: @Model.ID
+                    }
+                },
+                function (res) {
+                    countQuestion++;
+                    $(".questions-wrapper").append(
+                        `<div id="question-group-` + res + `" class="question-group p-3 ` + (countQuestion != 0 ? "mt-5" : "") + `">
+                            <h6 class="font-weight-bold"><span class="no">`+ countQuestion + `</span>. ` + questionContent +`</h6>
+                            <div class="row" id="option-wrapper`+res+`">
+
+                            </div>
+                            <a class="btn-del btn btn-danger" onclick="requestDeleteQuestion(`+ res +`)" title="Click to remove question">
+                                <i class="fas fa-times"></i>
+                            </a>
+
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="input-group my-2 col-12 col-md-4">
+                                    <input type="text" class="form-control form-control-user form-control-user-sm" placeholder="New Option" id="input`+res+`" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-success form-control-user-sm" onclick="requestAddAnswer(`+res+`)">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                    updateNO();
+                    $("#in-new-question").val("");
+                }
+            );
+        }
+    }
+
+    function updateNO() {
+        $("span[class='no']").map(function (i, item) {
+            $(item).text(i + 1);
+        });
+    }
+
     $('#form-edit-survey').submit(function (e) {
         e.preventDefault();
 
@@ -84,12 +252,33 @@
 
         $.ajax({
             url: "/Admin/EditSurvey",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (res) {
+                $('#content').html(res);
+            }
+        });
+    });
+
+    $('#form-edit-survey .image-preview input').change(function () {
+        var formData = new FormData();
+        formData.append("file", this.files[0]);
+
+        $.ajax({
+            url: "/Admin/Upload",
             data: formData,
             processData: false,
             contentType: false,
             type: 'POST',
             success: function (res) {
-                $('#content').html(res);
+                $('#form-edit-survey .image-preview .h1').remove();
+                $('#form-edit-survey .image-preview').css("background-image", "url('" + res + "')");
+                $('#form-edit-survey input[name="Image"]').val(res);
+
+                var x = $('#form-edit-survey input[name="Image"]').val();
+                debugger;
             }
         });
     });

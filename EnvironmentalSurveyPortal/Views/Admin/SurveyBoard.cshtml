@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Survey>
 @{
     Layout = "~/Views/Shared/_Admin.cshtml";
-    ViewBag.Title = "All Users";
+    ViewBag.Title = "Surveys Management";
 }
 
 <div id="content">
@@ -21,10 +21,12 @@
                     <table class="table text-gray-800">
                         <thead>
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.ID)</th>
-                                <th>@Html.DisplayNameFor(model => model.Name)</th>
-                                <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-                                <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+                                <th class="text-center">ID</th>
+                                <th>Survey Name</th>
+                                <th class="text-center">Survey For</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">End Date</th>
+                                <th class="text-center">Create Date</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -32,15 +34,35 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                int? n = null;
+                                if(@item.Feedbacks != null)
+                                {
+                                    if(@item.Feedbacks.Count > 0)
+                                    {
+                                        n = @item.Feedbacks.Count;
+                                    }
+                                }
                                 <tr>
-                                    <td>@item.ID</td>
-                                    <td>@item.Name</td>
-                                    <td>@item.StartDate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.EndDate.ToString("dd-MM-yyyy")</td>
+                                    <td class="text-center">@item.ID</td>
+                                    <td class="survey-name">@item.Name</td>
+                                    <td class="text-center">@item.For</td>
+                                    <td class="text-center">@item.StartDate.ToString("dd-MM-yyyy")</td>
+                                    <td class="text-center">@item.EndDate.ToString("dd-MM-yyyy")</td>
+                                    <td class="text-center">@item.CreateDate.ToString("dd-MM-yyyy")</td>
                                     <td class="text-center">
-                                        @Html.ActionLink("Feedbacks", "EditSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-info" })
-                                        @Html.ActionLink("Edit", "EditSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-warning" })
-                                        @Html.ActionLink("Delete", "DeleteSurvey", new { id = item.ID }, new { @class = "btn btn-sm btn-danger" })
+                                        <a href="/Admin/FeedbackAnalysis/@item.ID" class="btn btn-sm btn-info" title="Feedback Analysis">
+                                            <i class="fas fa-chart-pie"></i>
+                                        </a>
+                                        <a href="/Admin/Feedbacks/@item.ID" class="btn btn-sm btn-dark" title="View All Feedbacks">
+                                            <i class="fas fa-comments"></i>
+                                            <span class="badge badge-secondary">@n</span>
+                                        </a>
+                                        <a href="?Admin/EditSurvey/@item.ID" class="btn btn-sm btn-warning" title="Edit Survey">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-danger" onclick="requestDeleteSurvey('@item.ID')" title="Delete Survey">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }

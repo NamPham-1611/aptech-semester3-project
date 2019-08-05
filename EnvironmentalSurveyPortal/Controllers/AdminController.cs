@@ -15,7 +15,48 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Index()
         {
-            return RedirectToAction("SurveyBoard");
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("SurveyBoard");
+            }
+            return RedirectToAction("Login");
+        }
+
+
+        /*----------------------------------
+        Login Page Get Action
+         -----------------------------------*/
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        /*----------------------------------
+        Login Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public string Login(LoginAccount user)
+        {
+            var x = DAO.GetLoginUser(user.UID, user.Password);
+            if (x != null)
+            {
+                if (x.Role.ToLower() == "admin")
+                {
+                    Session["User"] = x;
+                    return "OK";
+                }
+                return "User is not authorized !";
+            }
+            return "Username or password incorrect !";
+        }
+
+        /*----------------------------------
+        Logout Get Action
+         -----------------------------------*/
+        public ActionResult Logout()
+        {
+            Session.Remove("User");
+            return RedirectToAction("Login");
         }
 
         /*----------------------------------
@@ -23,8 +64,12 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult EditUser(string id)
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetUserByUID(id));
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetUserByUID(id));
+            }
+            return RedirectToAction("Login");
         }
 
         /*----------------------------------
@@ -33,9 +78,13 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult EditUser(User eUser)
         {
+            if (Session["User"] != null)
+            {
+                DAO.UpdateUser(eUser);
+                return RedirectToAction("AllUsers");
+            }
+            return RedirectToAction("Login");
 
-            DAO.UpdateUser(eUser);
-            return RedirectToAction("AllUsers");
         }
 
         /*----------------------------------
@@ -43,8 +92,12 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult DeleteUser(string id)
         {
-            DAO.DeleteUser(id);            
-            return RedirectToAction("AllUsers");
+            if (Session["User"] != null)
+            {
+                DAO.DeleteUser(id);
+                return RedirectToAction("AllUsers");
+            }
+            return RedirectToAction("Login");
         }
 
         /*----------------------------------
@@ -52,8 +105,13 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult AllUsers()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetAllUser());
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetAllUser());
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -61,14 +119,24 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult ActiveUser(string id)
         {
-            DAO.SetActiveUser(id);
-            return RedirectToAction("AllUsers");
+            if (Session["User"] != null)
+            {
+                DAO.SetActiveUser(id);
+                return RedirectToAction("AllUsers");
+            }
+            return RedirectToAction("Login");
+
         }
 
         public ActionResult SurveyBoard()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetAllSurvey());
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetAllSurvey());
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -76,8 +144,13 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult CreateSurvey()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View();
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View();
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -86,21 +159,26 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult CreateSurvey(Survey survey)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                if (survey.StartDate < survey.EndDate)
+                if (ModelState.IsValid)
                 {
-                    if (DAO.InsertSurvey(survey))
+                    if (survey.StartDate < survey.EndDate)
                     {
-                        ViewBag.Successed = true;
+                        if (DAO.InsertSurvey(survey))
+                        {
+                            ViewBag.Successed = true;
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "End date must be greater than start date");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "End date must be greater than start date");
-                }
+                return PartialView("CreateSurveyForm");
             }
-            return PartialView("CreateSurveyForm");
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -108,8 +186,13 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult EditSurvey(int ID)
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetSurveyByID(ID));
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetSurveyByID(ID));
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -118,25 +201,31 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult EditSurvey(Survey survey)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                if (survey.StartDate < survey.EndDate)
+                if (ModelState.IsValid)
                 {
-                    if (DAO.UpdateSurvey(survey))
+                    if (survey.StartDate < survey.EndDate)
                     {
-                        ViewBag.Successed = true;
+                        if (DAO.UpdateSurvey(survey))
+                        {
+                            ViewBag.Successed = true;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "An error occur! Please try again!");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("", "An error occur! Please try again!");
+                        ModelState.AddModelError("", "End date must be greater than start date");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "End date must be greater than start date");
-                }
+
+                return PartialView("EditSurveyForm", DAO.GetSurveyByID(survey.ID));
             }
-            return PartialView("EditSurveyForm", survey);
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -144,8 +233,36 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult DeleteSurvey(int ID)
         {
-            DAO.DeleteSurvey(ID);
-            return RedirectToAction("SurveyBoard");
+            if (Session["User"] != null)
+            {
+                DAO.DeleteSurvey(ID);
+                return RedirectToAction("SurveyBoard");
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Feedbacks Get Action
+         -----------------------------------*/
+        public ActionResult Feedbacks(int ID)
+        {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+            return View(DAO.GetFeedbackBySurveyID(ID));
+        }
+
+        /*----------------------------------
+        Feedback Details Get Action
+         -----------------------------------*/
+        public ActionResult Feedback(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetFeedbackByID(ID));
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -153,8 +270,37 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult CreateAccount()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View();
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View();
+            }
+            return RedirectToAction("Login");
+
+        }
+
+
+        /*----------------------------------
+        Create Account Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult CreateAccount(RegisterAccount acc)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = new User { UID = acc.UID, Name = acc.Name, Password = acc.Password, Class = acc.Class, Specification = acc.Specification, Role = acc.Role, Section = acc.Section };
+
+                    if (DAO.InsertUser(user))
+                    {
+                        ViewBag.Successed = true;
+                    }
+                }
+                return PartialView("CreateAccountForm");
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -162,8 +308,13 @@ namespace EnvironmentalSurveyPortal.Controllers
         -----------------------------------*/
         public ActionResult EditSupportInfo()
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetSupportInfo());
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetSupportInfo());
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
@@ -172,12 +323,17 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult EditSupportInfo(Support e)
         {
-            DAO.EditSupportInfo(e);
-            return RedirectToAction("EditSupportInfo");
+            if (Session["User"] != null)
+            {
+                DAO.EditSupportInfo(e);
+                return RedirectToAction("EditSupportInfo");
+            }
+            return RedirectToAction("Login");
+
         }
 
         /*----------------------------------
-      Upload File Post Action
+        Upload File Post Action
         -----------------------------------*/
         [HttpPost]
         public string Upload(HttpPostedFileBase file)
@@ -186,6 +342,50 @@ namespace EnvironmentalSurveyPortal.Controllers
             var physicPath = Server.MapPath("~/Images/" + fileName);
             file.SaveAs(physicPath);
             return "/Images/" + fileName;
+        }
+
+        /*----------------------------------
+        Add Answer Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public int AddAnswer(SurveyAnswer answer)
+        {
+            return DAO.InsertAnswer(answer);
+        }
+
+        /*----------------------------------
+        Delete Answer Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public string DeleteAnswer(int answerID)
+        {
+            if (DAO.DeleteAnswer(answerID))
+            {
+                return "OK";
+            }
+            return "Error";
+        }
+
+        /*----------------------------------
+        Add Question Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public int AddQuestion(SurveyQuestion question)
+        {
+            return DAO.InsertQuestion(question);
+        }
+
+        /*----------------------------------
+        Delete Answer Post Action
+        -----------------------------------*/
+        [HttpPost]
+        public string DeleteQuestion(int questionID)
+        {
+            if (DAO.DeleteQuestion(questionID))
+            {
+                return "OK";
+            }
+            return "Error";
         }
     }
 }
