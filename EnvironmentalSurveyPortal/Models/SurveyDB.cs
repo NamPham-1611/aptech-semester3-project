@@ -29,7 +29,7 @@ namespace EnvironmentalSurveyPortal.Models
         }
     }
 
-    public class DBInit : DropCreateDatabaseIfModelChanges<SurveyDB>
+    public class DBInit : DropCreateDatabaseAlways<SurveyDB>
     {
         protected override void Seed(SurveyDB context)
         {
@@ -52,21 +52,15 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<Survey> surveyList = new List<Survey>
             {
-                new Survey { Name ="Survey Demo One", For ="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image ="/Images/news-img1.jpg" },
+               new Survey { Name ="Survey Demo One", For ="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image ="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", For="Student", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Two", For="Faculty/Staff", StartDate = new DateTime(2018,2,9),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Three", For="Student", StartDate = new DateTime(2018,1,10),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Quis nostrud exercitation", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,3,9), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Four", For="Faculty/Staff", StartDate = new DateTime(2019,1,1),EndDate = new DateTime(2019,8,1), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Lorem ipsum dolor sit amet", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,4,9), Image="/Images/news-img1.jpg" },
-
-                new Survey {Name="Consectetur adipiscing", For="Student", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
-
-                new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,6,9), Image="/Images/news-img1.jpg" },
-
-                new Survey {Name="Quis nostrud exercitation", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,7,9), Image="/Images/news-img1.jpg" }
+               new Survey {Name="Survey Demo Five", For="Student", StartDate = new DateTime(2019,6,1),EndDate = new DateTime(2019,10,1), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" }
             };
 
             surveyList.ForEach(item => context.tbSurvey.Add(item));
@@ -76,10 +70,36 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<SurveyQuestion> questionList = new List<SurveyQuestion>
             {
-                new SurveyQuestion { Content=" How concerned are you about air pollution?", Survey=surveyList[0] },
+                new SurveyQuestion { Content="How concerned are you about air pollution?", Survey=surveyList[0] },
                 new SurveyQuestion { Content="How concerned are you about the extinction of endangered animals?", Survey=surveyList[0] },
                 new SurveyQuestion { Content="Should the United States government's laws restricting pollution be more strict, less strict, or about as strict as they are now?", Survey=surveyList[0] },
-                new SurveyQuestion { Content="The term 'global warming' is often used to refer to the idea that the world's average temperature may be about 5 degrees Fahrenheit higher in 75 years than it is now. Do you think global warming is good or bad?", Survey=surveyList[0] }
+                new SurveyQuestion { Content="The term 'global warming' is often used to refer to the idea that the world's average temperature may be about 5 degrees Fahrenheit higher in 75 years than it is now. Do you think global warming is good or bad?", Survey=surveyList[0] },
+
+                new SurveyQuestion { Content="Is the United States government spending too much time trying to reduce global warming, too little time, or about the right amount of time?", Survey=surveyList[1] },
+                new SurveyQuestion { Content="Is reducing global warming more important than improving the economy, less important than improving the economy, or about as important as improving the economy?", Survey=surveyList[1] },
+                new SurveyQuestion { Content="When people get involved in trying to solve environmental problems, how often do you think they make things better?", Survey=surveyList[1] },
+                new SurveyQuestion { Content="How well do you think the environment can recover on its own from problems caused by humans?", Survey=surveyList[1] },
+                new SurveyQuestion { Content="How safe would you feel if a nuclear energy plant were built near where you live?", Survey=surveyList[1] },
+
+                new SurveyQuestion { Content="Which of the following alternative energy sources do you think will be MOST important in the next 10 years?", Survey=surveyList[2] },
+                new SurveyQuestion { Content="Should the government provide more money or less money to support alternative energy?", Survey=surveyList[2] },
+                new SurveyQuestion { Content="How often do you recycle?", Survey=surveyList[2] },
+                new SurveyQuestion { Content="How willing are you to change your lifestyle to reduce the damage you cause to the environment?", Survey=surveyList[2] },
+                new SurveyQuestion { Content="How likely are you to buy a more expensive product if its packaging is more environmentally-friendly than its competitor's product?", Survey=surveyList[2] },
+
+                new SurveyQuestion { Content="Which of the following do you feel is the worst environmental problem facing the planet?", Survey=surveyList[3] },
+                new SurveyQuestion { Content="Who are the worst polluters?", Survey=surveyList[3] },
+                new SurveyQuestion { Content="Who should be responsible for making sure we have a healthy environment?", Survey=surveyList[3] },
+                new SurveyQuestion { Content="Given the current concern about the environment, how would you describe your future?", Survey=surveyList[3] },
+                new SurveyQuestion { Content="The single most important thing that will make sure the environment is healthy for future generations is if:", Survey=surveyList[3] },
+
+                new SurveyQuestion { Content="How concerned are you about preservation?", Survey=surveyList[4] },
+                new SurveyQuestion { Content="How often do you recycle?", Survey=surveyList[4] },
+                new SurveyQuestion { Content="Which source of alternative energy sounds the most promising?", Survey=surveyList[4] },
+                new SurveyQuestion { Content="What is the state of environmental laws in your country?", Survey=surveyList[4] },
+                new SurveyQuestion { Content="Are you satisfied with the environmental laws in your country?", Survey=surveyList[4] }
+
+
             };
 
             questionList.ForEach(item => context.tbQuestion.Add(item));
@@ -114,6 +134,129 @@ namespace EnvironmentalSurveyPortal.Models
                 new SurveyAnswer { Content="Neither good nor bad", Question=questionList[3] },
                 new SurveyAnswer { Content="Bad", Question=questionList[3] },
                 new SurveyAnswer { Content="Very Bad", Question=questionList[3] },
+
+                new SurveyAnswer { Content="Much too much", Question=questionList[4] },
+                new SurveyAnswer { Content="Slightly too little", Question=questionList[4] },
+                new SurveyAnswer { Content="Somewhat too much", Question=questionList[4] },
+                new SurveyAnswer { Content="Somewhat too little", Question=questionList[4] },
+                new SurveyAnswer { Content="Slightly too much", Question=questionList[4] },
+                new SurveyAnswer { Content="Much too little", Question=questionList[4] },
+                new SurveyAnswer { Content="About the right amount", Question=questionList[4] },
+
+                new SurveyAnswer { Content="Much more important", Question=questionList[5] },
+                new SurveyAnswer { Content="Somewhat less important", Question=questionList[5] },
+                new SurveyAnswer { Content="Somewhat more important", Question=questionList[5] },
+                new SurveyAnswer { Content="Much less important", Question=questionList[5] },
+                new SurveyAnswer { Content="About as important", Question=questionList[5] },
+
+                new SurveyAnswer { Content="Always", Question=questionList[6] },
+                new SurveyAnswer { Content="Once in a while", Question=questionList[6] },
+                new SurveyAnswer { Content="Most of the time", Question=questionList[6] },
+                new SurveyAnswer { Content="Never", Question=questionList[6] },
+                new SurveyAnswer { Content="About half the time", Question=questionList[6] },
+
+                new SurveyAnswer { Content="Extremely well", Question=questionList[7] },
+                new SurveyAnswer { Content="Not so well", Question=questionList[7] },
+                new SurveyAnswer { Content="Very well", Question=questionList[7] },
+                new SurveyAnswer { Content="Not at all well", Question=questionList[7] },
+                new SurveyAnswer { Content="Somewhat well", Question=questionList[7] },
+
+                new SurveyAnswer { Content="Extremely safe", Question=questionList[8] },
+                new SurveyAnswer { Content="Slightly safe", Question=questionList[8] },
+                new SurveyAnswer { Content="Very safe", Question=questionList[8] },
+                new SurveyAnswer { Content="Not at all safe", Question=questionList[8] },
+                new SurveyAnswer { Content="Moderately safe", Question=questionList[8] },
+
+                new SurveyAnswer { Content="Wind", Question=questionList[9] },
+                new SurveyAnswer { Content="Ethanol", Question=questionList[9] },
+                new SurveyAnswer { Content="Solar", Question=questionList[9] },
+                new SurveyAnswer { Content="Natural gas", Question=questionList[9] },
+                new SurveyAnswer { Content="Nuclear", Question=questionList[9] },
+                new SurveyAnswer { Content="Coal", Question=questionList[9] },
+
+                new SurveyAnswer { Content="Much more money", Question=questionList[10] },
+                new SurveyAnswer { Content="Slightly less money", Question=questionList[10] },
+                new SurveyAnswer { Content="Somewhat more money", Question=questionList[10] },
+                new SurveyAnswer { Content="Somewhat less money", Question=questionList[10] },
+                new SurveyAnswer { Content="Slightly more moneyr", Question=questionList[10] },
+                new SurveyAnswer { Content="Much less money", Question=questionList[10] },
+                new SurveyAnswer { Content="About the same amount of money", Question=questionList[10] },
+
+                new SurveyAnswer { Content="Always", Question=questionList[11] },
+                new SurveyAnswer { Content="Once in a while", Question=questionList[11] },
+                new SurveyAnswer { Content="Most of the time", Question=questionList[11] },
+                new SurveyAnswer { Content="Never", Question=questionList[11] },
+                new SurveyAnswer { Content="About half the time", Question=questionList[11] },
+
+                new SurveyAnswer { Content="Extremely willing", Question=questionList[12] },
+                new SurveyAnswer { Content="Not so willing", Question=questionList[12] },
+                new SurveyAnswer { Content="Very willing", Question=questionList[12] },
+                new SurveyAnswer { Content="Not at all willing", Question=questionList[12] },
+                new SurveyAnswer { Content="Somewhat willing", Question=questionList[12] },
+
+                new SurveyAnswer { Content="Extremely likely", Question=questionList[13] },
+                new SurveyAnswer { Content="Slightly likely", Question=questionList[13] },
+                new SurveyAnswer { Content="Very likely", Question=questionList[13] },
+                new SurveyAnswer { Content="Not at all likely", Question=questionList[13] },
+                new SurveyAnswer { Content="Moderately likely", Question=questionList[13] },
+
+                new SurveyAnswer { Content="Ozone depletion", Question=questionList[14] },
+                new SurveyAnswer { Content="Toxic waste", Question=questionList[14] },
+                new SurveyAnswer { Content="Global wanning", Question=questionList[14] },
+                new SurveyAnswer { Content="Water pollution", Question=questionList[14] },
+                new SurveyAnswer { Content="Air pollution", Question=questionList[14] },
+                new SurveyAnswer { Content="Deforestation", Question=questionList[14] },
+
+                new SurveyAnswer { Content="Industries", Question=questionList[15] },
+                new SurveyAnswer { Content="Governments", Question=questionList[15] },
+                new SurveyAnswer { Content="Individual people", Question=questionList[15] },
+
+                new SurveyAnswer { Content="Industry", Question=questionList[16] },
+                new SurveyAnswer { Content="Government", Question=questionList[16] },
+                new SurveyAnswer { Content="Environmental groups", Question=questionList[16] },
+                new SurveyAnswer { Content="Individuals", Question=questionList[16] },
+
+                new SurveyAnswer { Content="Bright and hopeful", Question=questionList[17] },
+                new SurveyAnswer { Content="Challenging", Question=questionList[17] },
+                new SurveyAnswer { Content="Depressing", Question=questionList[17] },
+                new SurveyAnswer { Content="Uncertain", Question=questionList[17] },
+
+                new SurveyAnswer { Content="The polluting industries shut down, even if people lose their jobs", Question=questionList[18] },
+                new SurveyAnswer { Content="New technologies can be found to solve our problems", Question=questionList[18] },
+                new SurveyAnswer { Content="People learn to live with less and be more efficient users of energy and materials", Question=questionList[18] },
+                new SurveyAnswer { Content="We find a way to have economic development continue in a way that minimizes pollution", Question=questionList[18] },
+
+                new SurveyAnswer { Content="Not at all", Question=questionList[19] },
+                new SurveyAnswer { Content="Slightly", Question=questionList[19] },
+                new SurveyAnswer { Content="Moderately", Question=questionList[19] },
+                new SurveyAnswer { Content="Very", Question=questionList[19] },
+                new SurveyAnswer { Content="Extremely", Question=questionList[19] },
+
+                new SurveyAnswer { Content="Never", Question=questionList[20] },
+                new SurveyAnswer { Content="Rarely", Question=questionList[20] },
+                new SurveyAnswer { Content="Monthly", Question=questionList[20] },
+                new SurveyAnswer { Content="Weekly", Question=questionList[20] },
+                new SurveyAnswer { Content="Daily", Question=questionList[20] },
+
+                new SurveyAnswer { Content="Wind", Question=questionList[21] },
+                new SurveyAnswer { Content="Solar", Question=questionList[21] },
+                new SurveyAnswer { Content="Nuclear", Question=questionList[21] },
+                new SurveyAnswer { Content="Ethanol", Question=questionList[21] },
+                new SurveyAnswer { Content="Natural gas", Question=questionList[21] },
+                new SurveyAnswer { Content="Coal", Question=questionList[21] },
+                new SurveyAnswer { Content="Other", Question=questionList[21] },
+
+                new SurveyAnswer { Content="Unsatisfactory", Question=questionList[22] },
+                new SurveyAnswer { Content="Poor", Question=questionList[22] },
+                new SurveyAnswer { Content="Fair", Question=questionList[22] },
+                new SurveyAnswer { Content="Good", Question=questionList[22] },
+                new SurveyAnswer { Content="Excellent", Question=questionList[22] },
+
+                new SurveyAnswer { Content="Very dissatisfied", Question=questionList[23] },
+                new SurveyAnswer { Content="Dissatisfied", Question=questionList[23] },
+                new SurveyAnswer { Content="Neutral", Question=questionList[23] },
+                new SurveyAnswer { Content="Satisfied", Question=questionList[23] },
+                new SurveyAnswer { Content="Very satisfied", Question=questionList[23] }
             };
 
             answerList.ForEach(item => context.tbAnswer.Add(item));
