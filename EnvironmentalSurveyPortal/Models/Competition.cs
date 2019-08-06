@@ -30,17 +30,16 @@ namespace EnvironmentalSurveyPortal.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Prize> Prizes { get; set; }
     }
 }

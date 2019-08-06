@@ -112,10 +112,11 @@ namespace EnvironmentalSurveyPortal.Models
         public static bool DeleteUser(string uid)
         {
             var x = GetUserByUID(uid);
-            if (x != null)
+            if (x != null & x.Role != "Admin")
             {
                 db.tbUser.Remove(x);
                 db.SaveChanges();
+                return true;
             }
             return false;
         }
@@ -294,6 +295,23 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Edit Competition Method
+         -----------------------------------*/
+        public static bool EditCompetition(Competition competition)
+        {
+            var x = db.tbCompetition.Find(competition.ID);
+            if (x != null)
+            {
+                x.Name = competition.Name;
+                x.Image = competition.Image;
+                x.Content = competition.Content;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
         Delete Competition Method
          -----------------------------------*/
         public static bool DeleteCompetition(int ID)
@@ -320,11 +338,51 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Get Posts By ID Method
+         -----------------------------------*/
+        public static Post GetPostByID(int ID)
+        {
+            return db.tbPost.FirstOrDefault(p => p.ID == ID);
+        }
+
+        /*----------------------------------
+        Get Posts By Competition ID Method
+         -----------------------------------*/
+        public static IEnumerable<Post> GetPostsByCompetitionID(int ID)
+        {
+            return db.tbPost.Where(p => p.CompetitionID == ID);
+        }
+
+        /*----------------------------------
+        Set Post Status Method
+         -----------------------------------*/
+        public static void SetPostIsSeen(int id)
+        {
+            db.tbPost.FirstOrDefault(item => item.ID == id).Seen = true;
+            db.SaveChanges();
+        }
+
+        /*----------------------------------
+        Update Score Method
+         -----------------------------------*/
+        public static bool UpdateScore(int postID, int score)
+        {
+            var x = db.tbPost.FirstOrDefault(p => p.ID == postID);
+            if (x != null)
+            {
+                x.Score = score;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
         Get All Prize Method
          -----------------------------------*/
-        public static IEnumerable<Prize> GetAllPrize()
+        public static IEnumerable<Competition> GetAllPrize()
         {
-            return db.tbPrize;
+            return db.tbCompetition.Where(c => c.EndDate > DateTime.Now);
         }
 
         /*----------------------------------

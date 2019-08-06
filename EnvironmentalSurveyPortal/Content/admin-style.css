@@ -115,18 +115,25 @@ form .image-preview {
     overflow: hidden;
 }
 
-form .image-preview .upload-wrapper {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    opacity: 0;
-    background-color: rgba(0, 0, 0, 0.40);
-    transition: all 500ms;
-}
+    form .image-preview label.h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    form .image-preview .upload-wrapper {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 0.40);
+        transition: all 500ms;
+    }
 
 form .image-preview:hover .upload-wrapper {
     opacity: 1;
@@ -182,8 +189,9 @@ a.btn {
 
 a.btn span.badge {
     position: absolute;
-    top: -10px;
-    right: 0;
+    top: -13px;
+    right: -10px;
+    z-index: 1;
 }
 
 .card {
@@ -215,4 +223,29 @@ table td {
 
 .form-login .alert {
     border-radius: 25px;
+}
+
+input.post-score {
+    font-weight: bold;
+    font-size: 1.5rem;
+    border: none;
+    background-color: #ffffff;
+    color: #b10000;
+    border-radius: 25px;
+    text-align: center;
+    align-items: center;
+    width: 4rem;
+}
+
+span.rank {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-family: Arial;
+    font-weight: bold;
 }

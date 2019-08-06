@@ -44,7 +44,7 @@
     string[] surveyPages = { "CreateSurvey", "EditSurvey", "SurveyBoard", "Feedback", "Feedbacks", "SurveyAnalysis" };
     string[] userPages = { "CreateAccount", "AllUsers", "EditUser" };
     string[] supportPages = { "EditSupportInfo" };
-    string[] competitionPages = { "CreateCompetition", "AllCompetitions" };
+    string[] competitionPages = { "CreateCompetition","EditCompetition", "AllCompetitions" };
 }
 
 @{ 
@@ -57,31 +57,21 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <!-- Custom fonts for this template-->
-    <link href="~/Content/fontawesome-5.6.3/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="~/Content/fontawesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template-->
     <link href="~/Content/sb-admin-2.min.css" rel="stylesheet">
-    <link href="~/Content/quill.snow.css" rel="stylesheet" />
     <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
-    <link href="~/Content/zebra_tooltips.min.css" rel="stylesheet" />
-    <link href="~/Content/admin-style.css" rel="stylesheet">
+    <link href="~/Content/admin-style.min.css" rel="stylesheet">
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/sweetalert2.min.js"></script>
-    <script src="~/Scripts/quill.min.js"></script>
-    <script src="~/Scripts/zebra_tooltips.min.js"></script>
     <script>
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
             timer: 3000
-        });
-
-        $(document).ready(function () {
-
-            new $.Zebra_Tooltips($('.zebra_tooltips'));
-
         });
     </script>
 </head>
@@ -103,11 +93,11 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item @activeMenu(surveyPages)">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-list-alt"></i>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                        <i class="fas fa-fw fa-chart-pie"></i>
                         <span>Survey</span>
                     </a>
-                    <div id="collapseTwo" class="collapse @showSubMenu(surveyPages)" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapse1" class="collapse @showSubMenu(surveyPages)" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item @activeSubMenu("CreateSurvey")" href="/Admin/CreateSurvey">Create Survey</a>
                             <a class="collapse-item @activeSubMenu("SurveyBoard")" href="/Admin/SurveyBoard">Survey Board</a>
@@ -215,23 +205,12 @@
 
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Name</span>
+                    <a class="nav-link dropdown-toggle" href="#">
                         <img class="img-profile rounded-circle" src="~/Images/icons/icons8-male-user-32-dark.png">
+                        <span class="ml-2 d-none d-lg-inline text-gray-600 small">@User.Name</span>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <img class="img-profile rounded-circle logout" src="~/Images/icons/icons8-shutdown-32.png">
                     </a>
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
-                        </a>
-                       
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
-                            Logout
-                        </a>
-                    </div>
                 </li>
 
             </ul>
@@ -260,25 +239,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger" href="/Admin/Logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="~/Scripts/popper.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -286,7 +246,5 @@
     <!-- Scripts for all pages-->
     <script src="~/Scripts/sb-admin-2.min.js"></script>
 
-    <!-- Main script -->
-    <script src="~/Scripts/admin-script.js"></script>
 </body>
 </html>

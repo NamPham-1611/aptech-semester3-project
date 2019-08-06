@@ -7,69 +7,89 @@
 <div id="content">
     <!-- Begin Page Content -->
     <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mt-4">
+            <h4 class="mb-0 text-gray-800">All Surveys</h4>
+            <a href="/Admin/CreateSurvey" class="d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                <i class="fas fa-plus fa-sm text-white mr-1"></i>New Survey
+            </a>
+        </div>
         <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
-            <div class="card-body">
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h4 class="mb-0 text-gray-800">All Surveys</h4>
-                    <a href="/Admin/CreateSurvey" class="d-sm-inline-block btn btn-sm btn-success shadow-sm">
-                        <i class="fas fa-plus fa-sm text-white mr-1"></i>New Survey
-                    </a>
-                </div>
+            <table class="table table-striped m-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th>Survey Name</th>
+                        <th class="text-center">Survey For</th>
+                        <th class="text-center">Start Date</th>
+                        <th class="text-center">End Date</th>
+                        <th class="text-center">Create Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
 
-                <div>
-                    <table class="table text-gray-800">
-                        <thead>
-                            <tr>
-                                <th class="text-center">ID</th>
-                                <th>Survey Name</th>
-                                <th class="text-center">Survey For</th>
-                                <th class="text-center">Start Date</th>
-                                <th class="text-center">End Date</th>
-                                <th class="text-center">Create Date</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        int? count = null;
+                        if (item.Feedbacks != null)
+                        {
+                            count = item.Feedbacks.Where(f => f.Seen == false).Count();
 
-                        <tbody>
-                            @foreach (var item in Model)
+                            if (count == 0)
                             {
-                                int? count = null;
-                                if(@item.Feedbacks != null)
-                                {
-                                    if(@item.Feedbacks.Count > 0)
-                                    {
-                                        count = @item.Feedbacks.Count;
-                                    }
-                                }
-                                <tr>
-                                    <td class="text-center">@item.ID</td>
-                                    <td class="survey-name">@item.Name</td>
-                                    <td class="text-center">@item.For</td>
-                                    <td class="text-center">@item.StartDate.ToString("MMM-dd-yyyy")</td>
-                                    <td class="text-center">@item.EndDate.ToString("MMM-dd-yyyy")</td>
-                                    <td class="text-center">@item.CreateDate.ToString("MMM-dd-yyyy")</td>
-                                    <td class="text-center">
-                                        <a href="/Admin/SurveyAnalysis/@item.ID" class="btn btn-sm btn-info" title="Feedback Analysis">
-                                            <i class="fas fa-chart-pie"></i>
-                                        </a>
-                                        <a href="/Admin/Feedbacks/@item.ID" class="btn btn-sm btn-dark" title="View All Feedbacks">
-                                            <i class="fas fa-clipboard-list"></i>
-                                            <span class="badge badge-secondary">@count</span>
-                                        </a>
-                                        <a href="/Admin/EditSurvey/@item.ID" class="btn btn-sm btn-warning" title="Edit Survey">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button class="btn btn-sm btn-danger" onclick="requestDeleteSurvey('@item.ID')" title="Delete Survey">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                count = null;
                             }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        }
+                        <tr>
+                            <td class="text-center">@item.ID</td>
+                            <td class="survey-name">@item.Name</td>
+                            <td class="text-center">@item.For</td>
+                            <td class="text-center">@item.StartDate.ToString("MMM-dd-yyyy")</td>
+                            <td class="text-center">@item.EndDate.ToString("MMM-dd-yyyy")</td>
+                            <td class="text-center">@item.CreateDate.ToString("MMM-dd-yyyy")</td>
+                            <td class="text-center">
+                                <a href="/Admin/SurveyAnalysis/@item.ID" class="btn btn-sm btn-info" title="Feedback Analysis">
+                                    <i class="fas fa-chart-bar"></i>
+                                </a>
+                                <a href="/Admin/Feedbacks/@item.ID" class="btn btn-sm btn-dark" title="View All Feedbacks">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <span class="badge badge-danger">@count</span>
+                                </a>
+                                <a href="/Admin/EditSurvey/@item.ID" class="btn btn-sm btn-warning" title="Edit Survey">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger" onclick="requestDeleteSurvey('@item.ID')" title="Delete Survey">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="card-footer text-right">Total @Model.Count()</div>
         </div>
     </div>
 </div>
+
+<script>
+    function requestDeleteSurvey(id) {
+        Swal.fire({
+            title: 'Are you sure you want to delete this survey ?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.get(
+                    "/Admin/DeleteSurvey/" + id,
+                    function (res) {
+                        window.location.reload();
+                    }
+                );
+            }
+        });
+    }
+</script>

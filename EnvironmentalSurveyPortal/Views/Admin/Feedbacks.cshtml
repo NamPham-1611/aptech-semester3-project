@@ -2,32 +2,33 @@
 @{
     ViewBag.Title = "Feedbacks";
     Layout = "~/Views/Shared/_Admin.cshtml";
+
+    var feedbacks = Model.ToArray();
 }
 
 <div id="content">
     <!-- Begin Page Content -->
     <div class="container">
+        <h4 class="mt-4 text-gray-800">@feedbacks.First().Survey.Name <sup class="text-gray-600">Feedbacks</sup></h4>
         <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
-            <div class="card-body">
-                <h4>Total @Model.Count() Feedbacks</h4>
-
-                <table class="table">
-                    <tr>
-                        <th>No</th>
-                        <th>Submitter</th>
-                        <th class="text-center">Time</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                    @{ int i = 0; }
-                    @foreach (var item in Model)
+            <table class="table table-striped text-center m-0">
+                <tr>
+                    <th>No</th>
+                    <th>Submitter</th>
+                    <th class="text-center">Time</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                @if (feedbacks.Length > 0)
+                {
+                    for (int i = 0; i < feedbacks.Length; i++)
                     {
                         <tr>
-                            <td>@(++i)</td>
-                            <td>@item.User.UID</td>
-                            <td class="text-center">@item.Time</td>
+                            <td>@(i + 1)</td>
+                            <td>@feedbacks[i].User.UID</td>
+                            <td class="text-center">@feedbacks[i].Time</td>
                             <td class="text-center">
-                                @if (item.Seen)
+                                @if (feedbacks[i].Seen)
                                 {
                                     <span class="badge badge-secondary">Seen</span>
                                 }
@@ -37,12 +38,19 @@
                                 }
                             </td>
                             <td class="text-center">
-                                @Html.ActionLink("View", "Feedback", new { id = item.ID }, new { @class = "btn btn-sm btn-info" })
+                                @Html.ActionLink("View", "Feedback", new { id = feedbacks[i].ID }, new { @class = "btn btn-sm btn-info" })
                             </td>
                         </tr>
                     }
-                </table>
-            </div>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No feedbacks</td>
+                    </tr>
+                }
+            </table>
+            <div class="card-footer text-right">Total @Model.Count()</div>
         </div>
     </div>
 </div>

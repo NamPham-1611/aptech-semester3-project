@@ -7,11 +7,12 @@
         <div class="card-body p-0 d-flex justify-content-center">
             <div class="col-12 col-lg-9 py-5 px-3 px-md-5">
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Create New Competition</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Edit Competition</h1>
                 </div>
 
-                <form id="form-create-competition" class="user">
+                <form id="form-edit-competition" class="user">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
 
                     <div class="form-group">
                         @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "form-control form-control-user form-control-user-md", placeholder = "Competition Name" } })
@@ -19,16 +20,18 @@
                     </div>
 
                     <div class="form-group">
-                        <div id="editor" style="height: 300px;"></div>
+                        <div id="editor" style="height: 300px;">
+                            @Html.Raw(Model.Content)
+                        </div>
                         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Image, new { @class = "ml-3 text-gray-800" })
-                        <input hidden type="text" name="Image" value="" />
+                        <input hidden type="text" name="Image" value="@Model.Image" />
                         <div class="image-preview">
-                            <img style="height: 100%; width:auto;" src="" />
                             <label class="h1 text-center">Photo</label>
+                            <img style="height: 100%; width:auto;" src="@Model.Image" />
                             <div class="upload-wrapper">
                                 <label class="btn btn-primary">
                                     <i class="fas fa-upload mr-2"></i>Upload
@@ -61,8 +64,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group mt-5">
-                        <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Create Competition</button>
+                    <div class="mt-5">
+                        <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -76,7 +79,7 @@
         placeholder: 'Write content of competition here...'
     });
 
-    $('#form-create-competition').submit(function (e) {
+    $('#form-edit-competition').submit(function (e) {
         e.preventDefault();
 
         var formData = new FormData(this);
@@ -87,7 +90,7 @@
         formData.append("Content", content);
 
         $.ajax({
-            url: "/Admin/CreateCompetition",
+            url: "/Admin/EditCompetition",
             type: "POST",
             dataType: false,
             contentType: false,

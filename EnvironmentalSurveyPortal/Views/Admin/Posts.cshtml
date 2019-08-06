@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Post>
+@{
+    ViewBag.Title = "Posts of Competitions";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
+            <div class="card-body">
+                <h4>Total @Model.Count() posts</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>No</th>
+                        <th>Submitter</th>
+                        <th class="text-center">Time</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>@item.User.UID</td>
+                            <td class="text-center">@item.Time</td>
+                            <td class="text-center">
+                                @if (item.Seen)
+                                {
+                                    <span class="badge badge-secondary">Seen</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">New</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("View", "Post", new { id = item.ID }, new { @class = "btn btn-sm btn-info" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

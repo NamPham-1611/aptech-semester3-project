@@ -18,10 +18,14 @@ namespace EnvironmentalSurveyPortal.Models
 
         public DateTime Time { get; set; } = DateTime.Now;
 
+        public int Score { get; set; }
+
+        public bool Seen { get; set; } = false;
+
         public string UserUID { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int CompetitionID { get; set; }
-        public Competition Competition { get; set; }
+        public virtual Competition Competition { get; set; }
     }
 }

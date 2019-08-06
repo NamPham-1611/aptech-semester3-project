@@ -88,19 +88,19 @@
                         </div>
                         <div class="w-boxed-post owl-carousel owl-theme">
                             @{
-                                var prizes = ((IEnumerable<EnvironmentalSurveyPortal.Models.Prize>)ViewBag.Prizes).GroupBy(p => p.Competition.ID);
+                                var competitions = ((IEnumerable<EnvironmentalSurveyPortal.Models.Competition>)ViewBag.Prizes);
                                 int index = 0;
                             }
-                            @foreach (var prize in prizes)
+                            @foreach (var competition in competitions)
                             {
                                 index = 0;
 
                                 <ul>
                                     <li>
-                                        <h6 class="text-white text-center py-3 bg-danger m-0">@prize.First().Competition.Name</h6>
+                                        <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
                                     </li>
 
-                                    @foreach (var item in prize)
+                                    @foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3))
                                     {
                                         index++;
 
@@ -118,6 +118,13 @@
                                                     </div>
                                                 </div>
                                             </a>
+                                        </li>
+                                    }
+                                    @if (index == 0)
+                                    {
+                                        <li>
+                                            <div class="text-center mt-5 mb-1">Date of publication</div>
+                                            <div class="text-center mt-1 mb-5">@competition.EndDate.AddDays(1).ToString("MMM-dd-yyyy")</div>
                                         </li>
                                     }
                                 </ul>

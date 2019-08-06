@@ -67,6 +67,30 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
+        Create Account Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult CreateAccount(RegisterAccount acc)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = new User { UID = acc.UID, Name = acc.Name, Password = acc.Password, Class = acc.Class, Specification = acc.Specification, Role = acc.Role, Section = acc.Section };
+
+                    if (DAO.InsertUser(user))
+                    {
+                        return new HttpStatusCodeResult(200);
+                    }
+                }
+                Response.StatusCode = 201;
+                return PartialView("CreateAccountForm");
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
         Edit User Page Get Action
          -----------------------------------*/
         public ActionResult EditUser(string id)
@@ -108,8 +132,11 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             if (Session["User"] != null)
             {
-                DAO.DeleteUser(id);
-                return RedirectToAction("AllUsers");
+                if (DAO.DeleteUser(id))
+                {
+                    return RedirectToAction("AllUsers");
+                }
+                return new HttpStatusCodeResult(201);
             }
             return RedirectToAction("Login");
         }
@@ -315,7 +342,59 @@ namespace EnvironmentalSurveyPortal.Controllers
                     return new HttpStatusCodeResult(200);
                 }
                 Response.StatusCode = 201;
-                return PartialView("CreateCompetitionForm", competition);
+                return PartialView("CreateCompetitionForm", DAO.GetCompetitionByID(competition.ID));
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Get /Admin/EditCompetition
+         -----------------------------------*/
+        public ActionResult EditCompetition(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetCompetitionByID(ID));
+            }
+            return RedirectToAction("Login");
+
+        }
+
+
+        /*----------------------------------
+        Post /Admin/EditCompetition
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult EditCompetition(Competition competition)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (competition.StartDate < competition.EndDate)
+                    {
+                        if (DAO.EditCompetition(competition))
+                        {
+                            return new HttpStatusCodeResult(200);
+                        }
+
+                        Response.StatusCode = 201;
+                        ModelState.AddModelError("", "Error. Server cannot edit competition now !");
+                    }
+                    else
+                    {
+                        Response.StatusCode = 201;
+                        ModelState.AddModelError("", "End date must be greater than start date !");
+                    }
+                }
+                else
+                {
+                    Response.StatusCode = 201;
+                }
+
+                return PartialView("EditCompetitionForm", competition);
             }
             return RedirectToAction("Login");
 
@@ -335,12 +414,73 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
+        Get /Admin/Posts
+         -----------------------------------*/
+        public ActionResult Posts(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetPostsByCompetitionID(ID));
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Get /Admin/Post
+         -----------------------------------*/
+        public ActionResult Post(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                DAO.SetPostIsSeen(ID);
+                return View(DAO.GetPostByID(ID));
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Get /Admin/Award
+         -----------------------------------*/
+        public ActionResult Award(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetCompetitionByID(ID));
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Post /Admin/UpdateScore
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult UpdateScore(int postID, int score)
+        {
+            if (Session["User"] != null)
+            {
+                if (DAO.UpdateScore(postID, score))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                return new HttpStatusCodeResult(201);
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
         Feedbacks Get Action
          -----------------------------------*/
         public ActionResult Feedbacks(int ID)
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetFeedbackBySurveyID(ID));
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetFeedbackBySurveyID(ID));
+            }
+            return RedirectToAction("Login");
         }
 
         /*----------------------------------
@@ -389,29 +529,6 @@ namespace EnvironmentalSurveyPortal.Controllers
 
 
         /*----------------------------------
-        Create Account Post Action
-         -----------------------------------*/
-        [HttpPost]
-        public ActionResult CreateAccount(RegisterAccount acc)
-        {
-            if (Session["User"] != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = new User { UID = acc.UID, Name = acc.Name, Password = acc.Password, Class = acc.Class, Specification = acc.Specification, Role = acc.Role, Section = acc.Section };
-
-                    if (DAO.InsertUser(user))
-                    {
-                        return RedirectToAction("AllUsers");
-                    }
-                }
-                return PartialView("CreateAccountForm");
-            }
-            return RedirectToAction("Login");
-
-        }
-
-        /*----------------------------------
         Edit Support Infomation Page Get Action
         -----------------------------------*/
         public ActionResult EditSupportInfo()
@@ -446,10 +563,15 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public string Upload(HttpPostedFileBase file)
         {
-            var fileName = Path.GetFileName(file.FileName);
-            var physicPath = Server.MapPath("~/Images/" + fileName);
-            file.SaveAs(physicPath);
-            return "/Images/" + fileName;
+            if (Session["User"] != null)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var physicPath = Server.MapPath("~/Images/" + fileName);
+                file.SaveAs(physicPath);
+                return "/Images/" + fileName;
+            }
+            return "Not Authorized";
+
         }
 
         /*----------------------------------
@@ -467,11 +589,16 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public string DeleteAnswer(int answerID)
         {
-            if (DAO.DeleteAnswer(answerID))
+            if (Session["User"] != null)
             {
-                return "OK";
+                if (DAO.DeleteAnswer(answerID))
+                {
+                    return "OK";
+                }
+                return "Error";
             }
-            return "Error";
+            return "Not Authorized";
+
         }
 
         /*----------------------------------
@@ -489,11 +616,16 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public string DeleteQuestion(int questionID)
         {
-            if (DAO.DeleteQuestion(questionID))
+            if (Session["User"] != null)
             {
-                return "OK";
+                if (DAO.DeleteQuestion(questionID))
+                {
+                    return "OK";
+                }
+                return "Error";
             }
-            return "Error";
+            return "Not Authorized";
+
         }
     }
 }

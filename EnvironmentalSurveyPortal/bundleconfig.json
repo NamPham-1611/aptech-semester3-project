@@ -1,0 +1,38 @@
+[
+  {
+    "outputFileName": "Content/fontawesome.min.css",
+    "inputFiles": [
+      "Content/fontawesome.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/client-style.min.css",
+    "inputFiles": [
+      "Content/client-style.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/admin-style.min.css",
+    "inputFiles": [
+      "Content/admin-style.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/client-script.min.js",
+    "inputFiles": [
+      "Scripts/client-script.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/responsive-style.min.css",
+    "inputFiles": [
+      "Content/responsive-style.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/sb-admin-2.min.js",
+    "inputFiles": [
+      "Scripts/sb-admin-2.js"
+    ]
+  }
+]

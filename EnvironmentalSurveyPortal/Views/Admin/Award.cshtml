@@ -1,0 +1,52 @@
+﻿@model EnvironmentalSurveyPortal.Models.Competition
+@{
+    ViewBag.Title = "Rank of Competition";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    var posts = Model.Posts.Where(p => p.Score > 0).OrderByDescending(p => p.Score).ToArray();
+}
+
+@functions{
+    Random rand = new Random();
+    string generateGRB()
+    {
+        return string.Format("rgb({0},{1},{2})", rand.Next(255), rand.Next(255), rand.Next(255));
+    }
+}
+
+<div id="content">
+    <div class="container">
+        <h4 class="mt-4 text-gray-800">@Model.Name <sup class="text-gray-700">RANK</sup></h4>
+        <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
+            <table class="table table-striped text-center">
+                <tr class="bg-primary text-gray-100">
+                    <th>Rank</th>
+                    <th>UID</th>
+                    <th>FullName</th>
+                    <th>Score</th>
+                </tr>
+                @if (posts.Length > 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i == posts.Length)
+                        {
+                            break;
+                        }
+                        <tr>
+                            <td><span class="rank" style="background-color: @generateGRB()">@(i + 1)</span></td>
+                            <td>@(posts[i] != null ? posts[i].User.UID : "")</td>
+                            <td>@(posts[i] != null ? posts[i].User.Name : "")</td>
+                            <td>@(posts[i] != null ? posts[i].Score : 0)</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No participants</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

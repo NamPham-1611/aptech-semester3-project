@@ -18,6 +18,17 @@
         return ( "#" +Math.random().toString(16).slice(2, 8) );
     }
 
+    function randomNum() {
+      return Math.floor(Math.random() * 256);
+    }
+    
+    function randomRGB() {
+      var red = randomNum();
+      var green = randomNum();
+      var blue = randomNum();
+      return (`rgb(${red},${green},${blue})`);
+    }
+
 </script>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -159,7 +170,7 @@
             answers.forEach(function (item, i) {
                 labels.push(item.ID);
                 data.push(item.Count);
-                colors.push(getColor());
+                colors.push(randomRGB());
             });
 
             // Area Chart
@@ -283,7 +294,7 @@
                     display: false
                 },
                 cutoutPercentage: 70,
-                rotation: -1.4 * Math.PI
+                rotation: -1.5 * Math.PI
             },
         });
 

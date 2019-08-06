@@ -18,7 +18,6 @@ namespace EnvironmentalSurveyPortal.Models
         public virtual DbSet<Post> tbPost { get; set; }
         public virtual DbSet<SurveyQuestion> tbQuestion { get; set; }
         public virtual DbSet<SurveyAnswer> tbAnswer { get; set; }
-        public virtual DbSet<Prize> tbPrize { get; set; }
         public virtual DbSet<Feedback> tbFeedback { get; set; }
         public virtual DbSet<FeedbackAnswer> tbFeedbackAnswer { get; set; }
         public virtual DbSet<Support> tbSupport { get; set; }
@@ -30,7 +29,7 @@ namespace EnvironmentalSurveyPortal.Models
         }
     }
 
-    public class DBInit : DropCreateDatabaseAlways<SurveyDB>
+    public class DBInit : DropCreateDatabaseIfModelChanges<SurveyDB>
     {
         protected override void Seed(SurveyDB context)
         {
@@ -293,26 +292,6 @@ namespace EnvironmentalSurveyPortal.Models
             };
 
             competitionList.ForEach(item => context.tbCompetition.Add(item));
-
-            /*----------------------------------
-            Init Prize Data
-            -----------------------------------*/
-            List<Prize> prizeList = new List<Prize>
-            {
-                new Prize{User=userList[0], Competition=competitionList[0]},
-                new Prize{User=userList[1], Competition=competitionList[0]},
-                new Prize{User=userList[2], Competition=competitionList[0]},
-
-                new Prize{User=userList[0], Competition=competitionList[1]},
-                new Prize{User=userList[1], Competition=competitionList[1]},
-                new Prize{User=userList[2], Competition=competitionList[1]},
-
-                new Prize{User=userList[0], Competition=competitionList[2]},
-                new Prize{User=userList[1], Competition=competitionList[2]},
-                new Prize{User=userList[2], Competition=competitionList[2]}
-            };
-
-            prizeList.ForEach(item => context.tbPrize.Add(item));
 
             /*----------------------------------
             Init Support Data

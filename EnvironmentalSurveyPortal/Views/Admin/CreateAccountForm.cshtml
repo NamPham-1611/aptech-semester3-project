@@ -50,21 +50,16 @@
                         </select>
                         @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                     </div>
-                    <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>
+                    
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-@if (ViewBag.Successed != null)
-{
-    <script>
-        Toast.fire({
-            type: 'success',
-            title: 'Create account successfully'
-        })
-    </script>
-}
+
 <script>
     $("form").submit(function (e) {
         e.preventDefault();
@@ -77,9 +72,15 @@
             contentType: false,
             processData: false,
             data: formData,
-            success: function (res) {
-                $("#content").html(res);
+            statusCode: {
+                200: function (res) {
+                    location.href = "/Admin/AllUsers";
+                },
+                201: function (res) {
+                    $("#content").html(res);
+                }
             }
+
         });
     });
 </script>

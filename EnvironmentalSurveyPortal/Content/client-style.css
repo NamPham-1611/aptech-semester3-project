@@ -320,6 +320,59 @@ a{
 	cursor: pointer;
 	color: #FFF;
 }
+
+@font-face {
+    font-family: Quicksand;
+    src: url(../fonts/quicksand/Quicksand-Light.ttf);
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: Quicksand;
+    src: url(../fonts/quicksand/Quicksand-Regular.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Quicksand;
+    src: url(../fonts/quicksand/Quicksand-Bold.ttf);
+    font-weight: bold;
+}
+
+.page-item .page-link {
+    color: #dc2430;
+}
+
+.page-item.active .page-link {
+    background-color: #dc2430;
+    color: #ffffff;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.page-item .page-link:focus {
+    background-color: #dc2430;
+    color: #ffffff;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.editor {
+    height: 500px !important;
+}
+
+#registerModal .custom-control-label {
+    line-height: 1.9;
+}
+
+.disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 /*end of part 2----------------------------------------------------*/
 
 

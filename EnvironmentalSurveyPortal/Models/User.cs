@@ -38,7 +38,5 @@ namespace EnvironmentalSurveyPortal.Models
         public bool isActive { get; set; } = false;
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
-
-        public virtual ICollection<Prize> Prizes { get; set; }
     }
 }
