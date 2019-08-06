@@ -86,8 +86,14 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             if (Session["User"] != null)
             {
-                DAO.UpdateUser(eUser);
-                return RedirectToAction("AllUsers");
+                if (ModelState.IsValid)
+                {
+                    if (DAO.UpdateUser(eUser))
+                    {
+                        return RedirectToAction("AllUsers");
+                    }
+                }
+                return View(eUser);
             }
             return RedirectToAction("Login");
 
