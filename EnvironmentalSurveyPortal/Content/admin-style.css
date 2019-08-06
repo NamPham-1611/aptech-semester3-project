@@ -186,10 +186,23 @@ a.btn span.badge {
     right: 0;
 }
 
-table th.survey-name,
-table td.survey-name {
-    max-width: 300px;
+.card {
+    overflow-x: auto !important;
 }
+
+table th,
+table td {
+    vertical-align: middle !important;
+}
+
+    table td .btn{
+        margin: 2px 0;
+    }
+
+    table th.survey-name,
+    table td.survey-name {
+        max-width: 300px;
+    }
 
 .form-login {
     position:absolute;

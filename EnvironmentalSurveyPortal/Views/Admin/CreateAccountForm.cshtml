@@ -44,10 +44,9 @@
 
                     <div class="form-group">
                         <select class="form-control form-control-user form-control-user-lg" name="Role">
-                            <option value="">Role</option>
                             <option value="admin">Admin</option>
                             <option value="staff">Faculty/Staff</option>
-                            <option value="student">Student</option>
+                            <option selected value="student">Student</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                     </div>

@@ -11,7 +11,7 @@ function requestDeleteUser(uid) {
             $.get(
                 "/Admin/DeleteUser/" + uid,
                 function (res) {
-                    window.location.reload();
+                    location.href = "/Admin/AllUsers";
                 }
             );
         }

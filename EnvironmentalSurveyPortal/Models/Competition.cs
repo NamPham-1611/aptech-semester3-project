@@ -25,13 +25,22 @@ namespace EnvironmentalSurveyPortal.Models
         public string Image { get; set; }
 
         [Required]
+        [StringLength(15)]
+        public string For { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime EndDate { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
+        public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Prize> Prizes { get; set; }
     }
 }

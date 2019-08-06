@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Create New Competition";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div id="content">
+    @Html.Partial("CreateCompetitionForm", new ViewDataDictionary<EnvironmentalSurveyPortal.Models.Competition>())
+</div>

@@ -44,6 +44,7 @@
     string[] surveyPages = { "CreateSurvey", "EditSurvey", "SurveyBoard", "Feedback", "Feedbacks", "SurveyAnalysis" };
     string[] userPages = { "CreateAccount", "AllUsers", "EditUser" };
     string[] supportPages = { "EditSupportInfo" };
+    string[] competitionPages = { "CreateCompetition", "AllCompetitions" };
 }
 
 @{ 
@@ -110,6 +111,20 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item @activeSubMenu("CreateSurvey")" href="/Admin/CreateSurvey">Create Survey</a>
                             <a class="collapse-item @activeSubMenu("SurveyBoard")" href="/Admin/SurveyBoard">Survey Board</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item @activeMenu(competitionPages)">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-list-alt"></i>
+                        <span>Competitions</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse @showSubMenu(competitionPages)" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item @activeSubMenu("CreateCompetition")" href="/Admin/CreateCompetition">Create Competition</a>
+                            <a class="collapse-item @activeSubMenu("Competitions")" href="/Admin/AllCompetitions">All Competitions</a>
                         </div>
                     </div>
                 </li>

@@ -15,6 +15,7 @@ namespace EnvironmentalSurveyPortal.Models
         public virtual DbSet<User> tbUser { get; set; }
         public virtual DbSet<Survey> tbSurvey { get; set; }
         public virtual DbSet<Competition> tbCompetition { get; set; }
+        public virtual DbSet<Post> tbPost { get; set; }
         public virtual DbSet<SurveyQuestion> tbQuestion { get; set; }
         public virtual DbSet<SurveyAnswer> tbAnswer { get; set; }
         public virtual DbSet<Prize> tbPrize { get; set; }
@@ -286,9 +287,9 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<Competition> competitionList = new List<Competition>
             {
-                new Competition { Name="Competition Demo One", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
-                new Competition { Name="Competition Demo Two", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
-                new Competition { Name="Competition Demo Three", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo One", Content="This i an content", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo Two", Content="This i an content", For="Faculty/Staff", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo Three", Content="This i an content", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
             };
 
             competitionList.ForEach(item => context.tbCompetition.Add(item));

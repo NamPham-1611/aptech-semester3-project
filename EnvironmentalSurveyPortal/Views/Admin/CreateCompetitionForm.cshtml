@@ -1,0 +1,122 @@
+﻿@model EnvironmentalSurveyPortal.Models.Competition
+
+<div class="container-fluid">
+    <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
+        <div class="card-body p-0 d-flex justify-content-center">
+            <div class="col-12 col-lg-9 py-5 px-3 px-md-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Create New Competition</h1>
+                </div>
+
+                <form id="form-create-competition" class="user">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "form-control form-control-user form-control-user-md", placeholder = "Competition Name" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <div id="editor" style="height: 300px;"></div>
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Image, new { @class = "ml-3 text-gray-800" })
+                        <input hidden type="text" name="Image" value="" />
+                        <div class="image-preview">
+                            <img style="height: 100%; width:auto;" src="" />
+                            <label class="h1 text-center">Photo</label>
+                            <div class="upload-wrapper">
+                                <label class="btn btn-primary">
+                                    <i class="fas fa-upload mr-2"></i>Upload
+                                    <input type="file" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
+                            <select class="form-control form-control-user form-control-user-md" name="For">
+                                <option value="Student">Student</option>
+                                <option value="Faculty/Staff">Faculty/Staff</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.For, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg-4">
+                            @Html.LabelFor(model => model.StartDate, new { @class = "ml-3 text-gray-800" })
+                            @Html.EditorFor(model => model.StartDate, null, new { htmlAttributes = new { @class = "form-control date-control-user date-control-user-md" } })
+                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg-4">
+                            @Html.LabelFor(model => model.EndDate, new { @class = "ml-3 text-gray-800" })
+                            @Html.EditorFor(model => model.EndDate, null, new { htmlAttributes = new { @class = "form-control date-control-user date-control-user-md" } })
+                            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-user btn-block">Create Survey</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Write content of competition here...'
+    });
+
+    $('#form-create-competition').submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        var content = this.querySelector(".ql-editor").innerHTML;
+        content = content == "<p><br></p>" ? "" : content;
+
+        formData.append("Content", content);
+
+        $.ajax({
+            url: "/Admin/CreateCompetition",
+            type: "POST",
+            dataType: false,
+            contentType: false,
+            data: formData,
+            processData: false,
+            statusCode: {
+                200: function (res) {
+                    location.href = "/Admin/AllCompetitions";
+                },
+                201: function(res) {
+                    $('#content').html(res);
+                }
+            }
+        });
+
+    });
+
+    $('form .image-preview input').change(function () {
+        var formData = new FormData();
+        formData.append("file", this.files[0]);
+
+        $.ajax({
+            url: "/Admin/Upload",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (res) {
+                $('form .image-preview .h1').remove();
+                $('form .image-preview img').attr("src", res);
+                $('form input[name="Image"]').val(res);
+            }
+        });
+    });
+</script>
+

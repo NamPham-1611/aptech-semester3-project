@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-5.6.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/quill.snow.css">
     <link rel="stylesheet" type="text/css" href="~/Content/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
     <link rel="stylesheet" type="text/css" href="~/Content/client-custom-style.css">
@@ -54,7 +55,10 @@
                         <a href="/" class="material-button @activeMenu("Index")">HOME</a>
                     </li>
                     <li>
-                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">SURVEY BOARD</a>
+                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">SURVEYS</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Competitions" class="material-button submenu-toggle @activeMenu("Competitions")">COMPETITIONS</a>
                     </li>
                     <li>
                         <a href="/Home/Support" class="material-button submenu-toggle @activeMenu("Support")">SUPPORT</a>
@@ -140,52 +144,7 @@
                 <div class="sidebar-seperate"></div>
             </div>
             <!-- mobile menu end -->
-            <!-- sidebar menu start -->
-            <ul class="sidebar-menu">
-                <li class="active">
-                    <a href="/" class="material-button">
-                        <span class="menu-icon"><i class="material-icons">&#xE88A;</i></span>
-                        <span class="menu-label">Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Home/SurveyBoard" class="material-button">
-                        <span class="menu-icon"><i class="material-icons">&#xE038;</i></span>
-                        <span class="menu-label">Survey Board</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Home/Support" class="material-button">
-                        <span class="menu-icon"><i class="material-icons">&#xE0BF;</i></span>
-                        <span class="menu-label">Support</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Home/FAQ" class="material-button">
-                        <span class="menu-icon"><i class="material-icons">&#xE866;</i></span>
-                        <span class="menu-label">FAQ's</span>
-                    </a>
-                </li>
 
-            </ul>
-            <!-- sidebar menu end -->
-
-            <div class="sidebar-seperate"></div>
-
-            <!-- sidebar menu start -->
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="https://facebook.com" class="facebook material-button">
-                        <span class="menu-label">Facabook</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://twitter.com" class="twitter material-button">
-                        <span class="menu-label">Twitter</span>
-                    </a>
-                </li>
-            </ul>
-            <!-- sidebar menu end -->
         </div>
     </div>
     <!-- Left sidebar menu end -->
@@ -249,6 +208,7 @@
 
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script src="~/Scripts/quill.min.js"></script>
     <script src="~/Scripts/sweetalert2.min.js"></script>
     <script src="~/Scripts/client-script.js"></script>
     <script>

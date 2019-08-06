@@ -19,7 +19,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             ViewBag.User = Auth.CheckLoginState(Request);
             ViewBag.Prizes = DAO.GetAllPrize().ToList();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
-            ViewBag.Competitions = DAO.GetAllCompetition();
+            ViewBag.Competitions = DAO.GetLatestCompetitions(4);
             return View(DAO.GetPaginationData(currentPage));
         }
 
@@ -44,6 +44,40 @@ namespace EnvironmentalSurveyPortal.Controllers
             ViewBag.Prizes = DAO.GetAllPrize();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetSurveyByID(id));
+        }
+
+        /*----------------------------------
+        Get /Home/Competitions
+         -----------------------------------*/
+        public ActionResult Competitions()
+        {
+            ViewBag.User = Auth.CheckLoginState(Request);
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
+            return View(DAO.GetAllCompetition());
+        }
+
+        /*----------------------------------
+        Get /Home/Competition
+         -----------------------------------*/
+        public ActionResult Competition(int id)
+        {
+            ViewBag.User = Auth.CheckLoginState(Request);
+            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Popular = DAO.GetPopularSurveys(5);
+            return View(DAO.GetCompetitionByID(id));
+        }
+
+        /*----------------------------------
+        Get /Home/Post
+         -----------------------------------*/
+        public ActionResult Post(Post post)
+        {
+            if (DAO.InsertPost(post))
+            {
+                return new HttpStatusCodeResult(200);
+            }
+            return new HttpStatusCodeResult(201);
         }
 
         /*----------------------------------

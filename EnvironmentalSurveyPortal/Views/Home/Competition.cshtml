@@ -1,4 +1,4 @@
-﻿@model EnvironmentalSurveyPortal.Models.Survey
+﻿@model EnvironmentalSurveyPortal.Models.Competition
 
 @{
     ViewBag.Title = @Model.Name;
@@ -11,7 +11,7 @@
         <div class="content-body card">
             @if (ViewBag.User == null)
             {
-                <div class="alert alert-danger h5 mt-4 text-center">You need login to view this survey</div>
+                <div class="alert alert-danger h5 mt-4 text-center">You need login to view this competition</div>
             }
             else if (ViewBag.User.Role == Model.For)
             {
@@ -21,31 +21,22 @@
                 }
                 else if (DateTime.Now > Model.EndDate)
                 {
-                    <div class="alert alert-danger h5 mt-4 text-center">Expired Survey</div>
+                    <div class="alert alert-danger h5 mt-4 text-center">Expired Competition</div>
                 }
                 else
                 {
                     <div class="card-body">
                         <h4 class="text-center text-uppercase text-danger">@Model.Name</h4>
+                        <div>
+                            <div class="ql-container">
+                                @Html.Raw(Model.Content)
+                            </div>
+                        </div>
+                        <hr />
                         <form id="form-survey-feedback">
-                            <input type="hidden" name="SurveyID" value="@Model.ID" />
-                            <input type="hidden" name="UserUID" value="@(ViewBag.User != null ? ViewBag.User.UID : "")" />
-                            @{ var countQuestions = 0; }
-                            @foreach (var question in Model.Questions)
-                            {
-                                <h6 class="mt-5">@(++countQuestions + ". " + question.Content)</h6>
-                                <div class="row">
-                                    @foreach (var answer in question.Answers)
-                                    {
-                                        <div class="col-6">
-                                            <div class="custom-control custom-radio disable-select">
-                                                <input type="radio" name="@("question" + question.ID)" id="@("answer" + answer.ID)" class="custom-control-input" q-id="@question.ID" a-id="@answer.ID">
-                                                <label class="custom-control-label" for="@("answer" + answer.ID)">@answer.Content</label>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            }
+                            <div class="form-group">
+                                <div id="editor" style="height: 400px"></div>
+                            </div>
                             <div class="mt-4 text-center">
                                 <button type="submit" class="btn btn-danger">Submit</button>
                             </div>
@@ -59,14 +50,14 @@
                             End Date: <strong>@Model.EndDate.ToString("MMM-dd-yyyy")</strong>
                         </div>
                         <div>
-                            <span class="text-black-50">@Model.Feedbacks.Count Practipates</span>
+                            <span class="text-black-50">@Model.Posts.Count Practipates</span>
                         </div>
                     </div>
                 }
             }
             else
             {
-                <div class="alert alert-danger h5 mt-4 text-center">This survey is for @Model.For</div>
+                <div class="alert alert-danger h5 mt-4 text-center">This competition is for @Model.For</div>
             }
         </div>
 
@@ -157,63 +148,62 @@
 </section>
 <script>
 
-    $("#form-survey-feedback").submit(function (e) {
+    new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Write your post here...'
+    });
 
-            e.preventDefault();
+    $("form").submit(function (e) {
 
-            var answers = [ ];
+        e.preventDefault();
 
-            var radios = $(this).find("input[type='radio']:checked");
+        var content = this.querySelector(".ql-editor").innerHTML;
+        content = content == "<p><br></p>" ? "" : content;
 
-            radios.map(function (i, item) {
-                answers.push({
-                    AnswerID: item.getAttribute('a-id'),
-                    Question: { ID: item.getAttribute('q-id') }
-                });
-            });
+        if (content != "") {
 
             var data = {
-                feedback: {
-                    SurveyID: @Model.ID,
-                    UserID: "@(ViewBag.User != null ? ViewBag.User.UID : "")",
-                    Answers: answers
+                post: {
+                    Content: content,
+                    CompetitionID: @Model.ID,
+                    UserUID: "@ViewBag.User.UID"
                 }
             };
 
-            if (answers.length == @Model.Questions.Count) {
-                $.ajax({
-                    url: "/Home/Feedback",
-                    type: "POST",
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    statusCode: {
-                        200: function (responseObject, textStatus, jqXHR) {
-                            Swal.fire({
-                                title: 'Successful. Your post has been submitted !',
-                                type: 'success',
-                                showCancelButton: false,
-                                confirmButtonText: 'Close'
-                            });
-                        },
-                        201: function (res, textStatus, errorThrown) {
-                            Swal.fire({
-                                title: 'Error. Cannot process your post at this time !',
-                                type: 'error',
-                                showCancelButton: false,
-                                confirmButtonText: 'Close'
-                            });
-                        }
+            $.ajax({
+                url: "/Home/Post",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                processData: false,
+                statusCode: {
+                    200: function (responseObject, textStatus, jqXHR) {
+                        Swal.fire({
+                            title: 'Successful. Your post has been submitted !',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Close'
+                        });
+                    },
+                    201: function (res, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: 'Error. Cannot process your post at this time !',
+                            type: 'error',
+                            showCancelButton: false,
+                            confirmButtonText: 'Close'
+                        });
                     }
-                });
-            } else {
-                Swal.fire({
-                    title: 'You must complete all questions !',
-                    type: 'warning',
-                    showCancelButton: false,
-                    confirmButtonText: 'Close'
-                });
-            }
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'You must complete your post !',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonText: 'Close'
+            });
+        }
 
-        });
+    });
 </script>

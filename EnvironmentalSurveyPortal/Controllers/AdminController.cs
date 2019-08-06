@@ -34,7 +34,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                 return RedirectToAction("SurveyBoard");
             }
             return View();
-            
+
         }
 
         /*----------------------------------
@@ -49,6 +49,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                 if (x.Role.ToLower() == "admin")
                 {
                     Session["User"] = x;
+                    Session.Timeout = 60;
                     return "OK";
                 }
                 return "User is not authorized !";
@@ -141,6 +142,10 @@ namespace EnvironmentalSurveyPortal.Controllers
 
         }
 
+
+        /*----------------------------------
+        Get /Admin/SurveyBorad
+         -----------------------------------*/
         public ActionResult SurveyBoard()
         {
             if (Session["User"] != null)
@@ -256,6 +261,80 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
+        Get /Admin/AllCompetitions
+         -----------------------------------*/
+        public ActionResult AllCompetitions()
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetAllCompetition());
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Get /Admin/CreateCompetition
+         -----------------------------------*/
+        public ActionResult CreateCompetition()
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View();
+            }
+            return RedirectToAction("Login");
+
+        }
+
+
+        /*----------------------------------
+        Post /Admin/CreateCompetition
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult CreateCompetition(Competition competition)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (competition.StartDate > competition.EndDate)
+                    {
+                        Response.StatusCode = 201;
+                        ModelState.AddModelError("", "End date must be greater than start date !");
+                        return PartialView("CreateCompetitionForm", competition);
+                    }
+
+                    if (!DAO.InsertCompetition(competition))
+                    {
+                        Response.StatusCode = 201;
+                        ModelState.AddModelError("", "Error. Server cannot insert competition now !");
+                        return PartialView("CreateCompetitionForm", competition);
+                    }
+                    return new HttpStatusCodeResult(200);
+                }
+                Response.StatusCode = 201;
+                return PartialView("CreateCompetitionForm", competition);
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Get /Admin/DeleteCompetition
+         -----------------------------------*/
+        public ActionResult DeleteCompetiton(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                DAO.DeleteCompetition(ID);
+                return RedirectToAction("AllCompetitions");
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
         Feedbacks Get Action
          -----------------------------------*/
         public ActionResult Feedbacks(int ID)
@@ -323,7 +402,7 @@ namespace EnvironmentalSurveyPortal.Controllers
 
                     if (DAO.InsertUser(user))
                     {
-                        ViewBag.Successed = true;
+                        return RedirectToAction("AllUsers");
                     }
                 }
                 return PartialView("CreateAccountForm");

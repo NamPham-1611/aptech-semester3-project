@@ -201,6 +201,7 @@
     <Compile Include="Models\FeedbackAnswer.cs" />
     <Compile Include="Models\LoginAccount.cs" />
     <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Prize.cs" />
     <Compile Include="Models\RegisterAccount.cs" />
     <Compile Include="Models\Support.cs" />
@@ -240,6 +241,11 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\CreateAccountForm.cshtml" />
     <Content Include="Views\Admin\SurveyAnalysis.cshtml" />
+    <Content Include="Views\Home\Competition.cshtml" />
+    <Content Include="Views\Home\Competitions.cshtml" />
+    <Content Include="Views\Admin\AllCompetitions.cshtml" />
+    <Content Include="Views\Admin\CreateCompetition.cshtml" />
+    <Content Include="Views\Admin\CreateCompetitionForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,10 +9,13 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
-            <div class="card-body py-5 px-3 px-md-5">
+            <div class="card-body">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h4 class="mb-0 text-gray-800">Users List</h4>
+                    <a href="/Admin/CreateAccount" class="d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                        <i class="fas fa-plus fa-sm text-white mr-1"></i>New User
+                    </a>
                 </div>
 
                 <div>
@@ -25,6 +28,7 @@
                                 <th>Specification</th>
                                 <th>Section</th>
                                 <th>Role</th>
+                                <th class="text-center">Create Date</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -39,6 +43,7 @@
                                     <td>@user.Specification</td>
                                     <td>@user.Section</td>
                                     <td>@user.Role</td>
+                                    <td class="text-center">@user.CreateDate.ToString("MMM-dd-yyyyy")</td>
                                     <td class="text-center">
                                         @if (user.isActive)
                                         {

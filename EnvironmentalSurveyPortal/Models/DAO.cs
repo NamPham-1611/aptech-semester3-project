@@ -268,6 +268,58 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Get Latest Competition Method
+         -----------------------------------*/
+        public static IEnumerable<Competition> GetLatestCompetitions(int limit)
+        {
+            return db.tbCompetition.OrderByDescending(c => c.CreateDate).Take(limit);
+        }
+
+        /*----------------------------------
+        Get Competition By ID Method
+         -----------------------------------*/
+        public static Competition GetCompetitionByID(int ID)
+        {
+            return db.tbCompetition.First(c => c.ID == ID);
+        }
+
+        /*----------------------------------
+        Insert Competition Method
+         -----------------------------------*/
+        public static bool InsertCompetition(Competition competition)
+        {
+            db.tbCompetition.Add(competition);
+            db.SaveChanges();
+            return true;
+        }
+
+        /*----------------------------------
+        Delete Competition Method
+         -----------------------------------*/
+        public static bool DeleteCompetition(int ID)
+        {
+            var x = db.tbCompetition.FirstOrDefault(c => c.ID == ID);
+            if (x != null)
+            {
+                db.tbCompetition.Remove(x);
+                db.SaveChanges();
+                return true;
+            }
+           
+            return false;
+        }
+
+        /*----------------------------------
+        Insert Post Method
+        -----------------------------------*/
+        public static bool InsertPost(Post post)
+        {
+            db.tbPost.Add(post);
+            db.SaveChanges();
+            return true;
+        }
+
+        /*----------------------------------
         Get All Prize Method
          -----------------------------------*/
         public static IEnumerable<Prize> GetAllPrize()

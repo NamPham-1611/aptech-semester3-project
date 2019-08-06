@@ -1,5 +1,42 @@
 ﻿@model EnvironmentalSurveyPortal.Models.Pagination
+@functions {
+    string timeAgo(DateTime date)
+    {
+        var time = DateTime.Now - date;
+        var timeAgo = "";
+        if (time.Days != 0)
+        {
+            var months = time.Days / 30;
+            var years = months / 12;
 
+            if (years != 0)
+            {
+                timeAgo = years + " years ago";
+            }
+            else if (months != 0)
+            {
+                timeAgo = months + " month ago";
+            }
+            else
+            {
+                timeAgo = time.Days + " day ago";
+            }
+        }
+        else if (time.Hours != 0)
+        {
+            timeAgo = time.Hours + " hour ago";
+        }
+        else if (time.Minutes != 0)
+        {
+            timeAgo = time.Minutes + " minute ago";
+        }
+        else
+        {
+            timeAgo = time.Seconds + " second ago";
+        }
+        return timeAgo;
+    }
+}
 @{
     ViewBag.Title = "Environmental Survey Portal";
 }
@@ -19,44 +56,11 @@
 
                     @foreach (var item in ViewBag.Competitions)
                     {
-                        var time = DateTime.Now - item.CreateDate;
-                        var timeAgo = "";
-                        if (time.Days != 0)
-                        {
-                            var months = time.Days / 30;
-                            var years = months / 12;
-
-                            if (years != 0)
-                            {
-                                timeAgo = years + " years ago";
-                            }
-                            else if (months != 0)
-                            {
-                                timeAgo = months + " month ago";
-                            }
-                            else
-                            {
-                                timeAgo = time.Days + " day ago";
-                            }
-                        }
-                        else if (time.Hours != 0)
-                        {
-                            timeAgo = time.Hours + " hour ago";
-                        }
-                        else if (time.Minutes != 0)
-                        {
-                            timeAgo = time.Minutes + " minute ago";
-                        }
-                        else
-                        {
-                            timeAgo = time.Seconds + " second ago";
-                        }
-
                         <div class="columns column-3">
                             <div class="post-list-item">
                                 <div class="post-top" style="background-image: url('@item.Image')">
                                     <h3 class="post-title">
-                                        <a href="/Home/Survey/@item.ID"><span>@item.Name</span></a>
+                                        <a href="/Home/Competition/@item.ID"><span>@item.Name</span></a>
                                     </h3>
                                 </div>
                                 <div class="post-bottom">
@@ -64,15 +68,23 @@
                                     <div class="timeline-post-info">
 
                                         <div class="d-flex align-items-center">
-                                            <i class="material-icons mr-1">&#xE894;</i><span class="mr-2">@timeAgo</span>
+                                            <i class="material-icons mr-1">&#xE894;</i>
+                                            <strong class="mr-2">@timeAgo(item.CreateDate)</strong>
+                                            <span>
+                                                <span class="dot"></span>
+                                                <span class="comment">@(item.Posts != null ? item.Posts.Count : 0) Practipates</span>
+                                            </span>
                                         </div>
 
-                                        <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
-                                        <span class="dot"></span>
-                                        <span class="comment">@*@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates*@</span>
+                                        <span>
+                                            Start Date: <strong>@item.StartDate.ToString("MMM-dd-yyyy")</strong>
+                                            <span class="dot"></span>
+                                            End Date: <strong>@item.EndDate.ToString("MMM-dd-yyyy")</strong>
+                                        </span>
+                                        
                                     </div>
                                     <div class="post-meta text-center">
-                                        <a href="/Home/Survey/@item.ID" class="frm-button material-button">Join Now</a>
+                                        <a href="/Home/Competition/@item.ID" class="frm-button material-button">Join Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,39 +106,6 @@
 
                     @foreach (var item in Model.Surveys)
                     {
-                        var time = DateTime.Now - item.CreateDate;
-                        var timeAgo = "";
-                        if (time.Days != 0)
-                        {
-                            var months = time.Days / 30;
-                            var years = months / 12;
-
-                            if (years != 0)
-                            {
-                                timeAgo = years + " years ago";
-                            }
-                            else if (months != 0)
-                            {
-                                timeAgo = months + " month ago";
-                            }
-                            else
-                            {
-                                timeAgo = time.Days + " day ago";
-                            }
-                        }
-                        else if (time.Hours != 0)
-                        {
-                            timeAgo = time.Hours + " hour ago";
-                        }
-                        else if (time.Minutes != 0)
-                        {
-                            timeAgo = time.Minutes + " minute ago";
-                        }
-                        else
-                        {
-                            timeAgo = time.Seconds + " second ago";
-                        }
-
                         <div class="columns column-3">
                             <div class="post-list-item">
                                 <div class="post-top" style="background-image: url('@item.Image')">
@@ -137,15 +116,20 @@
                                 <div class="post-bottom">
 
                                     <div class="timeline-post-info">
-
                                         <div class="d-flex align-items-center">
-                                            <i class="material-icons mr-1">&#xE894;</i><span class="mr-2">@timeAgo</span>
-                                            <a href="#" class="timeline-category-name">For @item.For</a>
+                                            <i class="material-icons mr-1">&#xE894;</i>
+                                            <strong class="mr-2">@timeAgo(item.CreateDate)</strong>
+                                            <span>
+                                                <span class="dot"></span>
+                                                <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
+                                            </span>
                                         </div>
 
-                                        <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
-                                        <span class="dot"></span>
-                                        <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
+                                        <span>
+                                            Start Date: <strong>@item.StartDate.ToString("MMM-dd-yyyy")</strong>
+                                            <span class="dot"></span>
+                                            End Date: <strong>@item.EndDate.ToString("MMM-dd-yyyy")</strong>
+                                        </span>
                                     </div>
                                     <div class="post-meta text-center">
                                         <a href="/Home/Survey/@item.ID" class="frm-button material-button">Join Now</a>

@@ -1,4 +1,4 @@
-﻿@model EnvironmentalSurveyPortal.Models.Pagination
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.Competition>
 @functions {
     string timeAgo(DateTime date)
     {
@@ -47,12 +47,12 @@
             <div class="content-timeline">
                 <!--Timeline header area start -->
                 <div class="post-list-header">
-                    <span class="post-list-title text-danger">All surveys</span>
+                    <span class="post-list-title text-danger">All Competitions</span>
                 </div>
                 <!--Timeline header area end -->
                 <!--Timeline items start -->
                 <div class="timeline-items">
-                    @foreach (var item in Model.Surveys)
+                    @foreach (var item in Model.OrderByDescending(i => i.CreateDate))
                     {
 
                         <div class="timeline-item">
@@ -67,7 +67,7 @@
 
                             <div class="timeline-right">
                                 <div class="timeline-post-image">
-                                    <a href="/Home/Survey/@item.ID">
+                                    <a href="/Home/Competition/@item.ID">
                                         <div class="image" style="background-image: url('@item.Image')"></div>
                                     </a>
                                 </div>
@@ -75,7 +75,7 @@
                                 <div class="timeline-post-content">
                                     <a href="#" class="timeline-category-name">For @item.For</a>
 
-                                    <a href="/Home/Survey/@item.ID">
+                                    <a href="/Home/Competition/@item.ID">
                                         <h3 class="timeline-post-title">@item.Name</h3>
                                     </a>
                                     <div class="timeline-post-info">
@@ -87,7 +87,7 @@
                                         </span>
                                         <br />
                                         <span class="dot"></span>
-                                        <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
+                                        <span class="comment">@(item.Posts != null ? item.Posts.Count : 0) Practipates</span>
                                     </div>
                                 </div>
                             </div>
@@ -95,28 +95,6 @@
                     }
                 </div>
                 <!--Timeline items end -->
-                <!--pagination start  -->
-                <div class="text-center mt-5">
-                    <ul class="pagination d-inline-flex">
-                        <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
-                            <a class="page-link" href="/Home/SurveyBoard/@(Model.CurrentPage-1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                        </li>
-                        @for (int i = 1; i <= Model.TotalPage; i++)
-                        {
-                            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
-                                <a class="page-link" href="/Home/SurveyBoard/@i">@i</a>
-                            </li>
-                        }
-                        <li class="page-item @(Model.CurrentPage >= Model.TotalPage ? "disabled" : "")">
-                            <a class="page-link" href="/Home/SurveyBoard/@(Model.CurrentPage+1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--pagination end  -->
             </div>
         </div>
 
