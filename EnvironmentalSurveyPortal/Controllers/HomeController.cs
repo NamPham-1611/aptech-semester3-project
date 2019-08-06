@@ -183,5 +183,22 @@ namespace EnvironmentalSurveyPortal.Controllers
             return View(DAO.GetSupportInfo());
         }
 
+        /*----------------------------------
+        Get /Home/Edit Profile
+         -----------------------------------*/
+        public ActionResult EditUser(string id)
+        {
+            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+            return View(DAO.GetUserByUID(id));
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(User eUser)
+        {
+
+            DAO.UpdateUser(eUser);
+            return RedirectToAction("Index");
+        }
+
     }
 }
