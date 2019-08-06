@@ -6,6 +6,82 @@
 
 <section class="main-content">
     <div class="main-content-wrapper">
+
+        <div class="content-body">
+            <div class="content-timeline">
+                <!--Timeline header area start -->
+                <div class="post-list-header">
+                    <div class="post-list-title text-danger">Latest Competitions</div>
+                </div>
+                <!--Timeline header area end -->
+
+                <div class="post-lists">
+
+                    @foreach (var item in ViewBag.Competitions)
+                    {
+                        var time = DateTime.Now - item.CreateDate;
+                        var timeAgo = "";
+                        if (time.Days != 0)
+                        {
+                            var months = time.Days / 30;
+                            var years = months / 12;
+
+                            if (years != 0)
+                            {
+                                timeAgo = years + " years ago";
+                            }
+                            else if (months != 0)
+                            {
+                                timeAgo = months + " month ago";
+                            }
+                            else
+                            {
+                                timeAgo = time.Days + " day ago";
+                            }
+                        }
+                        else if (time.Hours != 0)
+                        {
+                            timeAgo = time.Hours + " hour ago";
+                        }
+                        else if (time.Minutes != 0)
+                        {
+                            timeAgo = time.Minutes + " minute ago";
+                        }
+                        else
+                        {
+                            timeAgo = time.Seconds + " second ago";
+                        }
+
+                        <div class="columns column-3">
+                            <div class="post-list-item">
+                                <div class="post-top" style="background-image: url('@item.Image')">
+                                    <h3 class="post-title">
+                                        <a href="/Home/Survey/@item.ID"><span>@item.Name</span></a>
+                                    </h3>
+                                </div>
+                                <div class="post-bottom">
+
+                                    <div class="timeline-post-info">
+
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons mr-1">&#xE894;</i><span class="mr-2">@timeAgo</span>
+                                        </div>
+
+                                        <span>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</span>
+                                        <span class="dot"></span>
+                                        <span class="comment">@*@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates*@</span>
+                                    </div>
+                                    <div class="post-meta text-center">
+                                        <a href="/Home/Survey/@item.ID" class="frm-button material-button">Join Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
         <div class="content-body">
             <div class="content-timeline">
                 <!--Timeline header area start -->

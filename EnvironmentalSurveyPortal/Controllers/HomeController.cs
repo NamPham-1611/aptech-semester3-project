@@ -19,6 +19,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             ViewBag.User = Auth.CheckLoginState(Request);
             ViewBag.Prizes = DAO.GetAllPrize().ToList();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
+            ViewBag.Competitions = DAO.GetAllCompetition();
             return View(DAO.GetPaginationData(currentPage));
         }
 

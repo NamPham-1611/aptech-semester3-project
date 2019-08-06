@@ -28,6 +28,8 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbSurvey.Where(item => item.Name.ToLower().Contains(txt));
         }
 
+
+
         /*----------------------------------
         Get User By UID Method
          -----------------------------------*/
@@ -95,6 +97,7 @@ namespace EnvironmentalSurveyPortal.Models
                 u.Name = user.Name;
                 u.Password = user.Password;
                 u.Role = user.Role;
+                u.Class = user.Class;
                 u.Section = user.Section;
                 u.Specification = user.Specification;
                 db.SaveChanges();
@@ -254,6 +257,14 @@ namespace EnvironmentalSurveyPortal.Models
                 return true;
             }
             return false;
+        }
+
+        /*----------------------------------
+        Get All Competition Method
+         -----------------------------------*/
+        public static IEnumerable<Competition> GetAllCompetition()
+        {
+            return db.tbCompetition;
         }
 
         /*----------------------------------

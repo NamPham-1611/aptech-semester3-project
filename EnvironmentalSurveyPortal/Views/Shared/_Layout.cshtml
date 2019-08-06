@@ -252,11 +252,20 @@
     <script src="~/Scripts/sweetalert2.min.js"></script>
     <script src="~/Scripts/client-script.js"></script>
     <script>
-        $('.owl-carousel').owlCarousel({
+        $('.w-boxed-post.owl-carousel').owlCarousel({
             items: 1,
             loop: true,
             autoplay: true
         });
+
+        $('#postCarousel').owlCarousel({
+		    loop:true,
+		    dots:true,
+		    nav:true,
+		    navText: ['<span><i class="material-icons">&#xE314;</i></span>','<span><i class="material-icons">&#xE315;</i></span>'],
+		    items:1,
+		    margin:0
+		})
     </script>
 
 </body>

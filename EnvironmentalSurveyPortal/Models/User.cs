@@ -20,6 +20,7 @@ namespace EnvironmentalSurveyPortal.Models
 
         [Required]
         [StringLength(30)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [StringLength(20)]

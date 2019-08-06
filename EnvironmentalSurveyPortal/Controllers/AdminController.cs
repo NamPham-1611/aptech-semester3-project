@@ -93,6 +93,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                         return RedirectToAction("AllUsers");
                     }
                 }
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
                 return View(eUser);
             }
             return RedirectToAction("Login");
