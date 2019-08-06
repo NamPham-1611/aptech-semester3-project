@@ -2630,10 +2630,13 @@ textarea.frm-input{
 	border-radius: 2px;
 	text-decoration: none;
 }
-.frm-button.small{
-	padding: 4px 10px;
-	font-size: 12px;
-}
+    .frm-button:hover{
+        color: #ffffff;
+    }
+    .frm-button.small {
+        padding: 4px 10px;
+        font-size: 12px;
+    }
 .frm-button.full{
 	width: 100%;
 	border-radius: 2px;

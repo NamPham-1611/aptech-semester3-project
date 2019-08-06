@@ -1,0 +1,301 @@
+﻿@model EnvironmentalSurveyPortal.Models.Survey
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "Analysis";
+
+
+
+}
+
+<script src="~/Scripts/Chart.min.js"></script>
+<script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    function getColor() {
+        return ( "#" +Math.random().toString(16).slice(2, 8) );
+    }
+
+</script>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="my-5">
+        <h1 class="h1 mb-0 text-gray-800 text-center">@Model.Name<sup class="text-gray-600 ml-1">Analysis</sup></h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Questions
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Questions.Count</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-question fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="/Admin/Feedbacks/@Model.ID">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Feedbacks
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Feedbacks.Count</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Start Date (DD-MM-YYYY)
+                            </div>
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.StartDate.ToString("dd-MM-yyyy")</div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                End Date (DD-MM-YYYY)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.EndDate.ToString("dd-MM-yyyy")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar-times fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{
+        var no = 0;
+        var feedbackAnswers = (IEnumerable<EnvironmentalSurveyPortal.Models.FeedbackAnswer>) ViewBag.FeedbackAnswers;
+        
+    }
+    @foreach (var question in Model.Questions)
+    {
+        var answerCounter = feedbackAnswers.Where(a => a.Question.ID == question.ID).GroupBy(a => a.Answer.Content).Select(g => new { ID = g.Key, Count = g.Count() });
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-4">
+                <h5 class="m-0 font-weight-bold text-primary">@(++no). @question.Content</h5>
+            </div>
+            <div class="card-body p-5">
+                <div class="row">
+                    <!-- Area Chart -->
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card" style="height: 383px;">
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="bar-chart-@question.ID"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card" style="height: 383px;">
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="pie-chart-@question.ID"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small pie-chart-legend-@question.ID">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var answers = JSON.parse('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(answerCounter))');
+            var labels = [];
+            var data = [];
+            var colors = [];
+            answers.forEach(function (item, i) {
+                labels.push(item.ID);
+                data.push(item.Count);
+                colors.push(getColor());
+            });
+
+            // Area Chart
+            new Chart(document.getElementById("bar-chart-@question.ID"), {
+                type: 'horizontalBar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Voted",
+                        lineTension: 0.3,
+                        backgroundColor: colors,
+                        borderColor: "rgba(78, 115, 223, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: data,
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 25,
+                            top: 25,
+                            bottom: 0
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'date'
+                            },
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 7
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                maxTicksLimit: 5,
+                                padding: 10
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        titleMarginBottom: 10,
+                        titleFontColor: '#ffffff',
+                        titleFontSize: 14,
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        intersect: false,
+                        mode: 'index',
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function (tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ': ' + tooltipItem.value;
+                            }
+                        }
+                    }
+                }
+            });
+
+        // Pie Chart
+        new Chart(document.getElementById("pie-chart-@question.ID"), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    titleFontSize: 14,
+                    bodyFontSize: 14,
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function (tooltipItem, chart) {
+                            var label = [];
+                            label[0] = chart.labels[tooltipItem.index];
+                            var q = chart.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            var sum = 0;
+                            chart.datasets[0].data.forEach(function (item, i) {
+                                sum += item;
+                            });
+                            label[1] = (q / sum * 100).toFixed(1) + " %";
+                            return label;
+                        }
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                cutoutPercentage: 70,
+                rotation: -1.4 * Math.PI
+            },
+        });
+
+        labels.forEach(function (item, i) {
+            $(".pie-chart-legend-@question.ID").append(
+                `<span class="mr-2">
+                    <i class="fas fa-circle" style="color: `+ colors[i] + `"></i> ` + item +`
+                </span>`
+            );
+        });
+    </script>
+    }
+
+</div>
+<!-- /.container-fluid -->

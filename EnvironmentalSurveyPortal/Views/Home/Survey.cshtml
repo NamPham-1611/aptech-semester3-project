@@ -9,53 +9,52 @@
 <section class="main-content">
     <div class="main-content-wrapper">
         <div class="content-body">
-            <h4 class="text-center text-uppercase text-danger">@Model.Name</h4>
-            <form id="form-survey-feedback">
-                <input type="hidden" name="SurveyID" value="@Model.ID" />
-                <input type="hidden" name="UserUID" value="@(ViewBag.User != null ? ViewBag.User.UID : "")" />
-                @{ var countQuestions = 0; }
-                @foreach (var question in Model.Questions)
+            @if (ViewBag.User == null)
+            {
+                <div class="alert alert-danger h5 mt-4 text-center">You need login to view this survey</div>
+            }
+            else if (ViewBag.User.Role == Model.For)
+            {
+                if (Model.StartDate > DateTime.Now)
                 {
-                    <h6 class="mt-5">@(++countQuestions + ". " + question.Content)</h6>
-                    <div class="row">
-                        @foreach (var answer in question.Answers)
-                        {
-                            <div class="col-6">
-                                <div class="custom-control custom-radio disable-select">
-                                    <input type="radio" name="@("question"+question.ID)" id="@("answer"+answer.ID)" class="custom-control-input" q-id="@question.ID" a-id="@answer.ID">
-                                    <label class="custom-control-label" for="@("answer"+answer.ID)">@answer.Content</label>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-
-                @if (Model.StartDate > DateTime.Now)
-                {
-                    <span class="h5 text-danger">Kiem tra lai han lam bai</span>
+                    <div class="alert alert-danger h5 mt-4 text-center">Comming Soon</div>
                 }
                 else if (DateTime.Now > Model.EndDate)
                 {
-                    <span class="h5 text-danger">Kiem tra lai han lam bai</span>
-                }
-                else if (ViewBag.User != null)
-                {
-                    if (Model.For == ViewBag.User.Role)
-                    {
-                        <div class="mt-4 text-center">
-                            <button type="submit" class="btn btn-danger">Submit</button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert alert-danger h5 mt-4 text-center">This survey is for @Model.For</div>
-                    }
+                    <div class="alert alert-danger h5 mt-4 text-center">Expired Survey</div>
                 }
                 else
                 {
-                    <div class="alert alert-danger h5 mt-4 text-center">You need login to post</div>
+                    <h4 class="text-center text-uppercase text-danger">@Model.Name</h4>
+                    <form id="form-survey-feedback">
+                        <input type="hidden" name="SurveyID" value="@Model.ID" />
+                        <input type="hidden" name="UserUID" value="@(ViewBag.User != null ? ViewBag.User.UID : "")" />
+                        @{ var countQuestions = 0; }
+                        @foreach (var question in Model.Questions)
+                        {
+                            <h6 class="mt-5">@(++countQuestions + ". " + question.Content)</h6>
+                            <div class="row">
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio disable-select">
+                                            <input type="radio" name="@("question" + question.ID)" id="@("answer" + answer.ID)" class="custom-control-input" q-id="@question.ID" a-id="@answer.ID">
+                                            <label class="custom-control-label" for="@("answer" + answer.ID)">@answer.Content</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
                 }
-            </form>
+            }
+            else
+            {
+                <div class="alert alert-danger h5 mt-4 text-center">This survey is for @Model.For</div>
+            }
         </div>
 
         <div class="content-sidebar">
@@ -65,28 +64,42 @@
                         <div class="w-title">Prized member</div>
                         <div class="w-seperator"></div>
                     </div>
-                    <div class="w-boxed-post">
-                        <ul>
-                            @{int index = 0; }
-                            @foreach (var item in ViewBag.Prizes)
-                            {
-                                <li class="@(index == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url(/Images/@item.Survey.Image);">
-                                        <div class="box-wrapper">
-                                            <div class="box-left">
-                                                <span>@(++index)</span>
-                                            </div>
-                                            <div class="box-right" style="width:100%">
-                                                <h3 class="p-title">@item.User.Name</h3>
-                                                <div class="p-icons">
-                                                    @item.Survey.Name
+                    <div class="w-boxed-post owl-carousel owl-theme">
+                        @{
+                            var prizes = ((IEnumerable<EnvironmentalSurveyPortal.Models.Prize>)ViewBag.Prizes).GroupBy(p => p.Competition.ID);
+                            int index = 0;
+                        }
+                        @foreach (var prize in prizes)
+                        {
+                            index = 0;
+
+                            <ul>
+                                <li>
+                                    <h6 class="text-white text-center py-3 bg-danger m-0">@prize.First().Competition.Name</h6>
+                                </li>
+
+                                @foreach (var item in prize)
+                                {
+                                    index++;
+
+                                    <li class="@(index == 1 ? "active" : "")">
+                                        <a href="#" style="background-image: url('@item.Competition.Image');">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(index)</span>
+                                                </div>
+                                                <div class="box-right" style="width:100%">
+                                                    <h3 class="p-title">@item.User.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.User.UID
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
                     </div>
                 </div>
 
@@ -101,7 +114,7 @@
                             @foreach (var item in ViewBag.Popular)
                             {
                                 <li class="@(count == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url(/Images/@item.Image);">
+                                    <a href="#" style="background-image: url('@item.Image');">
                                         <div class="box-wrapper">
                                             <div class="box-left">
                                                 <span>@(++count)</span>

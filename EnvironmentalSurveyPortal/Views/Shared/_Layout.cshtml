@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-5.6.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/client-style.css">
     <link rel="stylesheet" type="text/css" href="~/Content/client-custom-style.css">
@@ -53,7 +54,7 @@
                         <a href="/" class="material-button @activeMenu("Index")">HOME</a>
                     </li>
                     <li>
-                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">ALL SURVEYS</a>
+                        <a href="/Home/SurveyBoard" class="material-button submenu-toggle @activeMenu("SurveyBoard")">SURVEY BOARD</a>
                     </li>
                     <li>
                         <a href="/Home/Support" class="material-button submenu-toggle @activeMenu("Support")">SUPPORT</a>
@@ -150,7 +151,7 @@
                 <li>
                     <a href="/Home/SurveyBoard" class="material-button">
                         <span class="menu-icon"><i class="material-icons">&#xE038;</i></span>
-                        <span class="menu-label">All Surveys</span>
+                        <span class="menu-label">Survey Board</span>
                     </a>
                 </li>
                 <li>
@@ -247,9 +248,16 @@
     <div class="overlay"></div>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
     <script src="~/Scripts/sweetalert2.min.js"></script>
     <script src="~/Scripts/client-script.js"></script>
-
+    <script>
+        $('.owl-carousel').owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true
+        });
+    </script>
 
 </body>
 

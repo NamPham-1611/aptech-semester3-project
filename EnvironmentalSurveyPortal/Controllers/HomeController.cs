@@ -17,7 +17,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             int currentPage = id != null ? int.Parse(id.ToString()) : 1;
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetAllPrize().ToList();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetPaginationData(currentPage));
         }
@@ -69,21 +69,28 @@ namespace EnvironmentalSurveyPortal.Controllers
                 var u = Auth.CheckAccount(l);
                 if (u != null)
                 {
-                    HttpCookie authCookie = new HttpCookie("UID", u.UID);
-                    authCookie.Expires = DateTime.Now.AddDays(60);
-                    Response.Cookies.Add(authCookie);
-                    Response.Flush();
+                    if (u.isActive)
+                    {
+                        HttpCookie authCookie = new HttpCookie("UID", u.UID);
+                        authCookie.Expires = DateTime.Now.AddDays(60);
+                        Response.Cookies.Add(authCookie);
+                        Response.Flush();
+                    }
+                    else
+                    {
+                        Response.StatusCode = 201;
+                        ModelState.AddModelError("", "Account has not been activated !");
+                    }
                 }
                 else
                 {
                     Response.StatusCode = 201;
-                    ModelState.AddModelError("", "Account has not been activated !");
+                    ModelState.AddModelError("", "Account or password incorrect !");
                 }
                 
                 return PartialView("LoginForm");
             }
             Response.StatusCode = 201;
-            ModelState.AddModelError("", "Wrong User SurveyID or password, please try again!");
             return PartialView("LoginForm");
         }
 
@@ -91,19 +98,18 @@ namespace EnvironmentalSurveyPortal.Controllers
         Post /Home/CheckRegister
          -----------------------------------*/
         [HttpPost]
-        public PartialViewResult CheckRegister(User u)
+        public ActionResult CheckRegister(RegisterAccount acc)
         {
             if (ModelState.IsValid)
             {
-                if (DAO.InsertUser(u))
-                {
-                   
-                }
-                else
+                var user = new User { UID = acc.UID, Name = acc.Name, Password = acc.Password, Class = acc.Class, Specification = acc.Specification, Role = acc.Role, Section = acc.Section };
+
+                if (!DAO.InsertUser(user))
                 {
                     Response.StatusCode = 201;
                     ModelState.AddModelError("", "Account already exist !");
                 }
+
                 return PartialView("RegisterForm");
             }
 

@@ -71,8 +71,8 @@
                                         <span class="dot"></span>
                                         <span class="comment">@(item.Feedbacks != null ? item.Feedbacks.Count : 0) Practipates</span>
                                     </div>
-                                    <div class="post-meta">
-                                        <a href="/Home/Survey/@item.ID" class="read-more">Join Now <i class="material-icons"></i></a>
+                                    <div class="post-meta text-center">
+                                        <a href="/Home/Survey/@item.ID" class="frm-button material-button">Join Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,28 +114,42 @@
                         <div class="w-title">Prized member</div>
                         <div class="w-seperator"></div>
                     </div>
-                    <div class="w-boxed-post">
-                        <ul>
-                            @{int index = 0; }
-                            @foreach (var item in ViewBag.Prizes)
-                            {
-                                <li class="@(index == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url('@item.Survey.Image');">
-                                        <div class="box-wrapper">
-                                            <div class="box-left">
-                                                <span>@(++index)</span>
-                                            </div>
-                                            <div class="box-right" style="width:100%">
-                                                <h3 class="p-title">@item.User.Name</h3>
-                                                <div class="p-icons">
-                                                    @item.Survey.Name
+                    <div class="w-boxed-post owl-carousel owl-theme">
+                        @{
+                            var prizes = ((IEnumerable<EnvironmentalSurveyPortal.Models.Prize>)ViewBag.Prizes).GroupBy(p => p.Competition.ID);
+                            int index = 0;
+                        }
+                        @foreach (var prize in prizes)
+                        {
+                            index = 0;
+
+                            <ul>
+                                <li>
+                                    <h6 class="text-white text-center py-3 bg-danger m-0">@prize.First().Competition.Name</h6>
+                                </li>
+
+                                @foreach (var item in prize)
+                                {
+                                    index++;
+
+                                    <li class="@(index == 1 ? "active" : "")">
+                                        <a href="#" style="background-image: url('@item.Competition.Image');">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(index)</span>
+                                                </div>
+                                                <div class="box-right" style="width:100%">
+                                                    <h3 class="p-title">@item.User.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.User.UID
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
                     </div>
                 </div>
 

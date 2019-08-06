@@ -46,12 +46,28 @@
                                         }
                                         else
                                         {
-                                            <a href="/Admin/ActiveUser/@user.UID" class="badge badge-warning zebra_tooltips" title="Click to Active">Pending</a>
+                                            <span class="badge badge-warning">Pending</span>
                                         }
                                     </td>
                                     <td class="text-center">
-                                        @Html.ActionLink("Edit", "EditUser", new { id = user.UID }, new { @class = "btn btn-sm btn-info" })
-                                        <button class="btn btn-sm btn-danger" onclick="requestDeleteUser('@user.UID')">Delete</button>
+                                        @if (!user.isActive)
+                                        {
+                                            <a href="/Admin/ActiveUser/@user.UID" class="btn btn-sm btn-success" title="Active">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="" class="btn btn-sm btn-success disabled" title="Active">
+                                                <i class="fas fa-check-double"></i>
+                                            </a>
+                                        }
+                                        <a class="btn btn-sm btn-info" href="/Admin/EditUser/@user.UID" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-danger" onclick="requestDeleteUser('@user.UID')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }

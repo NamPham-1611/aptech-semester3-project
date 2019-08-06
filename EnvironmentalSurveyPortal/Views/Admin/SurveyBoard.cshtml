@@ -50,14 +50,14 @@
                                     <td class="text-center">@item.EndDate.ToString("dd-MM-yyyy")</td>
                                     <td class="text-center">@item.CreateDate.ToString("dd-MM-yyyy")</td>
                                     <td class="text-center">
-                                        <a href="/Admin/FeedbackAnalysis/@item.ID" class="btn btn-sm btn-info" title="Feedback Analysis">
+                                        <a href="/Admin/SurveyAnalysis/@item.ID" class="btn btn-sm btn-info" title="Feedback Analysis">
                                             <i class="fas fa-chart-pie"></i>
                                         </a>
                                         <a href="/Admin/Feedbacks/@item.ID" class="btn btn-sm btn-dark" title="View All Feedbacks">
                                             <i class="fas fa-comments"></i>
                                             <span class="badge badge-secondary">@n</span>
                                         </a>
-                                        <a href="?Admin/EditSurvey/@item.ID" class="btn btn-sm btn-warning" title="Edit Survey">
+                                        <a href="/Admin/EditSurvey/@item.ID" class="btn btn-sm btn-warning" title="Edit Survey">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <button class="btn btn-sm btn-danger" onclick="requestDeleteSurvey('@item.ID')" title="Delete Survey">

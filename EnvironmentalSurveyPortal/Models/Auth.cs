@@ -9,12 +9,7 @@ namespace EnvironmentalSurveyPortal.Models
     {
         public static User CheckAccount(LoginAccount l)
         {
-            var x = DAO.GetLoginUser(l.UID, l.Password);
-            if (x.isActive)
-            {
-                return x;
-            }
-            return null;
+            return DAO.GetLoginUser(l.UID, l.Password);
         }
 
         public static User CheckLoginState(HttpRequestBase req)

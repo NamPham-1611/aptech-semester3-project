@@ -1,4 +1,5 @@
 ﻿using EnvironmentalSurveyPortal.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,12 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult Login()
         {
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("SurveyBoard");
+            }
             return View();
+            
         }
 
         /*----------------------------------
@@ -258,8 +264,24 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             if (Session["User"] != null)
             {
+                DAO.SetFeedbackIsSeen(ID);
                 ViewBag.InActiveUsers = DAO.GetInActiveUsers();
                 return View(DAO.GetFeedbackByID(ID));
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Feedback Analysis Get Action
+         -----------------------------------*/
+        public ActionResult SurveyAnalysis(int ID)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                ViewBag.FeedbackAnswers = DAO.GetFeedbackAnswers(ID);
+                return View(DAO.GetSurveyByID(ID));
             }
             return RedirectToAction("Login");
 

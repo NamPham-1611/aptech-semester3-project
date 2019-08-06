@@ -295,6 +295,23 @@ namespace EnvironmentalSurveyPortal.Models
             return db.tbFeedback.FirstOrDefault(item => item.ID == id);
         }
 
+        /*----------------------------------
+        Set Feedback Status Method
+         -----------------------------------*/
+        public static void SetFeedbackIsSeen(int id)
+        {
+            db.tbFeedback.FirstOrDefault(item => item.ID == id).Seen = true;
+            db.SaveChanges();
+        }
+
+        /*----------------------------------
+        Get Answers of Survey Method
+         -----------------------------------*/
+        public static IEnumerable<FeedbackAnswer> GetFeedbackAnswers(int surveyID)
+        {
+            return db.tbFeedbackAnswer.Where(item => item.Question.Survey.ID == surveyID).ToList();
+        }
+
         public static IEnumerable<Feedback> GetAllFeedback()
         {
             return db.tbFeedback;

@@ -14,6 +14,7 @@ namespace EnvironmentalSurveyPortal.Models
 
         public virtual DbSet<User> tbUser { get; set; }
         public virtual DbSet<Survey> tbSurvey { get; set; }
+        public virtual DbSet<Competition> tbCompetition { get; set; }
         public virtual DbSet<SurveyQuestion> tbQuestion { get; set; }
         public virtual DbSet<SurveyAnswer> tbAnswer { get; set; }
         public virtual DbSet<Prize> tbPrize { get; set; }
@@ -37,6 +38,7 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<User> userList = new List<User>
             {
+                new User { UID = "admin", Name="Adminstrator", Password="123", Role="Admin", isActive=true },
                 new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1803.M1", isActive=true },
                 new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1803.M1" },
                 new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1803.M1" },
@@ -50,14 +52,9 @@ namespace EnvironmentalSurveyPortal.Models
             -----------------------------------*/
             List<Survey> surveyList = new List<Survey>
             {
-                new Survey {
-                    Name ="The Formosa Environmental Disaster",
-                    For ="Student",
-                    StartDate = new DateTime(2019,2,9),
-                    EndDate = new DateTime(2019,9,9),
-                    Image ="/Images/news-img1.jpg" },
+                new Survey { Name ="Survey Demo One", For ="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image ="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Consectetur adipiscing", For="Student", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
 
                 new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,2,9), Image="/Images/news-img1.jpg" },
 
@@ -65,7 +62,7 @@ namespace EnvironmentalSurveyPortal.Models
 
                 new Survey {Name="Lorem ipsum dolor sit amet", For="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,4,9), Image="/Images/news-img1.jpg" },
 
-                new Survey {Name="Consectetur adipiscing", For="All", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
+                new Survey {Name="Consectetur adipiscing", For="Student", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,5,9), Image="/Images/news-img1.jpg" },
 
                 new Survey {Name="Ut enim ad minim veniam", For="Faculty/Staff", StartDate = new DateTime(2019,2,9),EndDate = new DateTime(2019,9,9), CreateDate = new DateTime(2019,6,9), Image="/Images/news-img1.jpg" },
 
@@ -142,13 +139,33 @@ namespace EnvironmentalSurveyPortal.Models
             feedbackList.ForEach(item => context.tbFeedback.Add(item));
 
             /*----------------------------------
+            Init Competition Data
+            -----------------------------------*/
+            List<Competition> competitionList = new List<Competition>
+            {
+                new Competition { Name="Competition Demo One", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo Two", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo Three", Content="This i an content", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+            };
+
+            competitionList.ForEach(item => context.tbCompetition.Add(item));
+
+            /*----------------------------------
             Init Prize Data
             -----------------------------------*/
             List<Prize> prizeList = new List<Prize>
             {
-                new Prize{User=userList[0], Survey=surveyList[0]},
-                new Prize{User=userList[1], Survey=surveyList[1]},
-                new Prize{User=userList[2], Survey=surveyList[2]}
+                new Prize{User=userList[0], Competition=competitionList[0]},
+                new Prize{User=userList[1], Competition=competitionList[0]},
+                new Prize{User=userList[2], Competition=competitionList[0]},
+
+                new Prize{User=userList[0], Competition=competitionList[1]},
+                new Prize{User=userList[1], Competition=competitionList[1]},
+                new Prize{User=userList[2], Competition=competitionList[1]},
+
+                new Prize{User=userList[0], Competition=competitionList[2]},
+                new Prize{User=userList[1], Competition=competitionList[2]},
+                new Prize{User=userList[2], Competition=competitionList[2]}
             };
 
             prizeList.ForEach(item => context.tbPrize.Add(item));
