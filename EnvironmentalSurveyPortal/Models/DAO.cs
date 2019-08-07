@@ -380,9 +380,17 @@ namespace EnvironmentalSurveyPortal.Models
         /*----------------------------------
         Get All Prize Method
          -----------------------------------*/
-        public static IEnumerable<Competition> GetAllPrize()
+        public static IEnumerable<Competition> GetPrizes()
         {
-            return db.tbCompetition.Where(c => c.EndDate > DateTime.Now);
+            return db.tbCompetition;
+        }
+
+        /*----------------------------------
+       Get Prizes with limit Method
+        -----------------------------------*/
+        public static IEnumerable<Competition> GetPrizes(int limit)
+        {
+            return db.tbCompetition.Take(limit);
         }
 
         /*----------------------------------

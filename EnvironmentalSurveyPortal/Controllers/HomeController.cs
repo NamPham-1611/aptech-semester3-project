@@ -17,7 +17,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             int currentPage = id != null ? int.Parse(id.ToString()) : 1;
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize().ToList();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             ViewBag.Competitions = DAO.GetLatestCompetitions(4);
             return View(DAO.GetPaginationData(currentPage));
@@ -30,7 +30,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             int currentPage = id != null ? int.Parse(id.ToString()) : 1;
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetPaginationData(currentPage));
         }
@@ -41,7 +41,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         public ActionResult Survey(int id)
         {
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetSurveyByID(id));
         }
@@ -52,7 +52,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         public ActionResult Competitions()
         {
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetAllCompetition());
         }
@@ -63,7 +63,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         public ActionResult Competition(int id)
         {
             ViewBag.User = Auth.CheckLoginState(Request);
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.GetCompetitionByID(id));
         }
@@ -170,7 +170,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         public ActionResult Search(string q)
         {
             ViewBag.TXT = q;
-            ViewBag.Prizes = DAO.GetAllPrize();
+            ViewBag.Prizes = DAO.GetPrizes();
             ViewBag.Popular = DAO.GetPopularSurveys(5);
             return View(DAO.SearchSurvey(q));
         }

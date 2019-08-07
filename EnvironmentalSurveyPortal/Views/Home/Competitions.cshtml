@@ -119,27 +119,30 @@
                                     <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
                                 </li>
 
-                                @foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3))
+                                @if (competition.EndDate < DateTime.Now)
                                 {
-                                    index++;
+                                    foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3))
+                                    {
+                                        index++;
 
-                                    <li class="@(index == 1 ? "active" : "")">
-                                        <a href="#" style="background-image: url('@item.Competition.Image');">
-                                            <div class="box-wrapper">
-                                                <div class="box-left">
-                                                    <span>@(index)</span>
-                                                </div>
-                                                <div class="box-right" style="width:100%">
-                                                    <h3 class="p-title">@item.User.Name</h3>
-                                                    <div class="p-icons">
-                                                        @item.User.UID
+                                        <li class="@(index == 1 ? "active" : "")">
+                                            <a href="#" style="background-image: url('@item.Competition.Image');">
+                                                <div class="box-wrapper">
+                                                    <div class="box-left">
+                                                        <span>@(index)</span>
+                                                    </div>
+                                                    <div class="box-right" style="width:100%">
+                                                        <h3 class="p-title">@item.User.Name</h3>
+                                                        <div class="p-icons">
+                                                            @item.User.UID
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
+                                    }
                                 }
-                                @if (index == 0)
+                                else
                                 {
                                     <li>
                                         <div class="text-center mt-5 mb-1">Date of publication</div>
