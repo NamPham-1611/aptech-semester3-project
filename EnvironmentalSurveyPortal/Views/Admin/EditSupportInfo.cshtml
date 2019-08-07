@@ -16,7 +16,7 @@
         <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
             <div class="card-body py-5 px-3 px-md-5">
 
-                @using (Html.BeginForm("EditSupportInfo", "Admin", FormMethod.Post, new { @class="form-support user" }))
+                @using (Html.BeginForm("EditSupportInfo", "Admin", FormMethod.Post, new { @class = "form-support user" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -65,4 +65,12 @@
     <!-- /.container-fluid -->
 
 </div>
-<!-- End of Main Content -->
+@if (TempData["IsSuccess"] != null)
+{
+    <script>
+        Toast.fire({
+            type: 'success',
+            title: 'Updated'
+        });
+    </script>
+}

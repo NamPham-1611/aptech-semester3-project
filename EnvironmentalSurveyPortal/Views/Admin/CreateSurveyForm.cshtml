@@ -4,8 +4,8 @@
     <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
         <div class="card-body p-0 d-flex justify-content-center">
             <div class="col-12 col-lg-9 py-5 px-3 px-md-5">
-                <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Create New Survey</h1>
+                <div class="text-center mb-4">
+                    <label class="h4 text-gray-800">Create New Survey</label>
                 </div>
 
                 <form id="form-create-survey" class="user">
@@ -51,7 +51,7 @@
                     <div class="form-group row">
                         <div class="col-lg-4">
                             @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
-                            <select class="form-control form-control-user form-control-user-md" name="For">
+                            <select class="form-control form-control-user-md custom-dropdown-arrow" name="For">
                                 <option value="Student">Student</option>
                                 <option value="Faculty/Staff">Faculty/Staff</option>
                             </select>

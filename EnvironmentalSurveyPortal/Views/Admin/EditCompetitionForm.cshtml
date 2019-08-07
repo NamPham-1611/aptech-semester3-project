@@ -44,7 +44,7 @@
                     <div class="form-group row">
                         <div class="col-lg-4">
                             @Html.LabelFor(model => model.For, new { @class = "ml-3 text-gray-800" })
-                            <select class="form-control form-control-user form-control-user-md" name="For">
+                            <select class="form-control form-control-user form-control-user-md custom-dropdown-arrow" name="For">
                                 <option value="Student">Student</option>
                                 <option value="Faculty/Staff">Faculty/Staff</option>
                             </select>
@@ -98,7 +98,10 @@
             processData: false,
             statusCode: {
                 200: function (res) {
-                    location.href = "/Admin/AllCompetitions";
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Updated'
+                    });
                 },
                 201: function (res) {
                     $('#content').html(res);
@@ -126,4 +129,3 @@
         });
     });
 </script>
-

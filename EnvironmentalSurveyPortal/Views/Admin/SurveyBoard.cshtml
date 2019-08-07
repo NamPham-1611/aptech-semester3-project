@@ -93,3 +93,12 @@
         });
     }
 </script>
+@if (TempData["IsSuccess"] != null)
+{
+    <script>
+        Toast.fire({
+            type: 'success',
+            title: 'Updated'
+        });
+    </script>
+}

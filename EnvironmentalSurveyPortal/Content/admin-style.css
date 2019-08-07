@@ -258,9 +258,24 @@ img.logout {
     cursor: default;
 }
 
-.form-support .form-control {
+.form-support .form-control,
+.form-user-info .form-control{
     border-width: 0 0 1px 0;
     border-radius: 0;
     border-style: dashed;
     padding: 0;
+    box-shadow: none;
+}
+
+.form-support .form-control:focus,
+.form-user-info .form-control:focus {
+    box-shadow: none;
+}
+
+.custom-dropdown-arrow {
+    -webkit-appearance: none;
+    -moz-appearance: window;
+    background-image: url("/Images/icons/br_down.png");
+    background-repeat: no-repeat;
+    background-position: 98% center;
 }

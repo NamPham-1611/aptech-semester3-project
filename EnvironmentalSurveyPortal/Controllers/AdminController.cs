@@ -115,6 +115,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                 {
                     if (DAO.UpdateUser(eUser))
                     {
+                        TempData["IsSuccess"] = true;
                         return RedirectToAction("AllUsers");
                     }
                 }
@@ -134,6 +135,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             {
                 if (DAO.DeleteUser(id))
                 {
+                    TempData["IsSuccess"] = true;
                     return RedirectToAction("AllUsers");
                 }
                 return new HttpStatusCodeResult(201);
@@ -163,6 +165,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             if (Session["User"] != null)
             {
                 DAO.SetActiveUser(id);
+                TempData["IsSuccess"] = true;
                 return RedirectToAction("AllUsers");
             }
             return RedirectToAction("Login");
@@ -212,7 +215,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                     {
                         if (DAO.InsertSurvey(survey))
                         {
-                            ViewBag.Successed = true;
+                            TempData["IsSuccess"] = true;
                         }
                     }
                     else
@@ -254,7 +257,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                     {
                         if (DAO.UpdateSurvey(survey))
                         {
-                            ViewBag.Successed = true;
+                            TempData["IsSuccess"] = true;
                         }
                         else
                         {
@@ -281,6 +284,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             if (Session["User"] != null)
             {
                 DAO.DeleteSurvey(ID);
+                TempData["IsSuccess"] = true;
                 return RedirectToAction("SurveyBoard");
             }
             return RedirectToAction("Login");
@@ -408,6 +412,7 @@ namespace EnvironmentalSurveyPortal.Controllers
             if (Session["User"] != null)
             {
                 DAO.DeleteCompetition(ID);
+                TempData["IsSuccess"] = true;
                 return RedirectToAction("AllCompetitions");
             }
             return RedirectToAction("Login");
@@ -550,8 +555,14 @@ namespace EnvironmentalSurveyPortal.Controllers
         {
             if (Session["User"] != null)
             {
-                DAO.EditSupportInfo(e);
-                return RedirectToAction("EditSupportInfo");
+                if (ModelState.IsValid)
+                {
+                    DAO.EditSupportInfo(e);
+                    TempData["IsSuccess"] = true;
+                    return RedirectToAction("EditSupportInfo");
+                }
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(e);
             }
             return RedirectToAction("Login");
 
