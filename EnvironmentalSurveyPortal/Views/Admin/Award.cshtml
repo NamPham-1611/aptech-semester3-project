@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Rank of Competition";
     Layout = "~/Views/Shared/_Admin.cshtml";
-    var posts = Model.Posts.Where(p => p.Score > 0).OrderByDescending(p => p.Score).ToArray();
+    var posts = Model.Posts.Where(p => p.Score > 0).OrderByDescending(p => p.Score).OrderBy(p => p.Time).ToArray();
 }
 
 @functions{

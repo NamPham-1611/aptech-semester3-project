@@ -1,4 +1,9 @@
 ﻿@model EnvironmentalSurveyPortal.Models.Pagination
+
+@{
+    ViewBag.Title = "Environmental Survey Portal";
+}
+
 @functions {
     string timeAgo(DateTime date)
     {
@@ -36,9 +41,6 @@
         }
         return timeAgo;
     }
-}
-@{
-    ViewBag.Title = "Environmental Survey Portal";
 }
 
 <section class="main-content">
@@ -81,7 +83,7 @@
                                             <span class="dot"></span>
                                             End Date: <strong>@item.EndDate.ToString("MMM-dd-yyyy")</strong>
                                         </span>
-                                        
+
                                     </div>
                                     <div class="post-meta text-center">
                                         <a href="/Home/Competition/@item.ID" class="frm-button material-button">Join Now</a>
@@ -176,49 +178,49 @@
                     </div>
                     <div class="w-boxed-post owl-carousel owl-theme">
                         @{
-                            var competitions = ((IEnumerable<EnvironmentalSurveyPortal.Models.Competition>) ViewBag.Prizes);
+                            var prizes = ((IEnumerable<EnvironmentalSurveyPortal.Models.Competition>)ViewBag.Prizes);
                             int index = 0;
                         }
-                        @foreach (var competition in competitions)
+                        @foreach (var competition in prizes)
                         {
                             index = 0;
 
-                        <ul>
-                            <li>
-                                <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
-                            </li>
+                            <ul>
+                                <li>
+                                    <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
+                                </li>
 
-                            @if (competition.EndDate < DateTime.Now)
-                            {
-                                foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3))
+                                @if (competition.EndDate < DateTime.Now)
                                 {
-                                    index++;
+                                    foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3).OrderBy(p => p.Time))
+                                    {
+                                        index++;
 
-                                    <li class="@(index == 1 ? "active" : "")">
-                                        <a href="#" style="background-image: url('@item.Competition.Image');">
-                                            <div class="box-wrapper">
-                                                <div class="box-left">
-                                                    <span>@(index)</span>
-                                                </div>
-                                                <div class="box-right" style="width:100%">
-                                                    <h3 class="p-title">@item.User.Name</h3>
-                                                    <div class="p-icons">
-                                                        @item.User.UID
+                                        <li class="@(index == 1 ? "active" : "")">
+                                            <a href="#" style="background-image: url('@item.Competition.Image');">
+                                                <div class="box-wrapper">
+                                                    <div class="box-left">
+                                                        <span>@(index)</span>
+                                                    </div>
+                                                    <div class="box-right" style="width:100%">
+                                                        <h3 class="p-title">@item.User.Name</h3>
+                                                        <div class="p-icons">
+                                                            @item.User.UID
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li>
+                                        <div class="text-center mt-5 mb-1">Date of publication</div>
+                                        <div class="text-center mt-1 mb-5">@competition.EndDate.AddDays(1).ToString("MMM-dd-yyyy")</div>
                                     </li>
                                 }
-                            }
-                            else
-                            {
-                                <li>
-                                    <div class="text-center mt-5 mb-1">Date of publication</div>
-                                    <div class="text-center mt-1 mb-5">@competition.EndDate.AddDays(1).ToString("MMM-dd-yyyy")</div>
-                                </li>
-                            }
-                        </ul>
+                            </ul>
                         }
                     </div>
                 </div>

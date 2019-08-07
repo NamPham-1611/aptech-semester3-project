@@ -121,7 +121,7 @@
 
                                 @if (competition.EndDate < DateTime.Now)
                                 {
-                                    foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3))
+                                    foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3).OrderBy(p => p.Time))
                                     {
                                         index++;
 
