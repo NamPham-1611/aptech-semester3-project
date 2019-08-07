@@ -19,12 +19,12 @@
             <table class="table table-striped m-0">
                 <thead>
                     <tr>
-                        <th>UID</th>
+                        <th class="text-center">UID</th>
                         <th>Fullname</th>
-                        <th>Class</th>
-                        <th>Specification</th>
-                        <th>Section</th>
-                        <th>Role</th>
+                        <th class="text-center">Class</th>
+                        <th class="text-center">Specification</th>
+                        <th class="text-center">Section</th>
+                        <th class="text-center">Role</th>
                         <th class="text-center">Create Date</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
@@ -34,12 +34,12 @@
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.UID</td>
+                            <td class="text-center">@user.UID</td>
                             <td>@user.Name</td>
-                            <td>@user.Class</td>
-                            <td>@user.Specification</td>
-                            <td>@user.Section</td>
-                            <td>@user.Role</td>
+                            <td class="text-center">@user.Class</td>
+                            <td class="text-center">@user.Specification</td>
+                            <td class="text-center">@user.Section</td>
+                            <td class="text-center">@user.Role</td>
                             <td class="text-center">@user.CreateDate.ToString("MMM-dd-yyyyy")</td>
                             <td class="text-center">
                                 @if (user.isActive)
@@ -54,15 +54,15 @@
                             <td class="text-center">
                                 @if (!user.isActive)
                                 {
-                                    <a href="/Admin/ActiveUser/@user.UID" class="btn btn-sm btn-success" title="Active">
+                                    <a href="/Admin/ActiveUser/@user.UID" class="btn btn-sm btn-success" title="Click to active">
                                         <i class="fas fa-check"></i>
                                     </a>
                                 }
                                 else
                                 {
-                                    <a href="" class="btn btn-sm btn-success disabled" title="Active">
+                                    <button disabled class="btn btn-sm btn-success" title="Activated">
                                         <i class="fas fa-check-double"></i>
-                                    </a>
+                                    </button>
                                 }
                                 <a class="btn btn-sm btn-info" href="/Admin/EditUser/@user.UID" title="Edit">
                                     <i class="fas fa-edit"></i>
