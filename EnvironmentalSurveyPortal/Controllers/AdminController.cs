@@ -1,5 +1,4 @@
 ﻿using EnvironmentalSurveyPortal.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -557,6 +556,7 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult EditSupportInfo(Support e)
         {
+
             if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
@@ -640,6 +640,103 @@ namespace EnvironmentalSurveyPortal.Controllers
                 return "Error";
             }
             return "Not Authorized";
+
+        }
+          
+
+        /*----------------------------------
+        FAQ List Page Get Action
+         -----------------------------------*/
+        public ActionResult FAQList()
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetAllFAQ());
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Edit FAQ Page Get Action
+        -----------------------------------*/
+        public ActionResult EditFAQ(int id)
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetFAQInfo(id));
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Edit User Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult EditFAQ(FAQ faq)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (DAO.EditFAQ(faq))
+                    {
+                        return RedirectToAction("FAQList");
+                    }
+                }
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(faq);
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Delete FAQ Get Action
+         -----------------------------------*/
+        public ActionResult DeleteFAQ(int id)
+        {
+            if (Session["User"] != null)
+            {
+                DAO.DeleteFAQ(id);
+                return RedirectToAction("FAQList");
+            }
+            return RedirectToAction("Login");
+        }
+
+        /*----------------------------------
+        Create FAQ Page Get Action
+         -----------------------------------*/
+        public ActionResult CreateFAQ()
+        {
+            if (Session["User"] != null)
+            {
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View();
+            }
+            return RedirectToAction("Login");
+
+        }
+
+        /*----------------------------------
+        Create Survey Post Action
+         -----------------------------------*/
+        [HttpPost]
+        public ActionResult CreateFAQ(FAQ faq)
+        {
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (DAO.InsertFAQ(faq))
+                    {
+                        return RedirectToAction("FAQList");
+                    }
+                }
+                return View();
+            }
+            return RedirectToAction("Login");
 
         }
     }

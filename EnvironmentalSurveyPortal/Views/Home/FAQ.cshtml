@@ -1,0 +1,66 @@
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.FAQ>
+@{
+    ViewBag.Title = "Frequently Asked Questions";
+}
+<style>
+    .faq-question {
+        background: -webkit-linear-gradient(#db2c30, #7f4092);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+<!-- Card -->
+<div class="container">
+
+
+    <div class=""
+         style="background-image: url(); margin-top:-40px;background-size:cover">
+
+        <!-- Content -->
+        <div class="rgba-black-strong py-5 px-4">
+            <div class="text-center post-list-header">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAgMIHqIHj0hfBVcHzRgvWo6daJ9wkPPImp60DyeebzH9iI4x-" class="img-fluid" alt="Responsive image">
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10 col-xl-8">
+
+                    <!--Accordion wrapper-->
+                    <div class="accordion md-accordion accordion-5" id="accordionEx5" role="tablist"
+                         aria-multiselectable="true">
+                        @foreach (var item in Model)
+                        {
+                            <!-- Accordion card -->
+                            <div class="card mb-4">
+
+                                <!-- Card header -->
+                                <div class="card-header p-0 z-depth-1">
+                                    <a data-toggle="collapse" href="#collapse-@item.ID">
+                                        <i class="fas fa-comment-alt fa-2x p-3 mr-4 float-left black-text" aria-hidden="true"></i>
+                                        <h5 class="faq-question white-text mb-0 py-3 mt-1">
+                                            @item.Question
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapse-@item.ID" class="collapse">
+                                    <div class="card-body rgba-black-light white-text z-depth-1">
+                                        <div class="p-md-4 mb-0">
+                                            @Html.Raw(item.Answer)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Accordion card -->
+                        }
+
+                    </div>
+                    <!--/.Accordion wrapper-->
+
+                </div>
+            </div>
+        </div>
+        <!-- Content -->
+    </div>
+</div>
+<!-- Card -->

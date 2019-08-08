@@ -328,8 +328,24 @@ namespace EnvironmentalSurveyPortal.Models
                 new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1804.M1" },
                 new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1804.M1" },
             };
-            userList.ForEach(item => context.tbUser.Add(item));
 
+
+            /*----------------------------------
+            Init FAQ Data
+            -----------------------------------*/
+            List<FAQ> faqList = new List<FAQ>
+            {
+                new FAQ{ Question = "1. How to register for the survey?", Answer ="<p>- 1. Click Account, select Register.<br />- 2. Enter your Roll No / Employee Number, password, and name.<br />-   3. Choose a Student or Faculty / staff<br />-   4. Click register</p>" },
+                new FAQ{ Question = "2. How to participate in the survey?", Answer ="<p>- 1. You need to login to participate in the survey.<br />- 2. Click on the surveys on the Wed to participate in the survey.</p>" },
+                new FAQ{ Question = "3. How will I be intimated with the new survey?", Answer ="<p>- New surveys will be displayed at the top of the page, users can click for more information.</p>" },
+                new FAQ{ Question = "4. What if it gives error, after participating in the entire survey, and clicked on the submit button at the last for submitting the survey?", Answer ="<p>- If the system reports an error when submitting a survey, your survey will not be saved to the system. Probably because the user has not answered all the questions in the survey. In this case, please check again.</p>" },
+                new FAQ{ Question = "5. Why I am unable to participate in the survey?", Answer ="<p>-	1. Users must log in to participate in the survey<br />-   2. Users must be subject to the requirements of the survey<br />-   3. Technical issues </p>" },
+                new FAQ{ Question = "6. Why my registration request is not accepted?", Answer ="<p>-	1. Your username already exists<br />-   2. Your password does not match<br />-   3. Admin does not accept your registration request </p>" },
+                new FAQ{ Question = "7. Will there be any benefit if participated in the survey?", Answer ="<p> </p>" },
+                new FAQ{ Question = "8. How to participate in the competitions?", Answer ="<p> </p>" },
+                new FAQ{ Question = "9. What if there are some arrears in participating the survey?", Answer ="<p> </p>" },
+            };
+            faqList.ForEach(item => context.tbFAQ.Add(item));
             context.SaveChanges();
         }
     }
