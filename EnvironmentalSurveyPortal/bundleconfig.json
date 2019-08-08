@@ -34,5 +34,17 @@
     "inputFiles": [
       "Scripts/sb-admin-2.js"
     ]
+  },
+  {
+    "outputFileName": "Scripts/dataTables.min.js",
+    "inputFiles": [
+      "Scripts/dataTables.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/dataTables.min.css",
+    "inputFiles": [
+      "Content/dataTables.css"
+    ]
   }
 ]

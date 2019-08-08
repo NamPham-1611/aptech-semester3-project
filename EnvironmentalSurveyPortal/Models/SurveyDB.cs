@@ -8,7 +8,7 @@ namespace EnvironmentalSurveyPortal.Models
 
     public class SurveyDB : DbContext
     {
-        public SurveyDB() : base("name=eProject3DB")
+        public SurveyDB() : base("name=surveyDB")
         {
         }
 
@@ -29,38 +29,39 @@ namespace EnvironmentalSurveyPortal.Models
         }
     }
 
-    public class DBInit : DropCreateDatabaseIfModelChanges<SurveyDB>
+    public class DBInit : DropCreateDatabaseAlways<SurveyDB>
     {
         protected override void Seed(SurveyDB context)
         {
             /*----------------------------------
             Init User Data
             -----------------------------------*/
-            List<User> userList = new List<User>
+            for (int i = 1; i < 50; i++)
             {
-                new User { UID = "admin", Name="Adminstrator", Password="123", Role="Admin", isActive=true },
-                new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1803.M1", isActive=true },
-                new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1803.M1" },
-                new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1803.M1" },
-                new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1803.M1" }
-            };
+                var u = new User { UID = "student" + i, Name = "Student" + i, Password = "123", Class = "T1.1804.M1", isActive = true };
+                context.tbUser.Add(u);
+            }
 
-            userList.ForEach(item => context.tbUser.Add(item));
+            for (int i = 1; i < 50; i++)
+            {
+                var u = new User { UID = "staff" + i, Name = "Staff" + i, Password = "123", Class = "T1.1804.M1", Role = "Faculty/Staff", isActive = true };
+                context.tbUser.Add(u);
+            }
 
             /*----------------------------------
             Init Survey Data
             -----------------------------------*/
             List<Survey> surveyList = new List<Survey>
             {
-               new Survey { Name ="Survey Demo One", For ="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image ="/Images/news-img1.jpg" },
+               new Survey { Name ="Survey Demo One", For ="Student", StartDate = new DateTime(2019,2,9), EndDate = new DateTime(2019,9,9), Image ="/Images/sustainability_environment.jpg" },
 
-               new Survey {Name="Survey Demo Two", For="Faculty/Staff", StartDate = new DateTime(2018,2,9),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Two", For="Faculty/Staff", StartDate = new DateTime(2018,2,9),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2019,1,9), Image="/Images/Environment1.jpg" },
 
-               new Survey {Name="Survey Demo Three", For="Student", StartDate = new DateTime(2018,1,10),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Three", For="Student", StartDate = new DateTime(2018,1,10),EndDate = new DateTime(2018,9,9), CreateDate = new DateTime(2018,12,10), Image="/Images/1_16a0848761c.2171314_2840089636_16a0848761c_large.jpg" },
 
-               new Survey {Name="Survey Demo Four", For="Faculty/Staff", StartDate = new DateTime(2019,1,1),EndDate = new DateTime(2019,8,1), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" },
+               new Survey {Name="Survey Demo Four", For="Faculty/Staff", StartDate = new DateTime(2019,1,1),EndDate = new DateTime(2019,8,1), CreateDate = new DateTime(2018,12,10), Image="/Images/What-happens-when-the-EPA-doesn’t-protect-the-environment-730x410.jpg" },
 
-               new Survey {Name="Survey Demo Five", For="Student", StartDate = new DateTime(2019,6,1),EndDate = new DateTime(2019,10,1), CreateDate = new DateTime(2018,12,10), Image="/Images/news-img1.jpg" }
+               new Survey {Name="Survey Demo Five", For="Student", StartDate = new DateTime(2019,6,1),EndDate = new DateTime(2019,10,1), CreateDate = new DateTime(2018,12,10), Image="/Images/Environment Aotearoa 2019 Summary image.png" }
             };
 
             surveyList.ForEach(item => context.tbSurvey.Add(item));
@@ -262,33 +263,14 @@ namespace EnvironmentalSurveyPortal.Models
             answerList.ForEach(item => context.tbAnswer.Add(item));
 
             /*----------------------------------
-            Init Feedback Data
-            -----------------------------------*/
-            List<Feedback> feedbackList = new List<Feedback>
-            {
-                new Feedback {
-                    User = userList[0],
-                    Survey =surveyList[0],
-                    Answers=new List<FeedbackAnswer>
-                    {
-                        new FeedbackAnswer { Question=questionList[0], Answer=answerList[0] },
-                        new FeedbackAnswer { Question=questionList[1], Answer=answerList[7] },
-                        new FeedbackAnswer { Question=questionList[2], Answer=answerList[12] },
-                        new FeedbackAnswer { Question=questionList[3], Answer=answerList[18] }
-                    }
-                }
-            };
-
-            feedbackList.ForEach(item => context.tbFeedback.Add(item));
-
-            /*----------------------------------
             Init Competition Data
             -----------------------------------*/
             List<Competition> competitionList = new List<Competition>
             {
-                new Competition { Name="Competition Demo One", Content="This i an content", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
-                new Competition { Name="Competition Demo Two", Content="This i an content", For="Faculty/Staff", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
-                new Competition { Name="Competition Demo Three", Content="This i an content", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,8,20), Image="/Images/news-img1.jpg" },
+                new Competition { Name="Competition Demo One", Content="<p>Students submit projects that integrate architecture with natural environmental systems, and technology to provide architectural solutions that protect and enhance the environment.</p>", For="Student", StartDate=new DateTime(2019,7,5), EndDate=new DateTime(2019,8,6), Image="/Images/env123123.jpg" },
+                new Competition { Name="Competition Demo Two", Content="<p>Students imagine, research, design, and build cities of the future that showcase their solution to a citywide sustainability issue. Past topics include stormwater management, urban agriculture, and green energy.</p>", For="Student", StartDate=new DateTime(2019,8,8), EndDate=new DateTime(2019,8,20), Image="/Images/environemental-header-img.jpg" },
+                new Competition { Name="Competition Demo Three", Content="<p>Students submit original and inspiring artwork from around the country for the shot at being featured in the NOAA Marine Debris Program calendar</p>", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,9,20), Image="/Images/h_54328820-800x450.jpg" },
+                new Competition { Name="Competition Demo Four", Content="<p>Students submit Essays based on the themes of the Climate Law and Governance Day conference generally about how to create laws that will benefit the climate and environment.</p>", For="Student", StartDate=new DateTime(2019,8,6), EndDate=new DateTime(2019,8,25), Image="/Images/Melting-glacier-Earth-Day-1580x549.jpg" }
             };
 
             competitionList.ForEach(item => context.tbCompetition.Add(item));
@@ -304,6 +286,50 @@ namespace EnvironmentalSurveyPortal.Models
 
             };
             supportList.ForEach(item => context.tbSupport.Add(item));
+            context.SaveChanges();
+
+            /*----------------------------------
+            Init Feedback Data
+            -----------------------------------*/
+
+            Random rand = new Random();
+            var qs = context.tbQuestion.ToArray();
+
+            foreach (var u in context.tbUser)
+            {
+                foreach (var s in context.tbSurvey)
+                {
+                    var fas = new List<FeedbackAnswer>();
+
+                    foreach (var q in s.Questions)
+                    {
+                        var al = context.tbAnswer.ToArray().Where(a => a.QuestionID == q.ID).ToArray();
+
+                        fas.Add(new FeedbackAnswer { Question = q, Answer = al[rand.Next(al.Length - 1)] });
+                    }
+
+                    var f = new Feedback
+                    {
+                        User = u,
+                        Survey = s,
+                        Answers = fas
+                    };
+
+                    context.tbFeedback.Add(f);
+                }
+                
+            }
+
+            List<User> userList = new List<User>
+            {
+                new User { UID = "admin", Name="Adminstrator", Password="123", Role="Admin", isActive=true },
+                new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1804.M1" },
+                new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1804.M1" },
+                new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1804.M1" },
+                new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1804.M1" },
+            };
+            userList.ForEach(item => context.tbUser.Add(item));
+
             context.SaveChanges();
         }
     }

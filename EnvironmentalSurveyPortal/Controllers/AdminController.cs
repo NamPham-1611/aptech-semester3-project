@@ -46,10 +46,14 @@ namespace EnvironmentalSurveyPortal.Controllers
             var x = DAO.GetLoginUser(user.UID, user.Password);
             if (x != null)
             {
+                if (!x.isActive)
+                {
+                    return "User is not activated !";
+                }
+
                 if (x.Role.ToLower() == "admin")
                 {
                     Session["User"] = x;
-                    Session.Timeout = 60;
                     return "OK";
                 }
                 return "User is not authorized !";

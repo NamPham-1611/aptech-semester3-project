@@ -44,11 +44,11 @@
     string[] surveyPages = { "CreateSurvey", "EditSurvey", "SurveyBoard", "Feedback", "Feedbacks", "SurveyAnalysis" };
     string[] userPages = { "CreateAccount", "AllUsers", "EditUser" };
     string[] supportPages = { "EditSupportInfo" };
-    string[] competitionPages = { "CreateCompetition","EditCompetition", "AllCompetitions", "Posts", "Post", "Award" };
+    string[] competitionPages = { "CreateCompetition", "EditCompetition", "AllCompetitions", "Posts", "Post", "Award" };
 }
 
-@{ 
-    var User = (EnvironmentalSurveyPortal.Models.User) Session["User"];
+@{
+    var User = (EnvironmentalSurveyPortal.Models.User)Session["User"];
 }
 
 <!DOCTYPE html>
@@ -170,7 +170,7 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-                
+
                 <!-- Nav Item - Alerts -->
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -185,17 +185,18 @@
                         </h6>
                         @foreach (var item in ViewBag.InActiveUsers)
                         {
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <div class="dropdown-item d-flex align-items-center">
                                 <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-user-alt text-white"></i>
-                                    </div>
+                                    <a class="icon-circle bg-success" href="/Admin/ActiveUser/@item.UID" title="Click to active">
+                                        <i class="fas fa-check text-white"></i>
+                                    </a>
                                 </div>
                                 <div>
                                     <div class="small text-gray-500">@item.CreateDate.ToString("MMMM - dd - yyyy")</div>
                                     <span class="font-weight-bold">@item.UID - @item.Name</span>
                                 </div>
-                            </a>
+                                
+                            </div>
                         }
                         <a class="dropdown-item text-center small text-gray-500" href="/Admin/AllUsers">Go to user management</a>
                     </div>

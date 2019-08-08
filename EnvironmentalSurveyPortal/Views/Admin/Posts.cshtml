@@ -3,16 +3,16 @@
     ViewBag.Title = "Posts of Competitions";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
+<link href="~/Content/dataTables.min.css" rel="stylesheet" />
 <div id="content">
     <!-- Begin Page Content -->
     <div class="container">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mt-4">
-            
+
         </div>
         <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
-            <table class="table table-striped m-0">
+            <table id="data-table" class="table table-striped m-0">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -57,4 +57,8 @@
         </div>
     </div>
 </div>
+<script src="~/Scripts/dataTables.min.js"></script>
+<script>
+    $('#data-table').DataTable();
+</script>
 

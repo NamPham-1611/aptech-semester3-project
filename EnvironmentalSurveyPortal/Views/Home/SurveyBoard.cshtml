@@ -187,7 +187,7 @@
                             @foreach (var item in ViewBag.Popular)
                             {
                                 <li class="@(count == 0 ? "active" : "")">
-                                    <a href="#" style="background-image: url('@item.Image');">
+                                    <a href="/Home/Survey/@item.ID" style="background-image: url('@item.Image');">
                                         <div class="box-wrapper">
                                             <div class="box-left">
                                                 <span>@(++count)</span>
