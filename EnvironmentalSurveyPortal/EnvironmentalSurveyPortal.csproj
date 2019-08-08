@@ -246,6 +246,10 @@
     <Content Include="Views\Admin\AllCompetitions.cshtml" />
     <Content Include="Views\Admin\CreateCompetition.cshtml" />
     <Content Include="Views\Admin\CreateCompetitionForm.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Admin\FAQList.cshtml" />
+    <Content Include="Views\Admin\EditFAQ.cshtml" />
+    <Content Include="Views\Admin\CreateFAQ.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

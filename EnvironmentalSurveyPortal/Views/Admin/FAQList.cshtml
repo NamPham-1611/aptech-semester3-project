@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EnvironmentalSurveyPortal.Models.FAQ>
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "FAQList";
+}
+
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <div class="card o-hidden border-0 shadow-lg mt-3 mb-5">
+            <div class="card-body">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h4 class="mb-0 text-gray-800">FAQs List</h4>
+                    <a href="/Admin/CreateFAQ" class="d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                        <i class="fas fa-plus fa-sm text-white mr-1"></i>New FAQ
+                    </a>
+                </div>
+
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Question</td>
+                                    <td>@Html.Raw(item.Answer)</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-sm btn-info" href="/Admin/EditFAQ/@item.ID" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-danger" href="/Admin/DeleteFAQ/@item.ID" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

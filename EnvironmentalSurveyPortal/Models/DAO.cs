@@ -20,6 +20,14 @@ namespace EnvironmentalSurveyPortal.Models
         }
 
         /*----------------------------------
+        Get All FAQ Method
+        -----------------------------------*/
+        public static IEnumerable<FAQ> GetAllFAQ()
+        {
+            return db.tbFAQ;
+        }
+
+        /*----------------------------------
         Get All Survey Method
          -----------------------------------*/
         public static IEnumerable<Survey> SearchSurvey(string txt)
@@ -402,6 +410,60 @@ namespace EnvironmentalSurveyPortal.Models
                 u.Website = e.Website;
                 db.SaveChanges();
                 return true;
+            }
+            return false;
+        }
+        
+
+        /*----------------------------------
+        Insert FAQ Method
+         -----------------------------------*/
+        public static bool InsertFAQ(FAQ u)
+        {
+            var x = db.tbFAQ.FirstOrDefault(item => item.ID == u.ID);
+            if (x == null)
+            {
+                db.tbFAQ.Add(u);
+                db.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+        /*----------------------------------
+        Get FAQ Infomation Method
+        -----------------------------------*/
+        public static FAQ GetFAQInfo(int id)
+        {
+            return db.tbFAQ.FirstOrDefault(item => item.ID == id);
+        }
+
+        /*----------------------------------
+        Edit FAQ Infomation Method
+         -----------------------------------*/
+        public static bool EditFAQ(FAQ e)
+        {
+            var u = db.tbFAQ.Find(e.ID);
+            if (u != null)
+            {
+                u.Question = e.Question;
+                u.Answer = e.Answer;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        /*----------------------------------
+        Delete User Method
+        -----------------------------------*/
+        public static bool DeleteFAQ(int id)
+        {
+            var x = GetFAQInfo(id);
+            if (x != null)
+            {
+                db.tbFAQ.Remove(x);
+                db.SaveChanges();
             }
             return false;
         }

@@ -45,6 +45,7 @@
     string[] userPages = { "CreateAccount", "AllUsers", "EditUser" };
     string[] supportPages = { "EditSupportInfo" };
     string[] competitionPages = { "CreateCompetition", "AllCompetitions" };
+    string[] faqPages = { "FAQ" };
 }
 
 @{ 
@@ -156,9 +157,21 @@
                     </div>
                 </li>
 
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item @activeMenu(faqPages)">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <i class="fas fa fa-address-book"></i>
+                        <span>FAQ</span>
+                    </a>
+                    <div id="collapseThree" class="collapse @showSubMenu(faqPages)" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item @activeSubMenu("CreateFAQ")" href="/Admin/CreateFAQ">Create FAQ</a>
+                            <a class="collapse-item @activeSubMenu("FAQList")" href="/Admin/FAQList">FAQ List</a>
+                        </div>
+                    </div>
+                </li>
 
                 <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
 
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">

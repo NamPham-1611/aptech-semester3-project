@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EnvironmentalSurveyPortal.Models
 {
@@ -14,11 +15,12 @@ namespace EnvironmentalSurveyPortal.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(200)]
+        [AllowHtml]
+        [StringLength(500)]
         public string Question { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(1000)]
         public string Answer { get; set; }
     }
 }

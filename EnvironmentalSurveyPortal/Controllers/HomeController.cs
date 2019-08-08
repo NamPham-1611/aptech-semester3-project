@@ -184,6 +184,14 @@ namespace EnvironmentalSurveyPortal.Controllers
         }
 
         /*----------------------------------
+        Get /Home/Support
+        -----------------------------------*/
+        public ActionResult FAQ()
+        {
+            return View(DAO.GetAllFAQ());
+        }
+
+        /*----------------------------------
         Get /Home/Edit Profile
          -----------------------------------*/
         public ActionResult EditUser(string id)
