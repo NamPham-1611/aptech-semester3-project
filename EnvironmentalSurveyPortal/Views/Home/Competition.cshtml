@@ -162,7 +162,9 @@
         </div>
     </div>
 </section>
-<script>
+@if (ViewBag.User != null)
+{
+    <script>
 
     new Quill('#editor', {
         theme: 'snow',
@@ -224,4 +226,5 @@
         }
 
     });
-</script>
+    </script>
+}

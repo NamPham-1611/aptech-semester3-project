@@ -105,8 +105,7 @@
                 <!--Timeline header area end -->
 
                 <div class="post-lists">
-
-                    @foreach (var item in Model.Surveys)
+                    @foreach (var item in Model.Surveys.Take(4))
                     {
                         <div class="columns column-3">
                             <div class="post-list-item">
@@ -142,29 +141,6 @@
                     }
 
                 </div>
-
-                <!--pagination start  -->
-                <div class="text-center">
-                    <ul class="pagination d-inline-flex">
-                        <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
-                            <a class="page-link" href="/Home/Index/@(Model.CurrentPage-1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                        </li>
-                        @for (int i = 1; i <= Model.TotalPage; i++)
-                        {
-                            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
-                                <a class="page-link" href="/Home/Index/@i">@i</a>
-                            </li>
-                        }
-                        <li class="page-item @(Model.CurrentPage >= Model.TotalPage ? "disabled" : "")">
-                            <a class="page-link" href="/Home/Index/@(Model.CurrentPage+1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--pagination end  -->
             </div>
 
         </div>
@@ -185,42 +161,48 @@
                         {
                             index = 0;
 
-                            <ul>
-                                <li>
-                                    <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
-                                </li>
+                        <ul style="height: 288.4px">
+                            <li>
+                                <h6 class="text-white text-center py-3 bg-danger m-0">@competition.Name</h6>
+                            </li>
 
-                                @if (competition.EndDate < DateTime.Now)
+                            @if (competition.EndDate < DateTime.Now)
+                            {
+                                foreach (var item in competition.Posts.Where(p => p.Score > 0).OrderByDescending(p => p.Score).Take(3).OrderBy(p => p.Time))
                                 {
-                                    foreach (var item in competition.Posts.OrderByDescending(p => p.Score).Take(3).OrderBy(p => p.Time))
-                                    {
-                                        index++;
+                                    index++;
 
-                                        <li class="@(index == 1 ? "active" : "")">
-                                            <a href="#" style="background-image: url('@item.Competition.Image');">
-                                                <div class="box-wrapper">
-                                                    <div class="box-left">
-                                                        <span>@(index)</span>
-                                                    </div>
-                                                    <div class="box-right" style="width:100%">
-                                                        <h3 class="p-title">@item.User.Name</h3>
-                                                        <div class="p-icons">
-                                                            @item.User.UID
-                                                        </div>
+                                    <li class="@(index == 1 ? "active" : "")">
+                                        <a href="#" style="background-image: url('@item.Competition.Image');">
+                                            <div class="box-wrapper">
+                                                <div class="box-left">
+                                                    <span>@(index)</span>
+                                                </div>
+                                                <div class="box-right" style="width:100%">
+                                                    <h3 class="p-title">@item.User.Name</h3>
+                                                    <div class="p-icons">
+                                                        @item.User.UID
                                                     </div>
                                                 </div>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>
-                                        <div class="text-center mt-5 mb-1">Date of publication</div>
-                                        <div class="text-center mt-1 mb-5">@competition.EndDate.AddDays(1).ToString("MMM-dd-yyyy")</div>
+                                            </div>
+                                        </a>
                                     </li>
                                 }
-                            </ul>
+                                if (index == 0)
+                                {
+                                    <li>
+                                        <div class="text-center my-5">Not Prizes</div>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    <div class="text-center mt-5 mb-1">Date of publication</div>
+                                    <div class="text-center mt-1 mb-5 text-danger">@competition.EndDate.AddDays(1).ToString("MMM-dd-yyyy")</div>
+                                </li>
+                            }
+                        </ul>
                         }
                     </div>
                 </div>

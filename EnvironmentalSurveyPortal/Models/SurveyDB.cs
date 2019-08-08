@@ -272,7 +272,6 @@ namespace EnvironmentalSurveyPortal.Models
                 new Competition { Name="Competition Demo Three", Content="<p>Students submit original and inspiring artwork from around the country for the shot at being featured in the NOAA Marine Debris Program calendar</p>", For="Student", StartDate=new DateTime(2019,8,5), EndDate=new DateTime(2019,9,20), Image="/Images/h_54328820-800x450.jpg" },
                 new Competition { Name="Competition Demo Four", Content="<p>Students submit Essays based on the themes of the Climate Law and Governance Day conference generally about how to create laws that will benefit the climate and environment.</p>", For="Student", StartDate=new DateTime(2019,8,6), EndDate=new DateTime(2019,8,25), Image="/Images/Melting-glacier-Earth-Day-1580x549.jpg" }
             };
-
             competitionList.ForEach(item => context.tbCompetition.Add(item));
 
             /*----------------------------------
@@ -317,19 +316,30 @@ namespace EnvironmentalSurveyPortal.Models
 
                     context.tbFeedback.Add(f);
                 }
-                
+
             }
 
             List<User> userList = new List<User>
             {
                 new User { UID = "admin", Name="Adminstrator", Password="123", Role="Admin", isActive=true },
-                new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1804.M1" },
-                new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1804.M1" },
-                new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1804.M1" },
+                new User { UID = "ST1099153", Name="Vu Van Ninh", Password="123", Class="T1.1804.M1", isActive=true },
+                new User { UID = "ST1093700", Name="Vo Duy Cuong", Password="123", Class="T1.1804.M1", isActive=true },
+                new User { UID = "ST1098850", Name="Pham Phuong Nam", Password="123", Class="T1.1804.M1", isActive=true },
                 new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1804.M1" },
             };
 
             userList.ForEach(u => context.tbUser.Add(u));
+
+            /*----------------------------------
+            Init Posts Data
+            -----------------------------------*/
+            List<Post> postList = new List<Post>
+            {
+                new Post { Competition=competitionList[0], User=userList[1], Content="<p>A couple of years ago, the New York Times announced it was closing its Environment Beat and redistributing its team of environmental reporters to other areas, such as business and politics. It’s not that the environment isn’t important, the Times explained, but that it intersects with so many other disciplines that it can’t be teased out and treated in isolation. A story about fracking, for example, is also about economics, health, and industry. With this decision, the Times seemed to be telling their millions of global readers that the environment—a.k.a. the natural world—is a part of everything we do; the environment is a part of us. </p>", Score=95 },
+                new Post { Competition=competitionList[0], User=userList[2], Content="<p>A couple of years ago, the New York Times announced it was closing its Environment Beat and redistributing its team of environmental reporters to other areas, such as business and politics. It’s not that the environment isn’t important, the Times explained, but that it intersects with so many other disciplines that it can’t be teased out and treated in isolation. A story about fracking, for example, is also about economics, health, and industry. With this decision, the Times seemed to be telling their millions of global readers that the environment—a.k.a. the natural world—is a part of everything we do; the environment is a part of us. </p>", Score=80 },
+                new Post { Competition=competitionList[0], User=userList[3], Content="<p>A couple of years ago, the New York Times announced it was closing its Environment Beat and redistributing its team of environmental reporters to other areas, such as business and politics. It’s not that the environment isn’t important, the Times explained, but that it intersects with so many other disciplines that it can’t be teased out and treated in isolation. A story about fracking, for example, is also about economics, health, and industry. With this decision, the Times seemed to be telling their millions of global readers that the environment—a.k.a. the natural world—is a part of everything we do; the environment is a part of us. </p>", Score=90 }
+            };
+            postList.ForEach(p => context.tbPost.Add(p));
 
             /*----------------------------------
             Init FAQ Data

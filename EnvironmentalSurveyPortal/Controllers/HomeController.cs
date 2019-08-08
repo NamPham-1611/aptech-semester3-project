@@ -203,9 +203,12 @@ namespace EnvironmentalSurveyPortal.Controllers
         [HttpPost]
         public ActionResult EditUser(User eUser)
         {
-
-            DAO.UpdateUser(eUser);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                DAO.UpdateUser(eUser);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
     }
