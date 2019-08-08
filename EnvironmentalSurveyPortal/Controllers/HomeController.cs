@@ -122,7 +122,7 @@ namespace EnvironmentalSurveyPortal.Controllers
                     Response.StatusCode = 201;
                     ModelState.AddModelError("", "Account or password incorrect !");
                 }
-                
+
                 return PartialView("LoginForm");
             }
             Response.StatusCode = 201;
@@ -196,8 +196,14 @@ namespace EnvironmentalSurveyPortal.Controllers
          -----------------------------------*/
         public ActionResult EditUser(string id)
         {
-            ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-            return View(DAO.GetUserByUID(id));
+            var u = Auth.CheckLoginState(Request);
+            if (u != null)
+            {
+                ViewBag.User = u;
+                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
+                return View(DAO.GetUserByUID(id));
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -208,7 +214,9 @@ namespace EnvironmentalSurveyPortal.Controllers
                 DAO.UpdateUser(eUser);
                 return RedirectToAction("Index");
             }
+
             return View();
+
         }
 
     }
