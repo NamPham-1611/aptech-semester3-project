@@ -683,12 +683,14 @@ namespace EnvironmentalSurveyPortal.Controllers
                 {
                     if (DAO.EditFAQ(faq))
                     {
-                        return RedirectToAction("FAQList");
+                        TempData["IsSuccess"] = true;
+                        return new HttpStatusCodeResult(200);
                     }
                 }
-                ViewBag.InActiveUsers = DAO.GetInActiveUsers();
-                return View(faq);
+                Response.StatusCode = 201;
+                return PartialView("EditFAQForm", faq);
             }
+
             return RedirectToAction("Login");
         }
 
@@ -731,11 +733,14 @@ namespace EnvironmentalSurveyPortal.Controllers
                 {
                     if (DAO.InsertFAQ(faq))
                     {
-                        return RedirectToAction("FAQList");
+                        TempData["IsSuccess"] = true;
+                            return new HttpStatusCodeResult(200);
                     }
                 }
-                return View();
+                Response.StatusCode = 201;
+                return PartialView("CreateFAQForm", faq);
             }
+
             return RedirectToAction("Login");
 
         }

@@ -29,7 +29,7 @@ namespace EnvironmentalSurveyPortal.Models
         }
     }
 
-    public class DBInit : DropCreateDatabaseAlways<SurveyDB>
+    public class DBInit : DropCreateDatabaseIfModelChanges<SurveyDB>
     {
         protected override void Seed(SurveyDB context)
         {
@@ -329,6 +329,7 @@ namespace EnvironmentalSurveyPortal.Models
                 new User { UID = "ST1098221", Name="Pham Tan Nam Thanh", Password="123", Class="T1.1804.M1" },
             };
 
+            userList.ForEach(u => context.tbUser.Add(u));
 
             /*----------------------------------
             Init FAQ Data

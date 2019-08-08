@@ -44,7 +44,7 @@ namespace EnvironmentalSurveyPortal.Models
         [StringLength(20)]
         public string Section { get; set; }
 
-        [StringLength(10)]
+        [StringLength(15)]
         public string Role { get; set; }
 
         [ScaffoldColumn(true)]

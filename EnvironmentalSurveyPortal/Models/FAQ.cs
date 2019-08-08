@@ -15,11 +15,11 @@ namespace EnvironmentalSurveyPortal.Models
         public int ID { get; set; }
 
         [Required]
-        [AllowHtml]
         [StringLength(500)]
         public string Question { get; set; }
 
         [Required]
+        [AllowHtml]
         [StringLength(1000)]
         public string Answer { get; set; }
     }

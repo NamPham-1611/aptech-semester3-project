@@ -253,6 +253,14 @@
     <Content Include="Views\Admin\Award.cshtml" />
     <Content Include="Views\Admin\Posts.cshtml" />
     <Content Include="Views\Admin\Post.cshtml" />
+    <Content Include="Views\Admin\CreateFAQ.cshtml" />
+    <Content Include="Views\Admin\EditFAQ.cshtml" />
+    <Content Include="Views\Admin\EditSupport.cshtml" />
+    <Content Include="Views\Admin\FAQList.cshtml" />
+    <Content Include="Views\Home\EditUser.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Admin\CreateFAQForm.cshtml" />
+    <Content Include="Views\Admin\EditFAQForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

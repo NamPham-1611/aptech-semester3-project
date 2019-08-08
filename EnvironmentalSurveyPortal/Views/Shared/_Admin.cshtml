@@ -205,7 +205,10 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <div class="small text-gray-500">@item.CreateDate.ToString("MMMM - dd - yyyy")</div>
+                                    <div>
+                                        <span class="badge badge-secondary">@item.Role</span>
+                                        <sppan class="small text-gray-500">@item.CreateDate.ToString("MMMM - dd - yyyy")</sppan>
+                                    </div>
                                     <span class="font-weight-bold">@item.UID - @item.Name</span>
                                 </div>
                                 
